@@ -1,0 +1,18 @@
+<?xml version ="1.0" encoding ="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/saler_home"
+        android:enabled="true"
+        android:icon="@drawable/home"
+        android:title="主页"/>
+    <item
+        android:id="@+id/saler_order"
+        android:enabled="true"
+        android:icon="@drawable/order"
+        android:title="订单"/>
+    <item
+        android:id="@+id/saler_info"
+        android:enabled="true"
+        android:icon="@drawable/user"
+        android:title="店家信息"/>
+</menu>

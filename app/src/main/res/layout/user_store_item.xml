@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+<!--    <data>-->
+<!--        <variable-->
+<!--            name="store_item"-->
+<!--            type="com.example.basicpage.store_item" />-->
+<!--    </data>-->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/black" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:layout_height="wrap_content">
+                <LinearLayout
+                    android:id="@+id/good_item_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+
+                    <!--目前不会叠加图片，不过感觉可以在已售罄的时候不显示菜品图片并取消添加按钮的enable权限-->
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/good_image"
+                        android:background="@drawable/soldout"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="5dp" />
+
+                    <LinearLayout
+                        android:layout_width="198dp"
+                        android:layout_height="100dp"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:paddingLeft="5dp"
+                        android:paddingRight="2dp">
+
+                        <!--菜品名称-->
+
+                        <LinearLayout
+                            android:layout_width="192dp"
+                            android:layout_height="40dp"
+                            android:layout_gravity="start">
+
+                            <TextView
+                                android:id="@+id/good_name"
+                                android:layout_width="121dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="5dp"
+                                android:ellipsize="end"
+                                android:text="菜品名称"
+                                android:textColor="#464646"
+                                android:textSize="25sp" />
+
+                            <TextView
+                                android:layout_width="39dp"
+                                android:layout_height="34dp"
+                                android:layout_gravity="start"
+                                android:layout_marginLeft="30dp"
+                                android:background="@drawable/tag"
+                                android:gravity="center"
+                                android:text="热" />
+
+                        </LinearLayout>
+
+                        <!--配料-->
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="37dp"
+                            android:layout_marginTop="10dp"
+                            android:text="配料1，配料2，配料3" />
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="116dp"
+                        android:layout_height="100dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_gravity="right"
+                        android:gravity="right"
+                        android:orientation="vertical">
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="33dp"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/good_price"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="bottom"
+                                android:text="￥XX.XX"
+                                android:textColor="@color/red"
+                                android:textSize="20sp" />
+
+                            <androidx.appcompat.widget.AppCompatImageButton
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:layout_marginLeft="10dp"
+                                android:background="@drawable/collect" />
+
+
+                            <!--添加收藏功能，颜色变化等待研究，估计需要前后端共同协作-->
+                        </LinearLayout>
+
+
+                        <TextView
+                            android:layout_width="79dp"
+                            android:layout_height="25dp"
+                            android:layout_gravity="bottom"
+                            android:text="原价：￥XX.XX"
+                            android:textSize="10sp" />
+
+                        <Button
+                            android:id="@+id/store_add"
+                            android:layout_width="35dp"
+                            android:layout_height="35dp"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginRight="20dp"
+                            android:background="@drawable/add_blue"
+                            android:clickable="true"
+                            android:gravity="center"
+                            android:textStyle="bold"
+                            tools:ignore="TouchTargetSizeCheck" />
+
+                    </LinearLayout>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:textSize="15dp"
+                        android:text="推荐度：80%"
+                        android:gravity="center_horizontal"/>
+
+                    <ProgressBar
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_width="match_parent"
+                        android:layout_marginLeft="30dp"
+                        android:layout_marginRight="20dp"
+                        android:layout_marginTop="13dp"
+                        android:layout_height="10dp"
+                        android:indeterminate="false"
+                        android:max="100"
+                        android:progressDrawable="@drawable/style_progressbar"
+                    android:outlineAmbientShadowColor="@color/yellow"
+                        android:progress="80" />
+                </LinearLayout>
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/black" />
+
+    </LinearLayout>
+</layout>

@@ -1,0 +1,1 @@
+android-support-v4.jar，非常实用的jar文件，不可缺少，兼容Android 4.0以下的版本，包中包含类许多我们可以调用的，如widget、view、util等等。
