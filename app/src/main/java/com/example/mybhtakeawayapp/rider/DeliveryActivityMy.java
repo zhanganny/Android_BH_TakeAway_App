@@ -17,32 +17,31 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 public class DeliveryActivityMy extends AppCompatActivity {
     private BottomNavigationView bottomNavigationView;
     private FrameLayout frameLayout;
-    private UserHomeFragment blankFragment;
-//    private BlankFragment2 blankFragment2;
+    private DeliveryActivityMyHomeFragment homeFragment1;
+    private DeliveryActivityOrderFragment orderFragment2;
 
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.user_constrain);
-        blankFragment = new UserHomeFragment();
-//        blankFragment2 = new BlankFragment2();
-        frameLayout = findViewById(R.id.home_fragment);
+        setContentView(R.layout.rider_constrain);
+        homeFragment1 = new DeliveryActivityMyHomeFragment();
+        orderFragment2 = new DeliveryActivityOrderFragment();
+        frameLayout = findViewById(R.id.rider_home_fragment);
         bottomNavigationView = findViewById(R.id.bottomNavigationView);
         bottomNavigationView.setOnNavigationItemSelectedListener(itemSelectedListener);
-//        switchFragment(blankFragment2);
     }
 
     private BottomNavigationView.OnNavigationItemSelectedListener itemSelectedListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
-                case R.id.user_home:
-                    switchFragment(blankFragment);
+                case R.id.rider_home:
+                    switchFragment(homeFragment1);
                     return true;
-//                case R.id.user_order:
-//                    switchFragment(blankFragment2);
-//                    return true;
+                case R.id.rider_order:
+                    switchFragment(orderFragment2);
+                    return true;
             }
             return false;
         }
@@ -50,6 +49,6 @@ public class DeliveryActivityMy extends AppCompatActivity {
 
     private void switchFragment(Fragment fragment){
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.home_fragment, fragment).commitNow();
+        transaction.replace(R.id.rider_home_fragment, fragment).commitNow();
     }
 }

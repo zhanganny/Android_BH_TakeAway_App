@@ -32,7 +32,7 @@ public class UserActivityHome extends AppCompatActivity {
         user_orderFragment2 = new UserOrderFragment();
         user_infoFragment3 = new UserInfoFragment();
         user_contactFragment4 = new UserActivityContactsFragment();
-        frameLayout = findViewById(R.id.home_fragment);
+        frameLayout = findViewById(R.id.user_home_fragment);
         bottomNavigationView = findViewById(R.id.bottomNavigationView);
         bottomNavigationView.setOnNavigationItemSelectedListener(itemSelectedListener);
         System.out.println("aaaaaaaaaaaaaaaaaa");
@@ -64,7 +64,7 @@ public class UserActivityHome extends AppCompatActivity {
 
     private void switchFragment(Fragment fragment){
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.home_fragment, fragment).commitNow();
+        transaction.replace(R.id.user_home_fragment, fragment).commitNow();
     }
 
 }

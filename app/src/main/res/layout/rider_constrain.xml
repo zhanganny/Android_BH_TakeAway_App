@@ -21,7 +21,7 @@
         app:menu="@menu/rider_menu" />
 
     <FrameLayout
-        android:id="@+id/home_fragment"
+        android:id="@+id/rider_home_fragment"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="@color/white"
