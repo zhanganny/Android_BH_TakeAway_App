@@ -54,10 +54,7 @@
             android:exported="true"
             android:label="用户主页"
             android:launchMode="singleTask">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+
         </activity>
         <activity
             android:name=".user.setUserInformation"
@@ -71,7 +68,16 @@
             android:exported="true"
             android:label="骑手主页"
             android:launchMode="singleTask">
-
+        </activity>
+        <activity
+            android:name=".admin.AdministratorHomeActivity"
+            android:exported="true"
+            android:label="管理员主页"
+            android:launchMode="singleTask">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
     </application>
 

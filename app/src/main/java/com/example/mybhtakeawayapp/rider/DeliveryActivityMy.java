@@ -1,7 +1,6 @@
 package com.example.mybhtakeawayapp.rider;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.FrameLayout;
@@ -25,7 +24,7 @@ public class DeliveryActivityMy extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.constrain);
+        setContentView(R.layout.user_constrain);
         blankFragment = new UserHomeFragment();
 //        blankFragment2 = new BlankFragment2();
         frameLayout = findViewById(R.id.home_fragment);

@@ -82,5 +82,70 @@
         android:text="没有账号？立即注册"
         android:textColor="#1E90FF"/>
 
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal">
+
+
+        <RadioGroup
+            android:id="@+id/rgPay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_marginLeft="15dp"
+            android:orientation="horizontal">
+
+            <CheckBox
+                android:id="@+id/loginByAdmin"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:background="@drawable/radio_select"
+                android:button="@null"
+                android:gravity="center"
+                android:text="管理员"
+                android:textColor="@drawable/radiobutton_text_color"
+                android:textSize="18sp" />
+
+            <CheckBox
+                android:id="@+id/loginByRider"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_marginLeft="10dp"
+                android:background="@drawable/radio_select"
+                android:textColor="@drawable/radiobutton_text_color"
+                android:button="@null"
+                android:gravity="center"
+                android:text="外卖员"
+                android:textSize="18sp" />
+
+            <CheckBox
+                android:id="@+id/loginByStore"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_marginLeft="10dp"
+                android:background="@drawable/radio_select"
+                android:textColor="@drawable/radiobutton_text_color"
+                android:button="@null"
+                android:gravity="center"
+                android:text="商家"
+                android:textSize="18sp" />
+
+            <CheckBox
+                android:id="@+id/loginByUser"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_marginLeft="10dp"
+                android:background="@drawable/radio_select"
+                android:textColor="@drawable/radiobutton_text_color"
+                android:button="@null"
+                android:gravity="center"
+                android:text="用户"
+                android:textSize="18sp" />
+        </RadioGroup>
+    </LinearLayout>
+
 </LinearLayout>
 
