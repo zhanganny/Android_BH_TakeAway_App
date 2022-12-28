@@ -31,6 +31,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.mybhtakeawayapp.Local;
 import com.example.mybhtakeawayapp.R;
 import com.example.mybhtakeawayapp.admin.AdministratorHomeActivity;
 import com.github.mikephil.charting.charts.LineChart;
@@ -137,12 +138,10 @@ public class SalerInfo extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 BreakIterator editText = null;
-                String s = "abcdef";
-                    // todo 用户名
                         //editText.getText().toString().trim();
                 MultiFormatWriter writer = new MultiFormatWriter();
                 try {
-                    BitMatrix matrix = writer.encode(s, BarcodeFormat.QR_CODE,350,350);
+                    BitMatrix matrix = writer.encode(sellerId, BarcodeFormat.QR_CODE,350,350);
                     BarcodeEncoder encoder = new BarcodeEncoder();
                     Bitmap bitmap = encoder.createBitmap(matrix);
                     imageView.setImageBitmap(bitmap);
@@ -157,10 +156,34 @@ public class SalerInfo extends AppCompatActivity {
             }
         });
 
-
-        // todo
-        saler_name.setText("商家1");
-        saler_income.setText("100");
+        String providerUrl = localIP + "provider/getIncomeSum/" + sellerId;
+        RequestQueue requestQueue = Volley.newRequestQueue(SalerInfo.this);
+        JSONObject jsonObject = new JSONObject();
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, providerUrl,
+                jsonObject, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject jsonObject) {
+                try {
+                    boolean state = jsonObject.getBoolean("state");
+                    String msg = jsonObject.getString("msg");
+                    if (state) {
+                        saler_name.setText(jsonObject.getString("sellerName"));
+                        saler_income.setText(jsonObject.getDouble("income"));
+                    } else {
+                        Toast.makeText(SalerInfo.this, "加载预测数据失败", Toast.LENGTH_SHORT).show();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        },new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                Log.d("错误", volleyError.toString());
+                Toast.makeText(SalerInfo.this, "网络失败", Toast.LENGTH_SHORT).show();
+            }
+        });
+        requestQueue.add(jsonObjectRequest);
         initData();
         initChart1();
         initChart2();
