@@ -152,7 +152,6 @@ public class DeliveryActivityOrderFragment extends Fragment {
         mRecyclerView3 = mView.findViewById(R.id.order_ed_list3);
 
         // 构造一些数据  todo
-
         mNewsList1.add(new News("合一", "合一", "2022-10-20", "待接单"));
         mNewsList1.add(new News("合一", "合一", "2022-10-20", "待接单"));
 
