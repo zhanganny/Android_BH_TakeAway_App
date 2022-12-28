@@ -57,6 +57,25 @@
 
         </activity>
         <activity
+            android:name=".user.UserActivityStoreIndex"
+            android:exported="true"
+            android:launchMode="singleTask">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".user.UserActivityShoppingCart"
+            android:exported="true"
+            android:launchMode="singleTask">
+        </activity>
+        <activity
+            android:name=".user.UserActivityOrderEnsure"
+            android:exported="true"
+            android:launchMode="singleTask">
+        </activity>
+        <activity
             android:name=".user.setUserInformation"
             android:exported="true"
             android:label="用户修改信息"
@@ -68,10 +87,7 @@
             android:exported="true"
             android:label="骑手主页"
             android:launchMode="singleTask">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+
         </activity>
         <activity
             android:name=".admin.AdministratorHomeActivity"
