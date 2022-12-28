@@ -2,12 +2,6 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     >
 
-<!--    <data>-->
-<!--        <variable-->
-<!--            name="store"-->
-<!--            type="com.example.basicpage.store_index" />-->
-<!--    </data>-->
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -26,6 +20,7 @@
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:background="@drawable/help"
+                    android:id="@+id/saler_help"
                     android:layout_marginLeft="20dp"
                     android:layout_marginTop="100dp"/>
             </LinearLayout>
@@ -39,6 +34,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:id="@+id/saler_home_name"
                     android:text="店家名称"
                     android:textSize="30dp"
                     android:textStyle="bold"
@@ -55,13 +51,14 @@
                     android:gravity="center_horizontal"/>
 
                 <TextView
+                    android:id="@+id/saler_home_income"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:gravity="center_horizontal"
                     android:text="XX.XX元"
                     android:textSize="40dp"
-                    android:textStyle="bold"
-                    android:layout_marginTop="5dp"
-                    android:gravity="center_horizontal"/>
+                    android:textStyle="bold" />
 
 
             </LinearLayout>
@@ -83,6 +80,7 @@
 
                 <android.widget.Button
                     android:layout_width="30dp"
+                    android:id="@+id/erweima"
                     android:layout_height="30dp"
                     android:background="@drawable/card"
                     android:layout_marginRight="20dp"
@@ -98,13 +96,13 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="售卖预测"
+                android:text="明日售卖预测"
                 android:layout_marginTop="10dp"
                 android:gravity="center"
                 android:textSize="20dp"/>
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/order_ed_list"
+                android:id="@+id/order_list"
                 android:layout_width="match_parent"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
@@ -125,7 +123,8 @@
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1">
+                android:layout_weight="1"
+                android:orientation="vertical">
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -134,12 +133,19 @@
                     android:gravity="center"
                     android:textSize="20dp"/>
 
+                <com.github.mikephil.charting.charts.LineChart
+                    android:id="@+id/line1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                </com.github.mikephil.charting.charts.LineChart>
+
                 <!--插入统计图  待处理 todo-->
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
+                android:orientation="vertical"
                 android:layout_weight="1">
                 <TextView
                     android:layout_width="match_parent"
@@ -148,6 +154,12 @@
                     android:layout_marginTop="10dp"
                     android:gravity="center"
                     android:textSize="20dp"/>
+
+                <com.github.mikephil.charting.charts.LineChart
+                    android:id="@+id/line2"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                </com.github.mikephil.charting.charts.LineChart>
                 <!--插入统计图  待处理 todo-->
             </LinearLayout>
 
