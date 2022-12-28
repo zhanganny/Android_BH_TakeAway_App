@@ -14,7 +14,7 @@ import java.io.IOException;
 /**
  * 文件工具类
  */
-public class FileUtils {
+public class FileUtils { 
     /**
      * sd卡的根目录
      */
