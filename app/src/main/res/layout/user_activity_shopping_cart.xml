@@ -25,6 +25,7 @@
                 android:orientation="horizontal">
                 <!--返回键-->
                 <Button
+                    android:id="@+id/back"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:background="@drawable/back"

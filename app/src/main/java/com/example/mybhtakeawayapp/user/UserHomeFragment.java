@@ -1,5 +1,6 @@
 package com.example.mybhtakeawayapp.user;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -55,6 +56,8 @@ public class UserHomeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.user_activity_home, container, false);
+        Intent intent = new Intent(getActivity(), UserActivityStoreIndex.class);
+        startActivity(intent);
+        return inflater.inflate(R.layout.user_activity_store_index, container, false);
     }
 }

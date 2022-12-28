@@ -75,6 +75,7 @@ public class RegisterActivity extends Activity {
                                 boolean state = jsonObject.getBoolean("state");
                                 String msg = jsonObject.getString("msg");
                                 System.out.println(state);
+
                                 if (state) {
                                     if (isUser) {
                                         Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
