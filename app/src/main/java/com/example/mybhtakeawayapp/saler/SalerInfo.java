@@ -8,6 +8,7 @@ import android.graphics.Bitmap;
 import android.graphics.DashPathEffect;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -24,7 +25,15 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+import com.example.mybhtakeawayapp.Local;
 import com.example.mybhtakeawayapp.R;
+import com.example.mybhtakeawayapp.admin.AdministratorHomeActivity;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.components.Legend;
@@ -51,10 +60,16 @@ import com.google.zxing.qrcode.QRCodeReader;
 import com.journeyapps.barcodescanner.BarcodeEncoder;
 import com.journeyapps.barcodescanner.CaptureActivity;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.text.BreakIterator;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.List;
+import java.util.Map;
 
 
 public class SalerInfo extends AppCompatActivity {
@@ -62,6 +77,7 @@ public class SalerInfo extends AppCompatActivity {
     private TextView saler_income;
     private Button erweima;
     private Button help;
+    private String sellerId = Local.getUserLoginId();
 
     private String localIP = "http://192.168.110.79:8081/";
     LineChart lc1;
@@ -122,12 +138,10 @@ public class SalerInfo extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 BreakIterator editText = null;
-                String s = "abcdef";
-                    // todo 用户名
                         //editText.getText().toString().trim();
                 MultiFormatWriter writer = new MultiFormatWriter();
                 try {
-                    BitMatrix matrix = writer.encode(s, BarcodeFormat.QR_CODE,350,350);
+                    BitMatrix matrix = writer.encode(sellerId, BarcodeFormat.QR_CODE,350,350);
                     BarcodeEncoder encoder = new BarcodeEncoder();
                     Bitmap bitmap = encoder.createBitmap(matrix);
                     imageView.setImageBitmap(bitmap);
@@ -142,10 +156,34 @@ public class SalerInfo extends AppCompatActivity {
             }
         });
 
-
-        // todo
-        saler_name.setText("商家1");
-        saler_income.setText("100");
+        String providerUrl = localIP + "provider/getIncomeSum/" + sellerId;
+        RequestQueue requestQueue = Volley.newRequestQueue(SalerInfo.this);
+        JSONObject jsonObject = new JSONObject();
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, providerUrl,
+                jsonObject, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject jsonObject) {
+                try {
+                    boolean state = jsonObject.getBoolean("state");
+                    String msg = jsonObject.getString("msg");
+                    if (state) {
+                        saler_name.setText(jsonObject.getString("sellerName"));
+                        saler_income.setText(Double.toString(jsonObject.getDouble("income")));
+                    } else {
+                        Toast.makeText(SalerInfo.this, "加载预测数据失败", Toast.LENGTH_SHORT).show();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        },new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                Log.d("错误", volleyError.toString());
+                Toast.makeText(SalerInfo.this, "网络失败", Toast.LENGTH_SHORT).show();
+            }
+        });
+        requestQueue.add(jsonObjectRequest);
         initData();
         initChart1();
         initChart2();
@@ -155,9 +193,40 @@ public class SalerInfo extends AppCompatActivity {
 
     public void initRecycler() {
         mRecyclerView = findViewById(R.id.order_list);
-        mNewsList.add(new News("鱼香肉丝","x1"));
-        mNewsList.add(new News("肉末茄子","x3"));
-        mNewsList.add(new News("西红柿炒蛋","x3"));
+        String predictUrl = localIP + "indent/getPredicts/" + sellerId;
+        RequestQueue requestQueue = Volley.newRequestQueue(SalerInfo.this);
+        JSONObject jsonObject = new JSONObject();
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, predictUrl,
+                jsonObject, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject jsonObject) {
+                try {
+                    boolean state = jsonObject.getBoolean("state");
+                    String msg = jsonObject.getString("msg");
+                    if (state) {
+                        JSONArray predicts = (JSONArray) jsonObject.getJSONArray("data");
+                        for (int i = 0; i < predicts.length(); i++) {
+                            JSONObject dish = predicts.getJSONObject(i);
+                            mNewsList.add(new News(dish.getString("name"),"x" + dish.getInt("num")));
+                        }
+                    } else {
+                        Toast.makeText(SalerInfo.this, "加载预测数据失败", Toast.LENGTH_SHORT).show();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        },new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                Log.d("错误", volleyError.toString());
+                Toast.makeText(SalerInfo.this, "网络失败", Toast.LENGTH_SHORT).show();
+            }
+        });
+        requestQueue.add(jsonObjectRequest);
+//        mNewsList.add(new News("鱼香肉丝","x1"));
+//        mNewsList.add(new News("肉末茄子","x3"));
+//        mNewsList.add(new News("西红柿炒蛋","x3"));
         mMyAdapter = new SalerInfo.MyAdapter();
         mRecyclerView.setAdapter(mMyAdapter);
         LinearLayoutManager layoutManager = new LinearLayoutManager(SalerInfo.this);
@@ -167,23 +236,82 @@ public class SalerInfo extends AppCompatActivity {
     private void initData() {
 
         //todo
+        String incomeUrl = localIP + "provider/getProfit/" + sellerId;
+        RequestQueue requestQueue = Volley.newRequestQueue(SalerInfo.this);
+        JSONObject jsonObject = new JSONObject();
         list1= new ArrayList<>();
-        list1.add(new LineChartBaseBean("周一", 3.8f));
-        list1.add(new LineChartBaseBean("周二", 3.8f));
-        list1.add(new LineChartBaseBean("周三", 6.8f));
-        list1.add(new LineChartBaseBean("周四", 7.8f));
-        list1.add(new LineChartBaseBean("周五", 5.4f));
-        list1.add(new LineChartBaseBean("周六", 0f));
-        list1.add(new LineChartBaseBean("周日", 6f));
-
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, incomeUrl,
+                jsonObject, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject jsonObject) {
+                try {
+                    boolean state = jsonObject.getBoolean("state");
+                    String msg = jsonObject.getString("msg");
+                    if (state) {
+                        JSONArray incomes = (JSONArray) jsonObject.getJSONArray("data");
+                        for (int i = 0; i < incomes.length(); i++) {
+                            JSONObject oneDayIncome = incomes.getJSONObject(i);
+                            list1.add(new LineChartBaseBean(oneDayIncome.getString("time"),(float) oneDayIncome.getDouble("money")));
+                        }
+                    } else {
+                        Toast.makeText(SalerInfo.this, "加载收益数据失败", Toast.LENGTH_SHORT).show();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        },new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                Log.d("错误", volleyError.toString());
+                Toast.makeText(SalerInfo.this, "网络失败", Toast.LENGTH_SHORT).show();
+            }
+        });
+        requestQueue.add(jsonObjectRequest);
+//        list1.add(new LineChartBaseBean("周一", 3.8f));
+//        list1.add(new LineChartBaseBean("周二", 3.8f));
+//        list1.add(new LineChartBaseBean("周三", 6.8f));
+//        list1.add(new LineChartBaseBean("周四", 7.8f));
+//        list1.add(new LineChartBaseBean("周五", 5.4f));
+//        list1.add(new LineChartBaseBean("周六", 0f));
+//        list1.add(new LineChartBaseBean("周日", 6f));
+        String orderNumUrl = localIP + "provider/getOrderNum/" + sellerId;
         list2= new ArrayList<>();
-        list2.add(new LineChartBaseBean("周一", 3.8f));
-        list2.add(new LineChartBaseBean("周二", 3.8f));
-        list2.add(new LineChartBaseBean("周三", 6.8f));
-        list2.add(new LineChartBaseBean("周四", 7.8f));
-        list2.add(new LineChartBaseBean("周五", 5.4f));
-        list2.add(new LineChartBaseBean("周六", 0f));
-        list2.add(new LineChartBaseBean("周日", 6f));
+        jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, orderNumUrl,
+                jsonObject, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject jsonObject) {
+                try {
+                    boolean state = jsonObject.getBoolean("state");
+                    String msg = jsonObject.getString("msg");
+                    if (state) {
+                        JSONArray incomes = (JSONArray) jsonObject.getJSONArray("data");
+                        for (int i = 0; i < incomes.length(); i++) {
+                            JSONObject oneDayIncome = incomes.getJSONObject(i);
+                            list2.add(new LineChartBaseBean(oneDayIncome.getString("time"),oneDayIncome.getInt("num")));
+                        }
+                    } else {
+                        Toast.makeText(SalerInfo.this, "加载订单数据失败", Toast.LENGTH_SHORT).show();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        },new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                Log.d("错误", volleyError.toString());
+                Toast.makeText(SalerInfo.this, "网络失败", Toast.LENGTH_SHORT).show();
+            }
+        });
+        requestQueue.add(jsonObjectRequest);
+//        list2.add(new LineChartBaseBean("周一", 3.8f));
+//        list2.add(new LineChartBaseBean("周二", 3.8f));
+//        list2.add(new LineChartBaseBean("周三", 6.8f));
+//        list2.add(new LineChartBaseBean("周四", 7.8f));
+//        list2.add(new LineChartBaseBean("周五", 5.4f));
+//        list2.add(new LineChartBaseBean("周六", 0f));
+//        list2.add(new LineChartBaseBean("周日", 6f));
 
     }
 
