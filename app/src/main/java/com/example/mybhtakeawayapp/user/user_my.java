@@ -1,4 +1,4 @@
-package com.example.myapplication;
+package com.example.mybhtakeawayapp.user;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
@@ -28,6 +28,7 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.mybhtakeawayapp.R;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.BinaryBitmap;
 import com.google.zxing.DecodeHintType;
@@ -53,9 +54,6 @@ public class user_my extends AppCompatActivity {
     private TextView user_name;
     private Button user_erweima;
     private ImageView user_saomiao;
-
-
-
 
     private ImageView mImg;
     private String mPath;
@@ -128,6 +126,7 @@ public class user_my extends AppCompatActivity {
         }
     }
 
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
