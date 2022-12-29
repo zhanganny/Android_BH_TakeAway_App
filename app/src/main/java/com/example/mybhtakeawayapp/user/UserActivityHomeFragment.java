@@ -105,8 +105,8 @@ public class UserActivityHomeFragment extends Fragment {
         View mView = inflater.inflate(R.layout.user_activity_home ,container, false);
         sys_img = mView.findViewById(R.id.sys_img);
 
-        Drawable drawable = getResources().getDrawable(R.drawable.app_icon_your_company);
-        sys_img.setImageDrawable(drawable);
+        //Drawable drawable = getResources().getDrawable(R.drawable.app_icon_your_company);
+        //sys_img.setImageDrawable(drawable);
 
         mRecyclerView1 = mView.findViewById(R.id.user_home_store_list);
 
