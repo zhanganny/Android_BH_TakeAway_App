@@ -1,12 +1,7 @@
 package com.example.mybhtakeawayapp.user;
 
-import android.os.Build;
-
-import androidx.annotation.RequiresApi;
-
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Objects;
 
 public class UserShoppingData {

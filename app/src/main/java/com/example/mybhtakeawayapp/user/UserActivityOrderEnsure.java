@@ -123,5 +123,6 @@ public class UserActivityOrderEnsure extends Activity {
             }
         });
         requestQueue.add(jsonObjectRequest);
+        UserShoppingData.clear(UserShoppingData.curPid);
     }
 }
