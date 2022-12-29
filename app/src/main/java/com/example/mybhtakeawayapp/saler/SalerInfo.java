@@ -168,7 +168,7 @@ public class SalerInfo extends AppCompatActivity {
                     String msg = jsonObject.getString("msg");
                     if (state) {
                         saler_name.setText(jsonObject.getString("sellerName"));
-                        saler_income.setText(Double.toString(jsonObject.getDouble("income")));
+                        saler_income.setText(String.valueOf(jsonObject.getDouble("income")));
                     } else {
                         Toast.makeText(SalerInfo.this, "加载预测数据失败", Toast.LENGTH_SHORT).show();
                     }
