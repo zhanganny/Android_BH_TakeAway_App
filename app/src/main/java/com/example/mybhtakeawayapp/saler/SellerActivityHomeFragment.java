@@ -19,7 +19,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.mybhtakeawayapp.LoginActivity;
 import com.example.mybhtakeawayapp.R;
 import com.example.mybhtakeawayapp.RegisterActivity;
-import com.example.mybhtakeawayapp.UserActivityHomeFragment;
 import com.example.mybhtakeawayapp.rider.setDeliveryInformation;
 import com.example.mybhtakeawayapp.user.UserActivityStoreIndex;
 
