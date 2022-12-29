@@ -90,19 +90,19 @@ public class LoginActivity extends BaseActivity {
                             Log.d("msg", msg);
                             if (state) {
                                 if (isAdmin) {
-                                    Intent intent = new Intent(LoginActivity.this, UserActivityHome.class);
-                                    startActivity(intent);
-                                    finish();
-                                } else if (isUser) {
                                     Intent intent = new Intent(LoginActivity.this, AdministratorHomeActivity.class);
                                     startActivity(intent);
                                     finish();
+                                } else if (isUser) {
+                                    Intent intent = new Intent(LoginActivity.this, UserActivityHome.class);
+                                    startActivity(intent);
+                                    finish();
                                 } else if (isStore) {
-                                    Intent intent = new Intent(LoginActivity.this, DeliveryActivityMy.class);
+                                    Intent intent = new Intent(LoginActivity.this, DeliveryActivityMy.class);//TODO 改成商家的主界面
                                     startActivity(intent);
                                     finish();
                                 } else if (isRider) {
-                                    return;
+                                    return;//TODO
                                 }
                             } else {
                                 Toast.makeText(LoginActivity.this, msg, Toast.LENGTH_SHORT).show();
