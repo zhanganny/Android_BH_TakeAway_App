@@ -50,7 +50,6 @@ public class setUserInformation extends Activity {
 
 
         //页面首先获取骑手信息
-        userId="1";
         JSONObject jsonObject = new JSONObject();
         String url = localIP+"user/getInfo/" + userId;
         System.err.println(url);
