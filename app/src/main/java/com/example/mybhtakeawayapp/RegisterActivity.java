@@ -37,7 +37,6 @@ public class RegisterActivity extends Activity {
     private Button re_register;
 
 
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,13 +59,20 @@ public class RegisterActivity extends Activity {
                 boolean isRider = registerByRider.isChecked();
                 boolean isStore = registerByStore.isChecked();
                 boolean isUser = registerByUser.isChecked();
-                if(username.equals("")||password.equals("")||re_affirm.equals("")){
+                if (username.equals("") || password.equals("") || re_affirm.equals("")) {
                     Toast.makeText(RegisterActivity.this, "请完整填写信息", Toast.LENGTH_SHORT).show();
                 } else if (!password.equals(re_affirm)) {
                     Toast.makeText(RegisterActivity.this, "两次输入密码不一致，请重新输入", Toast.LENGTH_SHORT).show();
                 } else {
                     JSONObject jsonObject = new JSONObject();
-                    String url = localIP+"user/register/" + username + "/" + password;
+                    String url;
+                    if (isUser) {
+                        url = localIP + "user/register/" + username + "/" + password;
+                    } else if (isRider) {
+                        url = localIP + "rider/register/" + username + "/" + password;
+                    } else {
+                        url = localIP + "provider/register/" + username + "/" + password;
+                    }
                     RequestQueue requestQueue = Volley.newRequestQueue(RegisterActivity.this);
                     JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, jsonObject, new Response.Listener<JSONObject>() {
                         @Override
