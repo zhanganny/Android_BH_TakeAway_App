@@ -10,23 +10,35 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.mybhtakeawayapp.Local;
 import com.example.mybhtakeawayapp.LoginActivity;
 import com.example.mybhtakeawayapp.R;
 import com.example.mybhtakeawayapp.RegisterActivity;
 import com.example.mybhtakeawayapp.admin.AdministratorHomeActivity;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -178,8 +190,40 @@ public class UserActivityStoreIndex extends Activity {
 
         // todo Local.storeId;
         String id = Local.storeId;
-        mNewsList.add(new News("麻婆豆腐", "豆腐、辣椒","12.00","80"));
-        mNewsList.add(new News("风味茄子", "茄子、麻椒、花椒","12.00","90"));
+        // mNewsList.add(new News("麻婆豆腐", "豆腐、辣椒","12.00","80"));
+        // mNewsList.add(new News("风味茄子", "茄子、麻椒、花椒","12.00","90"));
+        String disUrl = Local.getInstance().getLocalIp() + "/getDishByDistrict/" + id;
+        RequestQueue requestQueue = Volley.newRequestQueue(UserActivityStoreIndex.this);
+        JSONObject jsonObject = new JSONObject();
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, disUrl,
+                jsonObject, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject jsonObject) {
+                try {
+                    System.out.println("食堂列表");
+                    boolean state = jsonObject.getBoolean("state");
+                    if (state) {
+                        JSONArray district = (JSONArray) jsonObject.getJSONArray("data");
+                        for (int i = 0;i<district.length();i++) {
+                            JSONObject d = district.getJSONObject(i);
+                            System.out.println(d);
+                             mNewsList.add(new News(d.getString("name"),d.getString("ingredient"),Double.toString(d.getDouble("curPrice")),Integer.toString(d.getInt("sale"))));
+                        }
+                    } else {
+                        Toast.makeText(UserActivityStoreIndex.this, "加载食堂数据失败", Toast.LENGTH_SHORT).show();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        },new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                Log.d("错误", volleyError.toString());
+                Toast.makeText(UserActivityStoreIndex.this, "网络失败", Toast.LENGTH_SHORT).show();
+            }
+        });
+        requestQueue.add(jsonObjectRequest);
         mMyAdapter = new MyAdapter();
         store_ListView.setAdapter(mMyAdapter);
         LinearLayoutManager layoutManager = new LinearLayoutManager(UserActivityStoreIndex.this);
