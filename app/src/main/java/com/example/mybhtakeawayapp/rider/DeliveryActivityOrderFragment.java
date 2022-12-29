@@ -20,6 +20,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DeliveryActivityOrderFragment extends Fragment {
+    // todo 获取食堂id
+    private int districtId;
 
     public DeliveryActivityOrderFragment() {
         // Required empty public constructor
@@ -183,13 +185,24 @@ public class DeliveryActivityOrderFragment extends Fragment {
         mRecyclerView2 = mView.findViewById(R.id.order_ed_list2);
         mRecyclerView3 = mView.findViewById(R.id.order_ed_list3);
 
+//        // 构造一些数据  todo
+//        mNewsList1.add(new News("合一", "合一", "2022-10-20", "待接单"));
+//        mNewsList1.add(new News("合一", "合一", "2022-10-20", "待接单"));
+//
+//        mNewsList2.add(new News("合一", "合一", "2022-10-20", "已接单"));
+//
+//        mNewsList3.add(new News("合一", "合一", "2022-10-20", "已完成"));
         // 构造一些数据  todo
-        mNewsList1.add(new News("合一", "合一", "2022-10-20", "待接单"));
-        mNewsList1.add(new News("合一", "合一", "2022-10-20", "待接单"));
-
-        mNewsList2.add(new News("合一", "合一", "2022-10-20", "已接单"));
-
-        mNewsList3.add(new News("合一", "合一", "2022-10-20", "已完成"));
+        int N = 12;
+        for (int i = 1;i<=N;i++) {
+            mNewsList3.add(new News(Integer.toString(i%4+1), Integer.toString(i), "2022-12-30", "已完成"));
+        }
+        for (int i = N+1;i<=2*N;i++) {
+            mNewsList2.add(new News(Integer.toString(i%4+1), Integer.toString(i), "2022-12-30", "已接单"));
+        }
+        for (int i = 2*N+1;i<=3*N-5;i++) {
+            mNewsList1.add(new News(Integer.toString(i%4+1), Integer.toString(i), "2022-10-20", "待接单"));
+        }
 
 
         mMyAdapter1 = new MyAdapter1();

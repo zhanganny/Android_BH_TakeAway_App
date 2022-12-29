@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 public class Local {
     static String userLoginId;
+    static String localIp = "http://192.168.1.1:8081/";
     static int totalMoney=0;
     static int countnum=0;
     static ArrayList<UserActivityStoreIndex.News> dishes;
@@ -24,6 +25,10 @@ public class Local {
 
     public static int getTotalMoney() {
         return totalMoney;
+    }
+
+    public static String getLocalIp() {
+        return localIp;
     }
 
     public static int getCountnum() {

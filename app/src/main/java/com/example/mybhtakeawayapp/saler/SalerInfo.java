@@ -82,7 +82,7 @@ public class SalerInfo extends Fragment {
     private Button help;
     private String sellerId = Local.getUserLoginId();
     private View mView;
-    private String localIP = "http://192.168.110.79:8081/";
+    private String localIP = Local.getLocalIp();
     LineChart lc1;
     LineChart lc2;
     List<LineChartBaseBean> list1;
@@ -108,6 +108,7 @@ public class SalerInfo extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         // 个人信息和帮助的跳转链接 todo
         super.onCreate(savedInstanceState);
+
     }
 
     public void initRecycler() {

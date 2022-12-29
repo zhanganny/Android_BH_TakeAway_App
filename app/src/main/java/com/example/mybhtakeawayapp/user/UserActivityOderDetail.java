@@ -38,10 +38,10 @@ public class UserActivityOderDetail extends Activity {
     private RecyclerView order_ed_list;
     private TextView order_total_money;
     private TextView order_comment;
+
     private Button cancel_order;
     private Button pay;
     private Button back;
-
     // todo 获取id
     private String orderId;
 
