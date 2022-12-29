@@ -88,7 +88,7 @@ public class AdministratorHomeActivity extends Activity {
                     boolean state = jsonObject.getBoolean("state");
                     String msg = jsonObject.getString("msg");
                     if (state) {
-                        int userNum = jsonObject.getInt("userNum");
+                        int userNum = jsonObject.getInt("data");
                         userNumText.setText(userNum);
                     } else {
                         Toast.makeText(AdministratorHomeActivity.this, "加载买家数据失败", Toast.LENGTH_SHORT).show();
@@ -112,7 +112,7 @@ public class AdministratorHomeActivity extends Activity {
                     boolean state = jsonObject.getBoolean("state");
                     String msg = jsonObject.getString("msg");
                     if (state) {
-                        int userNum = jsonObject.getInt("providerNum");
+                        int userNum = jsonObject.getInt("data");
                         providerNumText.setText(userNum);
                     } else {
                         Toast.makeText(AdministratorHomeActivity.this, "加载商家数据失败", Toast.LENGTH_SHORT).show();
@@ -137,7 +137,7 @@ public class AdministratorHomeActivity extends Activity {
                     boolean state = jsonObject.getBoolean("state");
                     String msg = jsonObject.getString("msg");
                     if (state) {
-                        int userNum = jsonObject.getInt("riderNum");
+                        int userNum = jsonObject.getInt("data");
                         riderNumText.setText(userNum);
                     } else {
                         Toast.makeText(AdministratorHomeActivity.this, "加载骑手数据失败", Toast.LENGTH_SHORT).show();
