@@ -50,6 +50,7 @@ public class setUserInformation extends Activity {
 
 
         //页面首先获取骑手信息
+        userId="1";
         JSONObject jsonObject = new JSONObject();
         String url = localIP+"user/getInfo/" + userId;
         System.err.println(url);
@@ -118,13 +119,14 @@ public class setUserInformation extends Activity {
 
     private void set(String name, String contact, String defaultAddress, String count, String password) throws JSONException {
         JSONObject jsonObject=new JSONObject();
-        String url= Local.getInstance().getLocalIp() + "updateInfo/" + userId;
+        String url= Local.getInstance().getLocalIp() + "user/updateInfo";
+        jsonObject.put("id",userId);
         jsonObject.put("name",name);
         jsonObject.put("contact",contact);
         jsonObject.put("address",defaultAddress);
         jsonObject.put("password",password);
         RequestQueue requestQueue= Volley.newRequestQueue(setUserInformation.this);
-        JsonObjectRequest jsonObjectRequest=new JsonObjectRequest(Request.Method.GET, url, jsonObject, new Response.Listener<JSONObject>() {
+        JsonObjectRequest jsonObjectRequest=new JsonObjectRequest(Request.Method.POST, url, jsonObject, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject jsonObject) {
                 try {
