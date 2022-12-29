@@ -1,14 +1,17 @@
 package com.example.mybhtakeawayapp.user;
-
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.Request;
@@ -23,6 +26,9 @@ import com.example.mybhtakeawayapp.R;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class UserActivityOderDetail extends Activity {
     private TextView order_id;
     private TextView order_store;
@@ -33,6 +39,7 @@ public class UserActivityOderDetail extends Activity {
     // todo 获取id
     private String orderId;
 
+    @SuppressLint("CutPasteId")
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
 
@@ -43,7 +50,7 @@ public class UserActivityOderDetail extends Activity {
         order_address = findViewById(R.id.order_address);
         order_total_money = findViewById(R.id.order_total_money);
         order_comment = findViewById(R.id.order_comment);
-        order_ed_list = findViewById(R.id.order_ed_list);
+        order_ed_list = findViewById(R.id.user_order_detail);
 
         String orderUrl = Local.getLocalIp() + "indent/getInfo/" + orderId;
         RequestQueue requestQueue = Volley.newRequestQueue(UserActivityOderDetail.this);
@@ -77,9 +84,6 @@ public class UserActivityOderDetail extends Activity {
         requestQueue.add(jsonObjectRequest);
         // todo
         // 前端需要从后端获取这些信息
-
-
-
 //        pay.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View view) {
@@ -87,5 +91,63 @@ public class UserActivityOderDetail extends Activity {
 //                startActivity(intent);
 //            }
 //        });
+
+        mRecyclerView = findViewById(R.id.user_order_detail);
+        // 构造一些数据  todo
+        mNewsList.add(new News("鱼香肉丝", "2"));
+        mNewsList.add(new News("麻婆豆腐", "3"));
+        mMyAdapter = new MyAdapter();
+        mRecyclerView.setAdapter(mMyAdapter);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(UserActivityOderDetail.this);
+        mRecyclerView.setLayoutManager(layoutManager);
+    }
+
+
+    public class News {
+        public String name; // 标题
+        public String num; //内容
+        public News(String  name, String num) {
+            this.name = name;
+            this.num = num;
+        }
+    }
+
+    RecyclerView mRecyclerView;
+    MyAdapter mMyAdapter ;
+    List<News> mNewsList = new ArrayList<>();
+
+    class MyAdapter extends RecyclerView.Adapter<MyViewHoder> {
+
+        @NonNull
+        @Override
+        public MyViewHoder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+            View view = View.inflate(UserActivityOderDetail.this, R.layout.good_item, null);
+            MyViewHoder myViewHoder = new MyViewHoder(view);
+            return myViewHoder;
+        }
+
+        @SuppressLint("SetTextI18n")
+        @Override
+        public void onBindViewHolder(@NonNull MyViewHoder holder, int position) {
+            News news = mNewsList.get(position);
+            holder.mTitleTv.setText(news.name);
+            holder.mTitleContent.setText("X" + news.num);
+        }
+
+        @Override
+        public int getItemCount() {
+            return mNewsList.size();
+        }
+    }
+
+    class MyViewHoder extends RecyclerView.ViewHolder {
+        TextView mTitleTv;
+        TextView mTitleContent;
+
+        public MyViewHoder(@NonNull View itemView) {
+            super(itemView);
+            mTitleTv = itemView.findViewById(R.id.payment_good_ame);
+            mTitleContent = itemView.findViewById(R.id.payment_good_number);
+        }
     }
 }

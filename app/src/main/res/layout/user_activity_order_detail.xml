@@ -169,7 +169,7 @@
                 android:textSize="20dp"/>
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/order_ed_list"
+                android:id="@+id/user_order_detail"
                 android:background="@color/transparent"
                 android:layout_width="match_parent"
                 android:layout_marginLeft="25dp"
