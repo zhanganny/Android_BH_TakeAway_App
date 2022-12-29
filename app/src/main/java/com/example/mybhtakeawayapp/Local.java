@@ -27,7 +27,7 @@ public class Local {
     public HashMap<Orders.OrderState,ArrayList<Orders>> orders;
     private Local() {
         userLoginId = "0";
-        localIp = "http://192.168.1.1:8081/";
+        localIp = "http://192.168.1.5:8081/";
         totalMoney=0;
         countnum=0;
         dishes = new ArrayList<>();
