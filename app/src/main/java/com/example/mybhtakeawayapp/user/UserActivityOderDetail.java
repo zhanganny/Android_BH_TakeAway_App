@@ -23,6 +23,7 @@ import com.android.volley.toolbox.Volley;
 import com.example.mybhtakeawayapp.Local;
 import com.example.mybhtakeawayapp.R;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -67,6 +68,11 @@ public class UserActivityOderDetail extends Activity {
                         order_address.setText(jsonObject.getString("address"));
                         order_total_money.setText(jsonObject.getString("cost"));
                         order_comment.setText(jsonObject.getString("o_comment"));
+                        JSONArray dishes = jsonObject.getJSONArray("dishes");
+                        for (int i=0;i<dishes.length();i++){
+                            JSONObject dish = dishes.getJSONObject(i);
+                            mNewsList.add(new News(dish.getString("name"),String.valueOf(dish.getInt("num"))));
+                        }
                     } else {
                         Toast.makeText(UserActivityOderDetail.this, "加载买家数据失败", Toast.LENGTH_SHORT).show();
                     }
