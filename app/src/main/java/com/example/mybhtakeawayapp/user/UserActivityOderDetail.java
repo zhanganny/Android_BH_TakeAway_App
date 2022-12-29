@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,12 +23,14 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.mybhtakeawayapp.Local;
 import com.example.mybhtakeawayapp.R;
+import com.example.mybhtakeawayapp.saler.LineChartBaseBean;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class UserActivityOderDetail extends Activity {
@@ -37,6 +40,11 @@ public class UserActivityOderDetail extends Activity {
     private RecyclerView order_ed_list;
     private TextView order_total_money;
     private TextView order_comment;
+
+    private Button cancel_order;
+    private Button pay;
+    private Button back;
+
     // todo 获取id
     private String orderId;
 
@@ -53,7 +61,16 @@ public class UserActivityOderDetail extends Activity {
         order_comment = findViewById(R.id.order_comment);
         order_ed_list = findViewById(R.id.user_order_detail);
 
-        String orderUrl = Local.getLocalIp() + "indent/getInfo/" + orderId;
+
+        cancel_order = findViewById(R.id.cancel_order);
+        pay = findViewById(R.id.pay);
+        back = findViewById(R.id.back);
+        mRecyclerView = findViewById(R.id.user_order_detail);
+        // 构造一些数据  todo
+//        mNewsList.add(new News("鱼香肉丝", "2"));
+//        mNewsList.add(new News("麻婆豆腐", "3"));
+//        String orderUrl = Local.getLocalIp() + "indent/getInfo/" + orderId;
+        String orderUrl = "indent/getInfo/" + orderId;
         RequestQueue requestQueue = Volley.newRequestQueue(UserActivityOderDetail.this);
         JSONObject jsonObject = new JSONObject();
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, orderUrl, jsonObject, new Response.Listener<JSONObject>() {
@@ -68,10 +85,10 @@ public class UserActivityOderDetail extends Activity {
                         order_address.setText(jsonObject.getString("address"));
                         order_total_money.setText(jsonObject.getString("cost"));
                         order_comment.setText(jsonObject.getString("o_comment"));
-                        JSONArray dishes = jsonObject.getJSONArray("dishes");
-                        for (int i=0;i<dishes.length();i++){
+                        JSONArray dishes = (JSONArray) jsonObject.getJSONArray("dishes");
+                        for (int i = 0; i < dishes.length(); i++) {
                             JSONObject dish = dishes.getJSONObject(i);
-                            mNewsList.add(new News(dish.getString("name"),String.valueOf(dish.getInt("num"))));
+                            mNewsList.add(new News(dish.getString("name"),Integer.toString(dish.getInt("sum"))));
                         }
                     } else {
                         Toast.makeText(UserActivityOderDetail.this, "加载买家数据失败", Toast.LENGTH_SHORT).show();
@@ -90,18 +107,56 @@ public class UserActivityOderDetail extends Activity {
         requestQueue.add(jsonObjectRequest);
         // todo
         // 前端需要从后端获取这些信息
-//        pay.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Intent intent = new Intent(UserActivityShoppingCart.this, UserActivityOrderEnsure.class);
-//                startActivity(intent);
-//            }
-//        });
+        pay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(UserActivityOderDetail.this, UserActivityOrderStatus.class);
+                startActivity(intent);
+                finish();
+            }
+        });
 
-        mRecyclerView = findViewById(R.id.user_order_detail);
-        // 构造一些数据  todo
-        mNewsList.add(new News("鱼香肉丝", "2"));
-        mNewsList.add(new News("麻婆豆腐", "3"));
+        cancel_order.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String orderUrl = "indent/cancel/" + orderId;
+                RequestQueue requestQueue = Volley.newRequestQueue(UserActivityOderDetail.this);
+                JSONObject jsonObject = new JSONObject();
+                JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, orderUrl, jsonObject, new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject jsonObject) {
+                        try {
+                            boolean state = jsonObject.getBoolean("state");
+                            String msg = jsonObject.getString("msg");
+                            if (state) {
+                                Toast.makeText(UserActivityOderDetail.this, "取消成功", Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(UserActivityOderDetail.this, "取消失败", Toast.LENGTH_SHORT).show();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError volleyError) {
+                        Log.d("错误", volleyError.toString());
+                        Toast.makeText(UserActivityOderDetail.this, "网络失败", Toast.LENGTH_SHORT).show();
+                    }
+                });
+                requestQueue.add(jsonObjectRequest);
+                finish();
+            }
+        });
+
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+
+
         mMyAdapter = new MyAdapter();
         mRecyclerView.setAdapter(mMyAdapter);
         LinearLayoutManager layoutManager = new LinearLayoutManager(UserActivityOderDetail.this);
