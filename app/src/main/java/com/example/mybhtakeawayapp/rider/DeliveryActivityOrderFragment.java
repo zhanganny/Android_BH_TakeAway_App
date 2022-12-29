@@ -1,23 +1,41 @@
 package com.example.mybhtakeawayapp.rider;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+import com.example.mybhtakeawayapp.Local;
 import com.example.mybhtakeawayapp.R;
+import com.example.mybhtakeawayapp.admin.AdministratorHomeActivity;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class DeliveryActivityOrderFragment extends Fragment {
+    // todo 获取食堂id
+    private int districtId;
+
 
     public DeliveryActivityOrderFragment() {
         // Required empty public constructor
@@ -151,14 +169,51 @@ public class DeliveryActivityOrderFragment extends Fragment {
         mRecyclerView2 = mView.findViewById(R.id.order_ed_list2);
         mRecyclerView3 = mView.findViewById(R.id.order_ed_list3);
 
-        // 构造一些数据  todo
-        mNewsList1.add(new News("合一", "合一", "2022-10-20", "待接单"));
-        mNewsList1.add(new News("合一", "合一", "2022-10-20", "待接单"));
+//        // 构造一些数据  todo
+//        mNewsList1.add(new News("合一", "合一", "2022-10-20", "待接单"));
+//        mNewsList1.add(new News("合一", "合一", "2022-10-20", "待接单"));
+//
+//        mNewsList2.add(new News("合一", "合一", "2022-10-20", "已接单"));
+//
+//        mNewsList3.add(new News("合一", "合一", "2022-10-20", "已完成"));
 
-        mNewsList2.add(new News("合一", "合一", "2022-10-20", "已接单"));
-
-        mNewsList3.add(new News("合一", "合一", "2022-10-20", "已完成"));
-
+        JSONObject jsonObject = new JSONObject();
+        String url = Local.getLocalIp() + "";
+        RequestQueue requestQueue = Volley.newRequestQueue(requireActivity());
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, jsonObject, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject jsonObject) {
+                try {
+                    JSONArray list1 = (JSONArray) jsonObject.getJSONArray("NA");
+                    JSONArray list2 = (JSONArray) jsonObject.getJSONArray("AC");
+                    JSONArray list3 = (JSONArray) jsonObject.getJSONArray("FINISH");
+                    for (int i = 0;i< list1.length();i++) {
+                        JSONObject indent = list1.getJSONObject(i);
+                        String status = indent.getString("state");
+                        mNewsList1.add(new News(indent.getString("did"),indent.getString("oid"),indent.getString("time"), status));
+                    }
+                    for (int i = 0;i< list2.length();i++) {
+                        JSONObject indent = list2.getJSONObject(i);
+                        String status = indent.getString("state");
+                        mNewsList2.add(new News(indent.getString("did"),indent.getString("oid"),indent.getString("time"), status));
+                    }
+                    for (int i = 0;i< list3.length();i++) {
+                        JSONObject indent = list3.getJSONObject(i);
+                        String status = indent.getString("state");
+                        mNewsList3.add(new News(indent.getString("did"),indent.getString("oid"),indent.getString("time"), status));
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                Log.d("错误", volleyError.toString());
+                Toast.makeText(requireActivity(), "网络失败", Toast.LENGTH_SHORT).show();
+            }
+        });
+        requestQueue.add(jsonObjectRequest);
 
         mMyAdapter1 = new MyAdapter1();
         mRecyclerView1.setAdapter(mMyAdapter1);
