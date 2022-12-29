@@ -188,13 +188,13 @@ public class SalerInfo extends Fragment {
             }
         });
         requestQueue.add(jsonObjectRequest);
-//        list1.add(new LineChartBaseBean("周一", 3.8f));
-//        list1.add(new LineChartBaseBean("周二", 3.8f));
-//        list1.add(new LineChartBaseBean("周三", 6.8f));
-//        list1.add(new LineChartBaseBean("周四", 7.8f));
-//        list1.add(new LineChartBaseBean("周五", 5.4f));
-//        list1.add(new LineChartBaseBean("周六", 0f));
-//        list1.add(new LineChartBaseBean("周日", 6f));
+        list1.add(new LineChartBaseBean("周一", 10f));
+        list1.add(new LineChartBaseBean("周二", 7.5f));
+        list1.add(new LineChartBaseBean("周三", 12f));
+        list1.add(new LineChartBaseBean("周四", 15f));
+        list1.add(new LineChartBaseBean("周五", 10f));
+        list1.add(new LineChartBaseBean("周六", 0f));
+        list1.add(new LineChartBaseBean("周日", 6f));
         String orderNumUrl = localIP + "provider/getOrderNum/" + sellerId;
         list2= new ArrayList<>();
         jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, orderNumUrl,
@@ -225,13 +225,13 @@ public class SalerInfo extends Fragment {
             }
         });
         requestQueue.add(jsonObjectRequest);
-//        list2.add(new LineChartBaseBean("周一", 3.8f));
-//        list2.add(new LineChartBaseBean("周二", 3.8f));
-//        list2.add(new LineChartBaseBean("周三", 6.8f));
-//        list2.add(new LineChartBaseBean("周四", 7.8f));
-//        list2.add(new LineChartBaseBean("周五", 5.4f));
-//        list2.add(new LineChartBaseBean("周六", 0f));
-//        list2.add(new LineChartBaseBean("周日", 6f));
+        list2.add(new LineChartBaseBean("周一", 3f));
+        list2.add(new LineChartBaseBean("周二", 4f));
+        list2.add(new LineChartBaseBean("周三", 5f));
+        list2.add(new LineChartBaseBean("周四", 5f));
+        list2.add(new LineChartBaseBean("周五", 4f));
+        list2.add(new LineChartBaseBean("周六", 0f));
+        list2.add(new LineChartBaseBean("周日", 0f));
 
     }
 
