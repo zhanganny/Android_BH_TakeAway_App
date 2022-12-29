@@ -89,6 +89,7 @@
                     />
 
                 <android.widget.Button
+                    android:id="@+id/delivery_erweima"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:background="@drawable/card"

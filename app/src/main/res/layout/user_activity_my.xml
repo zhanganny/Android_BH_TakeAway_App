@@ -112,8 +112,11 @@
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
                 android:layout_weight="1"
-                android:background="@color/white"
-                android:divider="@null"
+                android:background="@drawable/border"
+                android:paddingTop="10dp"
+                android:paddingRight="10dp"
+                android:paddingLeft="10dp"
+                android:paddingBottom="10dp"                android:divider="@null"
                 android:scrollbars="vertical" />
 
         </LinearLayout>

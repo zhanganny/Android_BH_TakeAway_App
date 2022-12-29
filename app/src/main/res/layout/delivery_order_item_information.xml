@@ -206,6 +206,10 @@
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 android:divider="@null"
+                android:paddingTop="10dp"
+                android:paddingRight="10dp"
+                android:paddingLeft="10dp"
+                android:paddingBottom="10dp"
                 android:scrollbars="vertical" />
 
             <LinearLayout

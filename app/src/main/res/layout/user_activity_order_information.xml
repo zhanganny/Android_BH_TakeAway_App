@@ -30,14 +30,6 @@
                     android:scaleType="fitXY"
                     android:background="@drawable/back" />
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/store_search"
-                    android:layout_width="300dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="10dp"
-                    android:background="@drawable/background_round_corner"
-                    android:hint="在本店铺中搜索菜品"/>
-
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
