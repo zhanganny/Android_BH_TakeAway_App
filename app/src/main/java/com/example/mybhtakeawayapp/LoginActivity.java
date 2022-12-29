@@ -18,6 +18,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.mybhtakeawayapp.admin.AdministratorHomeActivity;
 import com.example.mybhtakeawayapp.rider.DeliveryActivityMy;
+import com.example.mybhtakeawayapp.saler.SellerActivityHome;
 import com.example.mybhtakeawayapp.user.UserActivityHome;
 
 import org.json.JSONException;
@@ -51,9 +52,6 @@ public class LoginActivity extends BaseActivity {
         loginByStore = findViewById(R.id.loginByStore);
         loginByUser = findViewById(R.id.loginByUser);
 
-        Intent intent = new Intent(LoginActivity.this, UserActivityHome.class);
-        startActivity(intent);
-
         lg_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -65,48 +63,67 @@ public class LoginActivity extends BaseActivity {
                 boolean isStore = loginByStore.isChecked();
                 boolean isUser = loginByUser.isChecked();
 
-                JSONObject jsonObject = new JSONObject();
-                String url = localIP+"user/login/" + username + "/" + password;
-                RequestQueue requestQueue = Volley.newRequestQueue(LoginActivity.this);
-                JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, jsonObject, new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject jsonObject) {
-                        try {
-                            boolean state = jsonObject.getBoolean("state");
-                            String msg = jsonObject.getString("msg");
-                            System.out.println(state);
-                            Log.d("msg", msg);
-                            if (state) {
-                                if (isAdmin) {
-                                    Intent intent = new Intent(LoginActivity.this, UserActivityHome.class);
-                                    startActivity(intent);
-                                    finish();
-                                } else if (isUser) {
-                                    Intent intent = new Intent(LoginActivity.this, AdministratorHomeActivity.class);
-                                    startActivity(intent);
-                                    finish();
-                                } else if (isStore) {
-                                    Intent intent = new Intent(LoginActivity.this, DeliveryActivityMy.class);
-                                    startActivity(intent);
-                                    finish();
-                                } else if (isRider) {
-                                    return;
-                                }
-                            } else {
-                                Toast.makeText(LoginActivity.this, msg, Toast.LENGTH_SHORT).show();
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError volleyError) {
-                        Log.d("错误", volleyError.toString());
-                        Toast.makeText(LoginActivity.this, "网络失败", Toast.LENGTH_SHORT).show();
-                    }
-                });
-                requestQueue.add(jsonObjectRequest);
+
+                if (isAdmin) {
+                    Intent intent = new Intent(LoginActivity.this, AdministratorHomeActivity.class);
+                    startActivity(intent);
+                    finish();
+                } else if (isUser) {
+                    Intent intent = new Intent(LoginActivity.this, UserActivityHome.class);
+                    startActivity(intent);
+                    finish();
+                } else if (isStore) {
+                    Intent intent = new Intent(LoginActivity.this, SellerActivityHome.class);
+                    startActivity(intent);
+                    finish();
+                } else if (isRider) {
+                    Intent intent = new Intent(LoginActivity.this, DeliveryActivityMy.class);
+                    startActivity(intent);
+                    finish();
+                }
+//                JSONObject jsonObject = new JSONObject();
+//                String url = localIP+"user/login/" + username + "/" + password;
+//                RequestQueue requestQueue = Volley.newRequestQueue(LoginActivity.this);
+//                JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, jsonObject, new Response.Listener<JSONObject>() {
+//                    @Override
+//                    public void onResponse(JSONObject jsonObject) {
+//                        try {
+//                            boolean state = jsonObject.getBoolean("state");
+//                            state = true;
+//                            String msg = jsonObject.getString("msg");
+//                            System.out.println(state);
+//                            Log.d("msg", msg);
+//                            if (state) {
+//                                if (isAdmin) {
+//                                    Intent intent = new Intent(LoginActivity.this, UserActivityHome.class);
+//                                    startActivity(intent);
+//                                    finish();
+//                                } else if (isUser) {
+//                                    Intent intent = new Intent(LoginActivity.this, AdministratorHomeActivity.class);
+//                                    startActivity(intent);
+//                                    finish();
+//                                } else if (isStore) {
+//                                    Intent intent = new Intent(LoginActivity.this, DeliveryActivityMy.class);
+//                                    startActivity(intent);
+//                                    finish();
+//                                } else if (isRider) {
+//                                    return;
+//                                }
+//                            } else {
+//                                Toast.makeText(LoginActivity.this, msg, Toast.LENGTH_SHORT).show();
+//                            }
+//                        } catch (JSONException e) {
+//                            e.printStackTrace();
+//                        }
+//                    }
+//                }, new Response.ErrorListener() {
+//                    @Override
+//                    public void onErrorResponse(VolleyError volleyError) {
+//                        Log.d("错误", volleyError.toString());
+//                        Toast.makeText(LoginActivity.this, "网络失败", Toast.LENGTH_SHORT).show();
+//                    }
+//                });
+//                requestQueue.add(jsonObjectRequest);
             }
         });
 

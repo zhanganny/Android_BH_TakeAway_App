@@ -1,4 +1,4 @@
-package com.example.mybhtakeawayapp.rider;
+package com.example.mybhtakeawayapp.saler;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
@@ -9,19 +9,18 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.mybhtakeawayapp.saler.SellerOrderItemFragment;
 import com.example.mybhtakeawayapp.R;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class DeliveryActivityOrderFragment extends Fragment {
-
-    public DeliveryActivityOrderFragment() {
+public class SellerOrderItemFragment extends Fragment {
+    public SellerOrderItemFragment() {
         // Required empty public constructor
     }
 
@@ -42,29 +41,29 @@ public class DeliveryActivityOrderFragment extends Fragment {
     RecyclerView mRecyclerView1;
     RecyclerView mRecyclerView2;
     RecyclerView mRecyclerView3;
-    MyAdapter1 mMyAdapter1 ;
-    MyAdapter2 mMyAdapter2 ;
-    MyAdapter3 mMyAdapter3 ;
-    List<News> mNewsList1 = new ArrayList<>();
-    List<News> mNewsList2 = new ArrayList<>();
-    List<News> mNewsList3 = new ArrayList<>();
+    SellerOrderItemFragment.MyAdapter1 mMyAdapter1 ;
+    SellerOrderItemFragment.MyAdapter2 mMyAdapter2 ;
+    SellerOrderItemFragment.MyAdapter3 mMyAdapter3 ;
+    List<SellerOrderItemFragment.News> mNewsList1 = new ArrayList<>();
+    List<SellerOrderItemFragment.News> mNewsList2 = new ArrayList<>();
+    List<SellerOrderItemFragment.News> mNewsList3 = new ArrayList<>();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
 
-    class MyAdapter1 extends RecyclerView.Adapter<MyViewHoder> {
+    class MyAdapter1 extends RecyclerView.Adapter<SellerOrderItemFragment.MyViewHoder> {
         @NonNull
         @Override
-        public MyViewHoder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        public SellerOrderItemFragment.MyViewHoder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
             View view = View.inflate(getActivity(), R.layout.order_item, null);
-            MyViewHoder myViewHoder = new MyViewHoder(view);
+            SellerOrderItemFragment.MyViewHoder myViewHoder = new SellerOrderItemFragment.MyViewHoder(view);
             return myViewHoder;
         }
         @Override
-        public void onBindViewHolder(@NonNull MyViewHoder holder, int position) {
-            News news = mNewsList1.get(position);
+        public void onBindViewHolder(@NonNull SellerOrderItemFragment.MyViewHoder holder, int position) {
+            SellerOrderItemFragment.News news = mNewsList1.get(position);
             holder.order_name.setText(news.order_name);
             holder.order_status.setText(news.order_statement);
             holder.order_time.setText(news.order_time);
@@ -78,17 +77,17 @@ public class DeliveryActivityOrderFragment extends Fragment {
         }
     }
 
-    class MyAdapter2 extends RecyclerView.Adapter<MyViewHoder2> {
+    class MyAdapter2 extends RecyclerView.Adapter<SellerOrderItemFragment.MyViewHoder2> {
         @NonNull
         @Override
-        public MyViewHoder2 onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        public SellerOrderItemFragment.MyViewHoder2 onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
             View view = View.inflate(getActivity(), R.layout.order_item, null);
-            MyViewHoder2 myViewHoder2 = new MyViewHoder2(view);
+            SellerOrderItemFragment.MyViewHoder2 myViewHoder2 = new SellerOrderItemFragment.MyViewHoder2(view);
             return myViewHoder2;
         }
         @Override
-        public void onBindViewHolder(@NonNull MyViewHoder2 holder, int position) {
-            News news = mNewsList2.get(position);
+        public void onBindViewHolder(@NonNull SellerOrderItemFragment.MyViewHoder2 holder, int position) {
+            SellerOrderItemFragment.News news = mNewsList2.get(position);
             holder.order_name.setText(news.order_name);
             holder.order_status.setText(news.order_statement);
             holder.order_time.setText(news.order_time);
@@ -103,17 +102,17 @@ public class DeliveryActivityOrderFragment extends Fragment {
     }
 
 
-    class MyAdapter3 extends RecyclerView.Adapter<MyViewHoder3> {
+    class MyAdapter3 extends RecyclerView.Adapter<SellerOrderItemFragment.MyViewHoder3> {
         @NonNull
         @Override
-        public MyViewHoder3 onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        public SellerOrderItemFragment.MyViewHoder3 onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
             View view = View.inflate(getActivity(), R.layout.order_item, null);
-            MyViewHoder3 myViewHoder3 = new MyViewHoder3(view);
+            SellerOrderItemFragment.MyViewHoder3 myViewHoder3 = new SellerOrderItemFragment.MyViewHoder3(view);
             return myViewHoder3;
         }
         @Override
-        public void onBindViewHolder(@NonNull MyViewHoder3 holder, int position) {
-            News news = mNewsList3.get(position);
+        public void onBindViewHolder(@NonNull SellerOrderItemFragment.MyViewHoder3 holder, int position) {
+            SellerOrderItemFragment.News news = mNewsList3.get(position);
             holder.order_name.setText(news.order_name);
             holder.order_status.setText(news.order_statement);
             holder.order_time.setText(news.order_time);
@@ -184,25 +183,25 @@ public class DeliveryActivityOrderFragment extends Fragment {
         mRecyclerView3 = mView.findViewById(R.id.order_ed_list3);
 
         // 构造一些数据  todo
-        mNewsList1.add(new News("合一", "合一", "2022-10-20", "待接单"));
-        mNewsList1.add(new News("合一", "合一", "2022-10-20", "待接单"));
+        mNewsList1.add(new SellerOrderItemFragment.News("合一", "合一", "2022-10-20", "待接单"));
+        mNewsList1.add(new SellerOrderItemFragment.News("合一", "合一", "2022-10-20", "待接单"));
 
-        mNewsList2.add(new News("合一", "合一", "2022-10-20", "已接单"));
+        mNewsList2.add(new SellerOrderItemFragment.News("合一", "合一", "2022-10-20", "已接单"));
 
-        mNewsList3.add(new News("合一", "合一", "2022-10-20", "已完成"));
+        mNewsList3.add(new SellerOrderItemFragment.News("合一", "合一", "2022-10-20", "已完成"));
 
 
-        mMyAdapter1 = new MyAdapter1();
+        mMyAdapter1 = new SellerOrderItemFragment.MyAdapter1();
         mRecyclerView1.setAdapter(mMyAdapter1);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         mRecyclerView1.setLayoutManager(layoutManager);
 
-        mMyAdapter2 = new MyAdapter2();
+        mMyAdapter2 = new SellerOrderItemFragment.MyAdapter2();
         mRecyclerView2.setAdapter(mMyAdapter2);
         LinearLayoutManager layoutManager2 = new LinearLayoutManager(getActivity());
         mRecyclerView2.setLayoutManager(layoutManager2);
 
-        mMyAdapter3 = new MyAdapter3();
+        mMyAdapter3 = new SellerOrderItemFragment.MyAdapter3();
         mRecyclerView3.setAdapter(mMyAdapter3);
         LinearLayoutManager layoutManager3 = new LinearLayoutManager(getActivity());
         mRecyclerView3.setLayoutManager(layoutManager3);

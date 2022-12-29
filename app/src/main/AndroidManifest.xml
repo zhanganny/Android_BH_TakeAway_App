@@ -42,6 +42,7 @@
             android:exported="true"
             android:label="登录页"
             android:launchMode="singleTask">
+
         </activity>
         <activity
             android:name=".RegisterActivity"
@@ -80,6 +81,16 @@
 
         </activity>
         <activity
+            android:name=".saler.SellerActivityHome"
+            android:exported="true"
+            android:label="商家主页"
+            android:launchMode="singleTask">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
             android:name=".rider.DeliveryActivityMy"
             android:exported="true"
             android:label="骑手主页"
@@ -96,10 +107,7 @@
         <activity android:name=".user.UserActivityOderDetail"
             android:exported="true"
             android:launchMode="singleTask">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+
         </activity>
         <activity android:name=".user.UserActivityOrderStatus"
             android:exported="true"

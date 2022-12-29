@@ -67,7 +67,7 @@
         </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/store_ListView"
+            android:id="@+id/cart_store_ListView"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
