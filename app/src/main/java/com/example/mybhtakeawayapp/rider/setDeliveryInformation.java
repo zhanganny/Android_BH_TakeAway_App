@@ -25,7 +25,7 @@ import org.json.JSONObject;
 
 
 public class setDeliveryInformation extends Activity {
-    private String localIP = Local.getLocalIp();
+    private String localIP = Local.getInstance().getLocalIp();
     private int riderId = 19375203;
     private TextView riderUserName;
     private TextView riderContact;

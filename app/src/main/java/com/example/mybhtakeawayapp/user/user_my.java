@@ -64,7 +64,7 @@ public class user_my extends Fragment {
     private ImageView user_saomiao;
     private View mView;
     private Button changeUserInfo = null;
-    private String sellerId = Local.getUserLoginId();
+    private String sellerId = Local.getInstance().getUserLoginId();
     Dialog dia;
 
 

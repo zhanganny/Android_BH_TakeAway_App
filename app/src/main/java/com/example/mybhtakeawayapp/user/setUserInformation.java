@@ -33,7 +33,7 @@ public class setUserInformation extends Activity {
     private TextView userCount;
     private TextView userPassword;
     private Button pay;
-    private String userId = Local.getUserLoginId();
+    private String userId = Local.getInstance().getUserLoginId();
 
 
     @Override
@@ -80,7 +80,7 @@ public class setUserInformation extends Activity {
 
     private void set(String name, String contact, String defaultAddress, String email, String count, String password) throws JSONException {
         JSONObject jsonObject=new JSONObject();
-        String url= Local.getLocalIp() + "updateInfo/" + userId;
+        String url= Local.getInstance().getLocalIp() + "updateInfo/" + userId;
         jsonObject.put("name",name);
         jsonObject.put("contact",contact);
         jsonObject.put("address",defaultAddress);
