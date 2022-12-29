@@ -59,6 +59,7 @@ public class setDeliveryInformation extends Activity {
                     boolean state = jsonObject.getBoolean("state");
                     String msg = jsonObject.getString("msg");
                     if (state) {
+                        jsonObject=jsonObject.getJSONObject("data");
                         String userName = jsonObject.getString("userName");
                         String contact = jsonObject.getString("contact");
                         String accountName = jsonObject.getString("userName");

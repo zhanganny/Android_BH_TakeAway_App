@@ -27,6 +27,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.mybhtakeawayapp.Local;
+import com.example.mybhtakeawayapp.Local;
 import com.example.mybhtakeawayapp.R;
 import com.example.mybhtakeawayapp.saler.LineChartBaseBean;
 import com.example.mybhtakeawayapp.user.UserActivityStoreIndex;
@@ -81,6 +82,9 @@ public class UserActivityHomeFragment extends Fragment {
             holder.go_in.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+
+                    //
+                    Local.storeId = Local.storeName2Id.get((String) holder.order_name.getText());
                     Intent intent = new Intent(getActivity(), UserActivityStoreIndex.class);
                     startActivity(intent);
                 }
@@ -115,8 +119,8 @@ public class UserActivityHomeFragment extends Fragment {
         View mView = inflater.inflate(R.layout.user_activity_home ,container, false);
         sys_img = mView.findViewById(R.id.sys_img);
 
-        Drawable drawable = getResources().getDrawable(R.drawable.app_icon_your_company);
-        sys_img.setImageDrawable(drawable);
+        //Drawable drawable = getResources().getDrawable(R.drawable.app_icon_your_company);
+        //sys_img.setImageDrawable(drawable);
 
         mRecyclerView1 = mView.findViewById(R.id.user_home_store_list);
 

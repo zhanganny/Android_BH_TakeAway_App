@@ -4,6 +4,7 @@ import static com.example.mybhtakeawayapp.Local.addTotalMoney;
 import static com.example.mybhtakeawayapp.Local.getTotalMoney;
 import static com.example.mybhtakeawayapp.Local.shopingcar;
 import static com.example.mybhtakeawayapp.Local.shopingcaritem;
+import static com.example.mybhtakeawayapp.Local.storeId;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -37,7 +38,7 @@ public class UserActivityStoreIndex extends Activity {
     private TextView total_money;
     private Button cart;
 
-    public class News {
+    public static class News {
         // todo
         public String good_name; // 标题
         public String good_composition;
@@ -174,6 +175,9 @@ public class UserActivityStoreIndex extends Activity {
         // 链接recyclerview todo
         store_ListView = findViewById(R.id.store_ListView);
         // 构造一些数据 todo
+
+        // todo Local.storeId;
+        String id = Local.storeId;
         mNewsList.add(new News("麻婆豆腐", "豆腐、辣椒","12.00","80"));
         mNewsList.add(new News("风味茄子", "茄子、麻椒、花椒","12.00","90"));
         mMyAdapter = new MyAdapter();

@@ -1,5 +1,6 @@
 package com.example.mybhtakeawayapp;
 
+
 import android.os.Build;
 
 import com.example.mybhtakeawayapp.user.UserActivityStoreIndex;
@@ -10,10 +11,14 @@ import java.util.HashMap;
 
 public class Local {
 
+
+
     static ArrayList<UserActivityStoreIndex.News> dishes;
     private static Local instance;
     String userLoginId;
     String localIp;
+    public static HashMap<String, String> storeName2Id = new HashMap<>();
+    public static String storeId;
     public static HashMap<String,Integer> shopingcar = new HashMap<>();
     public static HashMap<String, UserActivityStoreIndex.News> shopingcaritem = new HashMap<>();
     public static float totalMoney = 0;
@@ -24,6 +29,9 @@ public class Local {
     public static float getTotalMoney() {
         return totalMoney;
     }
+
+
+
     public HashMap<Orders.OrderState,ArrayList<Orders>> orders;
     private Local() {
         userLoginId = "0";
