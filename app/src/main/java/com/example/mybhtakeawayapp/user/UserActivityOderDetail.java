@@ -66,11 +66,9 @@ public class UserActivityOderDetail extends Activity {
         pay = findViewById(R.id.pay);
         back = findViewById(R.id.back);
         mRecyclerView = findViewById(R.id.user_order_detail);
-        // 构造一些数据  todo
-//        mNewsList.add(new News("鱼香肉丝", "2"));
-//        mNewsList.add(new News("麻婆豆腐", "3"));
-//        String orderUrl = Local.getLocalIp() + "indent/getInfo/" + orderId;
-        String orderUrl = "indent/getInfo/" + orderId;
+
+        String orderUrl = Local.getLocalIp() + "indent/getInfo/" + orderId;
+//        String orderUrl = "indent/getInfo/" + orderId;
         RequestQueue requestQueue = Volley.newRequestQueue(UserActivityOderDetail.this);
         JSONObject jsonObject = new JSONObject();
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, orderUrl, jsonObject, new Response.Listener<JSONObject>() {
