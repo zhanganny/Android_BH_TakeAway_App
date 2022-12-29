@@ -169,51 +169,55 @@ public class DeliveryActivityOrderFragment extends Fragment {
         mRecyclerView2 = mView.findViewById(R.id.order_ed_list2);
         mRecyclerView3 = mView.findViewById(R.id.order_ed_list3);
 
-//        // 构造一些数据  todo
-//        mNewsList1.add(new News("合一", "合一", "2022-10-20", "待接单"));
-//        mNewsList1.add(new News("合一", "合一", "2022-10-20", "待接单"));
-//
-//        mNewsList2.add(new News("合一", "合一", "2022-10-20", "已接单"));
-//
-//        mNewsList3.add(new News("合一", "合一", "2022-10-20", "已完成"));
+        // 构造一些数据  todo
+        int N = 12;
+        for (int i = 1;i<=N;i++) {
+            mNewsList3.add(new News(Integer.toString(i%4+1), Integer.toString(i), "2022-12-30", "已完成"));
+        }
+        for (int i = N+1;i<=2*N;i++) {
+            mNewsList2.add(new News(Integer.toString(i%4+1), Integer.toString(i), "2022-12-30", "已接单"));
+        }
+        for (int i = 2*N+1;i<=3*N-5;i++) {
+            mNewsList1.add(new News(Integer.toString(i%4+1), Integer.toString(i), "2022-10-20", "待接单"));
+        }
 
-        JSONObject jsonObject = new JSONObject();
-        String url = Local.getLocalIp() + "";
-        RequestQueue requestQueue = Volley.newRequestQueue(requireActivity());
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, jsonObject, new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject jsonObject) {
-                try {
-                    JSONArray list1 = (JSONArray) jsonObject.getJSONArray("NA");
-                    JSONArray list2 = (JSONArray) jsonObject.getJSONArray("AC");
-                    JSONArray list3 = (JSONArray) jsonObject.getJSONArray("FINISH");
-                    for (int i = 0;i< list1.length();i++) {
-                        JSONObject indent = list1.getJSONObject(i);
-                        String status = indent.getString("state");
-                        mNewsList1.add(new News(indent.getString("did"),indent.getString("oid"),indent.getString("time"), status));
-                    }
-                    for (int i = 0;i< list2.length();i++) {
-                        JSONObject indent = list2.getJSONObject(i);
-                        String status = indent.getString("state");
-                        mNewsList2.add(new News(indent.getString("did"),indent.getString("oid"),indent.getString("time"), status));
-                    }
-                    for (int i = 0;i< list3.length();i++) {
-                        JSONObject indent = list3.getJSONObject(i);
-                        String status = indent.getString("state");
-                        mNewsList3.add(new News(indent.getString("did"),indent.getString("oid"),indent.getString("time"), status));
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError volleyError) {
-                Log.d("错误", volleyError.toString());
-                Toast.makeText(requireActivity(), "网络失败", Toast.LENGTH_SHORT).show();
-            }
-        });
-        requestQueue.add(jsonObjectRequest);
+//        JSONObject jsonObject = new JSONObject();
+//        String url = Local.getLocalIp() + "";
+//        RequestQueue requestQueue = Volley.newRequestQueue(requireActivity());
+//        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, jsonObject, new Response.Listener<JSONObject>() {
+//            @Override
+//            public void onResponse(JSONObject jsonObject) {
+//                try {
+//                    JSONArray list1 = (JSONArray) jsonObject.getJSONArray("NA");
+//                    JSONArray list2 = (JSONArray) jsonObject.getJSONArray("AC");
+//                    JSONArray list3 = (JSONArray) jsonObject.getJSONArray("FINISH");
+//                    for (int i = 0;i< list1.length();i++) {
+//                        JSONObject indent = list1.getJSONObject(i);
+//                        String status = indent.getString("state");
+//                        mNewsList1.add(new News(indent.getString("did"),indent.getString("oid"),indent.getString("time"), status));
+//                    }
+//                    for (int i = 0;i< list2.length();i++) {
+//                        JSONObject indent = list2.getJSONObject(i);
+//                        String status = indent.getString("state");
+//                        mNewsList2.add(new News(indent.getString("did"),indent.getString("oid"),indent.getString("time"), status));
+//                    }
+//                    for (int i = 0;i< list3.length();i++) {
+//                        JSONObject indent = list3.getJSONObject(i);
+//                        String status = indent.getString("state");
+//                        mNewsList3.add(new News(indent.getString("did"),indent.getString("oid"),indent.getString("time"), status));
+//                    }
+//                } catch (JSONException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//        }, new Response.ErrorListener() {
+//            @Override
+//            public void onErrorResponse(VolleyError volleyError) {
+//                Log.d("错误", volleyError.toString());
+//                Toast.makeText(requireActivity(), "网络失败", Toast.LENGTH_SHORT).show();
+//            }
+//        });
+//        requestQueue.add(jsonObjectRequest);
 
         mMyAdapter1 = new MyAdapter1();
         mRecyclerView1.setAdapter(mMyAdapter1);
