@@ -2,7 +2,7 @@ package com.example.mybhtakeawayapp;
 
 public class Local {
     static String userLoginId;
-    static String localIp = "http://192.168.110.79:8081/";
+    static String localIp = "http://192.168.1.1:8081/";
 
     public static String getUserLoginId() {
         return userLoginId;

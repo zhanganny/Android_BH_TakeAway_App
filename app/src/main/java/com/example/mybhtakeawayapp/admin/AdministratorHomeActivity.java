@@ -21,6 +21,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.mybhtakeawayapp.Local;
 import com.example.mybhtakeawayapp.LoginActivity;
 import com.example.mybhtakeawayapp.R;
 import com.example.mybhtakeawayapp.RegisterActivity;
@@ -33,7 +34,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AdministratorHomeActivity extends Activity {
-    private String localIP = "http://10.0.2.2:8081/";
+    private String localIP = Local.getLocalIp();
     private Button addSystemInformation;
     private TextView userNumText;
     private TextView providerNumText;
