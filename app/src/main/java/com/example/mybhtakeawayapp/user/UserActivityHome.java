@@ -12,7 +12,6 @@ import android.view.MenuItem;
 import android.widget.FrameLayout;
 
 import com.example.mybhtakeawayapp.R;
-import com.example.mybhtakeawayapp.UserActivityHomeFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class UserActivityHome extends AppCompatActivity {

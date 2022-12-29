@@ -43,7 +43,6 @@ public class setUserInformation extends Activity {
         userName = findViewById(R.id.userName);
         userContact = findViewById(R.id.userContact);
         userDefaultAddress = findViewById(R.id.userDefaultAddress);
-        userEmail = findViewById(R.id.userEmail);
         userCount = findViewById(R.id.userCount);
         userPassword = findViewById(R.id.userPassword);
         pay = findViewById(R.id.pay);

@@ -1,4 +1,4 @@
-package com.example.mybhtakeawayapp;
+package com.example.mybhtakeawayapp.user;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -18,6 +18,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.mybhtakeawayapp.Local;
 import com.example.mybhtakeawayapp.R;
 import com.example.mybhtakeawayapp.user.UserActivityStoreIndex;
 
@@ -36,8 +37,8 @@ public class UserActivityHomeFragment extends Fragment {
             this.order_name = name;
             this.order_store_image = store;
         }
-
     }
+
     RecyclerView mRecyclerView1;
     MyAdapter1 mMyAdapter1 ;
     List<News> mNewsList1 = new ArrayList<>();
@@ -67,6 +68,9 @@ public class UserActivityHomeFragment extends Fragment {
             holder.go_in.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+
+                    //
+                    Local.storeId = Local.storeName2Id.get((String) holder.order_name.getText());
                     Intent intent = new Intent(getActivity(), UserActivityStoreIndex.class);
                     startActivity(intent);
                 }
@@ -109,8 +113,10 @@ public class UserActivityHomeFragment extends Fragment {
 
 
         // 构造一些数据  todo
-        mNewsList1.add(new News("合一", "合一"));
-        mNewsList1.add(new News("合一", "合一"));
+        Local.storeName2Id.put("合一食堂","合一Id");
+        Local.storeName2Id.put("学二食堂","学二Id");
+        mNewsList1.add(new News("xx", "合一食堂"));
+        mNewsList1.add(new News("xx", "学二食堂"));
 
         mMyAdapter1 = new MyAdapter1();
         mRecyclerView1.setAdapter(mMyAdapter1);
