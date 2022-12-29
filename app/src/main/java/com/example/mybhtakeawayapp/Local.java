@@ -9,13 +9,21 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Local {
+
+    static ArrayList<UserActivityStoreIndex.News> dishes;
     private static Local instance;
     String userLoginId;
     String localIp;
-    int totalMoney;
-    int countnum;
-    ArrayList<UserActivityStoreIndex.News> dishes;
-
+    public static HashMap<String,Integer> shopingcar = new HashMap<>();
+    public static HashMap<String, UserActivityStoreIndex.News> shopingcaritem = new HashMap<>();
+    public static float totalMoney = 0;
+    public static void addTotalMoney(float totalMoney) {
+        Local.totalMoney = Local.totalMoney+totalMoney;
+    }
+    public static int countnum=0;
+    public static float getTotalMoney() {
+        return totalMoney;
+    }
     public HashMap<Orders.OrderState,ArrayList<Orders>> orders;
     private Local() {
         userLoginId = "0";
@@ -72,8 +80,8 @@ public class Local {
             instance = new Local();
         return instance;
     }
-    
-    
+
+
     public   void addTotalMoney(int totalMoney) {
         Local.getInstance().totalMoney = Local.getInstance().totalMoney+totalMoney;
     }
@@ -84,10 +92,6 @@ public class Local {
 
     public   String getUserLoginId() {
         return userLoginId;
-    }
-
-    public   int getTotalMoney() {
-        return totalMoney;
     }
 
     public   String getLocalIp() {

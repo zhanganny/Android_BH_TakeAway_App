@@ -9,7 +9,7 @@
 <!--    </data>-->
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="400dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
         android:orientation="vertical">
@@ -43,7 +43,7 @@
                         android:layout_marginLeft="5dp" />
 
                     <LinearLayout
-                        android:layout_width="100dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="100dp"
                         android:layout_weight="1"
                         android:orientation="vertical"
@@ -54,7 +54,7 @@
                         <!--菜品名称-->
                         <TextView
                             android:id="@+id/cart_good_name"
-                            android:layout_width="match_parent"
+                            android:layout_width="150dp"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="5dp"
                             android:ellipsize="end"
@@ -106,7 +106,7 @@
                         android:orientation="vertical">
 
                         <LinearLayout
-                            android:layout_width="match_parent"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:orientation="horizontal"
                             android:layout_marginTop="20dp">
@@ -114,10 +114,11 @@
                             <android.widget.Button
                             android:layout_width="30dp"
                             android:layout_height="30dp"
+                                android:id="@+id/plus"
                             android:background="@drawable/plus"/>
 
                             <TextView
-                                android:layout_width="50dp"
+                                android:layout_width="30dp"
                                 android:layout_height="match_parent"
                                 android:text="2"
                                 android:id="@+id/cart_good_num"
@@ -127,14 +128,10 @@
                             <android.widget.Button
                                 android:layout_width="30dp"
                                 android:layout_height="30dp"
+                                android:id="@+id/sub"
                                 android:background="@drawable/sub"/>
 
                         </LinearLayout>
-
-                        <android.widget.Button
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="删除"/>
 
                         <TextView
                             android:id="@+id/store_minus"

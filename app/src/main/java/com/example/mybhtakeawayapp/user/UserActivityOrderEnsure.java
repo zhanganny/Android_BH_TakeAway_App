@@ -1,5 +1,6 @@
 package com.example.mybhtakeawayapp.user;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -36,6 +37,7 @@ public class UserActivityOrderEnsure extends Activity {
     private Spinner order_man;
     private TextView order_comment;
 
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

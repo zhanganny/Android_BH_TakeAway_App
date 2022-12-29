@@ -145,50 +145,6 @@
 
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:background="@color/gray"
-            android:layout_height="30dp"
-            android:orientation="horizontal">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="20dp"
-                android:text="价格区间:"
-                android:textSize="20dp"/>
-
-            <EditText
-                android:layout_width="60dp"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="20dp"
-                android:gravity="center"
-                android:background="@drawable/background_round_corner"
-                android:hint="最低价(元)"
-                android:textSize="10dp"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:text="~"
-                android:textSize="20dp"/>
-            <EditText
-                android:layout_width="60dp"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:background="@drawable/background_round_corner"
-                android:hint="最高价(元)"
-                android:textSize="10dp">
-            </EditText>
-
-            <Spinner
-                android:id="@+id/spinner_rank"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:background="@drawable/background_round_corner"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:spinnerMode="dialog" />
-        </LinearLayout>
-
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/store_ListView"
             android:background="@color/transparent"
@@ -236,6 +192,7 @@
             <android.widget.Button
                 android:layout_width="112dp"
                 android:layout_height="match_parent"
+                android:id="@+id/gotocar"
                 android:textColor="@color/white"
                 android:background="@drawable/button_round_confirm"
                 android:text="查看购物车"/>

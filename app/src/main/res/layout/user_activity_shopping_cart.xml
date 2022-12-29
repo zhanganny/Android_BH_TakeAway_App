@@ -82,26 +82,6 @@
             android:orientation="horizontal"
             android:background="@color/darkGray">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:text="合计：   ￥XX.XX"
-                android:textSize="20dp"
-                android:gravity="center"/>
-
-            <android.widget.Button
-                android:id="@+id/add_more"
-                android:layout_width="0dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
-                android:layout_marginLeft="40dp"
-                android:layout_marginRight="20dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:text="继续加菜"
-                android:textColor="@color/white"
-                android:background="@color/blue"/>
-
         </LinearLayout>
 
         <LinearLayout
@@ -135,6 +115,19 @@
                 android:textColor="@color/white"
                 android:background="@color/blue"
                 android:textSize="20sp" />
+
+            <android.widget.Button
+                android:id="@+id/add_more"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginBottom="10dp"
+                android:layout_weight="1"
+                android:background="@color/blue"
+                android:text="继续加菜"
+                android:textColor="@color/white" />
 
         </LinearLayout>
     </LinearLayout>

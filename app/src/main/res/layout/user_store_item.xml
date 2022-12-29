@@ -62,7 +62,7 @@
 
                             <TextView
                                 android:id="@+id/good_name"
-                                android:layout_width="121dp"
+                                android:layout_width="150dp"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="5dp"
                                 android:ellipsize="end"
@@ -74,7 +74,7 @@
                                 android:layout_width="39dp"
                                 android:layout_height="34dp"
                                 android:layout_gravity="start"
-                                android:layout_marginLeft="30dp"
+                                android:layout_marginLeft="5dp"
                                 android:background="@drawable/tag"
                                 android:gravity="center"
                                 android:text="热" />
@@ -84,7 +84,7 @@
                         <!--配料-->
                         <TextView
                             android:id="@+id/good_composition"
-                            android:layout_width="match_parent"
+                            android:layout_width="200dp"
                             android:layout_height="37dp"
                             android:layout_marginTop="10dp"
                             android:text="配料1，配料2，配料3" />
@@ -125,13 +125,6 @@
                             <!--添加收藏功能，颜色变化等待研究，估计需要前后端共同协作-->
                         </LinearLayout>
 
-
-                        <TextView
-                            android:layout_width="79dp"
-                            android:layout_height="25dp"
-                            android:layout_gravity="bottom"
-                            android:text="原价：￥XX.XX"
-                            android:textSize="10sp" />
 
                         <Button
                             android:id="@+id/add_dish"

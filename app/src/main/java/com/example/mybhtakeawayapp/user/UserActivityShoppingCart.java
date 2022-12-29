@@ -1,5 +1,9 @@
 package com.example.mybhtakeawayapp.user;
 
+import static com.example.mybhtakeawayapp.Local.addTotalMoney;
+import static com.example.mybhtakeawayapp.Local.shopingcar;
+import static com.example.mybhtakeawayapp.Local.shopingcaritem;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,6 +18,7 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.mybhtakeawayapp.Local;
 import com.example.mybhtakeawayapp.R;
 
 import java.util.ArrayList;
@@ -56,13 +61,13 @@ public class UserActivityShoppingCart extends Activity {
             }
         });
 
-
         mRecyclerView = findViewById(R.id.cart_store_ListView);
-        // 构造一些数据 todo
-        mNewsList.add(new News("a","鱼香肉丝","80","￥20.00","2"));
-        mNewsList.add(new News("a","麻婆豆腐","80","￥20.00","2"));
-        mNewsList.add(new News("a","风味茄子","80","￥20.00","2"));
 
+        // 构造一些数据 todo
+        for (String name: shopingcar.keySet()) {
+            UserActivityStoreIndex.News news = shopingcaritem.get(name);
+            mNewsList.add(new News("a",news.good_name,news.good_composition,"￥"+news.good_price,shopingcar.get(name).toString()));
+        }
         mMyAdapter = new MyAdapter();
         mRecyclerView.setAdapter(mMyAdapter);
         LinearLayoutManager layoutManager = new LinearLayoutManager(UserActivityShoppingCart.this);
@@ -102,12 +107,42 @@ public class UserActivityShoppingCart extends Activity {
         @Override
         public void onBindViewHolder(@NonNull MyViewHoder holder, int position) {
             News news = mNewsList.get(position);
-            // todo 图片还没弄
-            //holder.user_cart_good_image.setImageIcon();
+            if (news.name == "麻婆豆腐") {
+                holder.user_cart_good_image.setImageResource(R.drawable.a1);
+            } else if(news.name == "糖醋里脊") {
+                holder.user_cart_good_image.setImageResource(R.drawable.a2);
+            } else if(news.name == "风味茄子") {
+                holder.user_cart_good_image.setImageResource(R.drawable.a3);
+            }
+            else if(news.name == "梅菜扣肉") {
+                holder.user_cart_good_image.setImageResource(R.drawable.a4);
+            } else  if(news.name == "西红柿炒蛋") {
+                holder.user_cart_good_image.setImageResource(R.drawable.a6);
+            } else {
+                holder.user_cart_good_image.setImageResource(R.drawable.a6);
+            }
             holder.cart_good_name.setText(news.name);
             holder.cart_good_store.setText(news.score);
             holder.cart_good_num.setText(news.number);
             holder.cart_good_price.setText(news.cost);
+            holder.add.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    addTotalMoney(Float.valueOf(((String) holder.cart_good_price.getText()).substring(((String) holder.cart_good_price.getText()).length()-5)));
+                    String name = (String) holder.cart_good_name.getText();
+                    shopingcar.put(name, shopingcar.get(name) + 1);
+                    holder.cart_good_num.setText(String.valueOf(Integer.valueOf((String) holder.cart_good_num.getText()) + 1));
+                }
+            });
+            holder.sub.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    String name = (String) holder.cart_good_name.getText();
+                    shopingcar.put(name, shopingcar.get(name) - 1);
+                    holder.cart_good_num.setText(String.valueOf(Integer.valueOf((String) holder.cart_good_num.getText()) - 1));
+
+                }
+            });
         }
 
         @Override
@@ -122,6 +157,8 @@ public class UserActivityShoppingCart extends Activity {
         TextView cart_good_store;
         TextView cart_good_price;
         TextView cart_good_num;
+        Button add;
+        Button sub;
 
         public MyViewHoder(@NonNull View itemView) {
             super(itemView);
@@ -130,6 +167,8 @@ public class UserActivityShoppingCart extends Activity {
             cart_good_store = itemView.findViewById(R.id.cart_good_store);
             cart_good_price = itemView.findViewById(R.id.cart_good_price);
             cart_good_num = itemView.findViewById(R.id.cart_good_num);
+            add = itemView.findViewById(R.id.plus);
+            sub = itemView.findViewById(R.id.sub);
         }
     }
 }
