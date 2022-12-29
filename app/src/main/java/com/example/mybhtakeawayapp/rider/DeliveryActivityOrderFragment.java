@@ -195,15 +195,15 @@ public class DeliveryActivityOrderFragment extends Fragment {
 //
 //        mNewsList3.add(new News("合一", "合一", "2022-10-20", "已完成"));
         // 构造一些数据  todo
-        ArrayList<Orders> tmp = Local.orders.get(Orders.OrderState.ACCEPTED);
+        ArrayList<Orders> tmp = Local.getInstance().orders.get(Orders.OrderState.ACCEPTED);
         for (Orders order:tmp) {
             mNewsList1.add(new News(Integer.toString(order.d_id),Integer.toString(order.o_id),order.o_time.toString(),"待接单"));
         }
-        tmp = Local.orders.get(Orders.OrderState.DELIVERING);
+        tmp = Local.getInstance().orders.get(Orders.OrderState.DELIVERING);
         for (Orders order:tmp) {
             mNewsList2.add(new News(Integer.toString(order.d_id),Integer.toString(order.o_id),order.o_time.toString(),"已接单"));
         }
-        tmp = Local.orders.get(Orders.OrderState.FINISHED);
+        tmp = Local.getInstance().orders.get(Orders.OrderState.FINISHED);
         for (Orders order:tmp) {
             mNewsList3.add(new News(Integer.toString(order.d_id),Integer.toString(order.o_id),order.o_time.toString(),"已接单"));
         }

@@ -56,7 +56,8 @@ import java.util.List;
 public class DeliveryActivityMyHomeFragment extends Fragment {
     private Button riderInfoSet;
     private Button erweima;
-    private String sellerId = Local.getUserLoginId();
+    // private String sellerId = Local.getUserLoginId();
+    private String sellerId;
     Dialog dia;
     private String localIP = "http://192.168.110.79:8081/";
     List<LineChartBaseBean> list1;

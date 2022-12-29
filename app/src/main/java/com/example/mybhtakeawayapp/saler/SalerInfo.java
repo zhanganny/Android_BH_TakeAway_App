@@ -80,9 +80,9 @@ public class SalerInfo extends Fragment {
     private TextView saler_income;
     private Button erweima;
     private Button help;
-    private String sellerId = Local.getUserLoginId();
+    private String sellerId = Local.getInstance().getUserLoginId();
     private View mView;
-    private String localIP = Local.getLocalIp();
+    private String localIP = Local.getInstance().getLocalIp();
     LineChart lc1;
     LineChart lc2;
     List<LineChartBaseBean> list1;

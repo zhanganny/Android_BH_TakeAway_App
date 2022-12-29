@@ -72,7 +72,7 @@ public class UserActivityOrderEnsure extends Activity {
     }
 
     private void commitOrder() throws JSONException {
-        String orderUrl = Local.getLocalIp() + "dish/getTotalCost";
+        String orderUrl = Local.getInstance().getLocalIp() + "dish/getTotalCost";
         RequestQueue requestQueue = Volley.newRequestQueue(UserActivityOrderEnsure.this);
         JSONObject jsonObject = new JSONObject();
         JSONObject jsonObject2 = new JSONObject();
@@ -102,9 +102,9 @@ public class UserActivityOrderEnsure extends Activity {
         });
         requestQueue.add(jsonObjectRequest);
         // todo 获取地址、骑手id、备注
-        orderUrl = Local.getLocalIp() + "indent/addIndent";
+        orderUrl = Local.getInstance().getLocalIp() + "indent/addIndent";
         jsonObject2.put("address",order_address.getText().toString());
-        jsonObject2.put("uid",Local.getUserLoginId());
+        jsonObject2.put("uid",Local.getInstance().getUserLoginId());
 //        jsonObject2.put("rider",rider);
         jsonObject2.put("pid",UserShoppingData.curPid);
         jsonObject2.put("comment",order_comment.getText().toString());
