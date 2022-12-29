@@ -66,7 +66,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="30dp"
+                android:layout_height="40dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="20dp"
@@ -80,7 +80,7 @@
                     android:textColor="@color/black"
                     android:text="用户名称" />
 
-                <TextView
+                <EditText
                     android:id="@+id/userName"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
@@ -91,7 +91,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="30dp"
+                android:layout_height="40dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="20dp"
@@ -105,7 +105,7 @@
                     android:gravity="center_vertical"
                     android:text="联系方式" />
 
-                <TextView
+                <EditText
                     android:id="@+id/userContact"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
@@ -117,7 +117,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="30dp"
+                android:layout_height="40dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="20dp"
@@ -131,7 +131,7 @@
                     android:gravity="center_vertical"
                     android:text="默认地址" />
 
-                <TextView
+                <EditText
                     android:id="@+id/userDefaultAddress"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
@@ -143,7 +143,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="30dp"
+                android:layout_height="40dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="20dp"
@@ -157,7 +157,7 @@
                     android:gravity="center_vertical"
                     android:text="口味偏好" />
 
-                <TextView
+                <EditText
                     android:id="@+id/userTaste"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
@@ -170,7 +170,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="30dp"
+                android:layout_height="40dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="20dp"
@@ -184,7 +184,7 @@
                     android:gravity="center_vertical"
                     android:text="账号" />
 
-                <TextView
+                <EditText
                     android:id="@+id/userCount"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
@@ -196,7 +196,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="30dp"
+                android:layout_height="40dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="20dp"
@@ -210,7 +210,7 @@
                     android:gravity="center_vertical"
                     android:text="密码" />
 
-                <TextView
+                <EditText
                     android:id="@+id/userPassword"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
