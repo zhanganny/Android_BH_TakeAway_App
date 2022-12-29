@@ -14,6 +14,8 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.mybhtakeawayapp.Local;
+import com.example.mybhtakeawayapp.Orders;
 import com.example.mybhtakeawayapp.R;
 
 import java.util.ArrayList;
@@ -193,15 +195,17 @@ public class DeliveryActivityOrderFragment extends Fragment {
 //
 //        mNewsList3.add(new News("合一", "合一", "2022-10-20", "已完成"));
         // 构造一些数据  todo
-        int N = 12;
-        for (int i = 1;i<=N;i++) {
-            mNewsList3.add(new News(Integer.toString(i%4+1), Integer.toString(i), "2022-12-30", "已完成"));
+        ArrayList<Orders> tmp = Local.orders.get(Orders.OrderState.ACCEPTED);
+        for (Orders order:tmp) {
+            mNewsList1.add(new News(Integer.toString(order.d_id),Integer.toString(order.o_id),order.o_time.toString(),"待接单"));
         }
-        for (int i = N+1;i<=2*N;i++) {
-            mNewsList2.add(new News(Integer.toString(i%4+1), Integer.toString(i), "2022-12-30", "已接单"));
+        tmp = Local.orders.get(Orders.OrderState.DELIVERING);
+        for (Orders order:tmp) {
+            mNewsList2.add(new News(Integer.toString(order.d_id),Integer.toString(order.o_id),order.o_time.toString(),"已接单"));
         }
-        for (int i = 2*N+1;i<=3*N-5;i++) {
-            mNewsList1.add(new News(Integer.toString(i%4+1), Integer.toString(i), "2022-10-20", "待接单"));
+        tmp = Local.orders.get(Orders.OrderState.FINISHED);
+        for (Orders order:tmp) {
+            mNewsList3.add(new News(Integer.toString(order.d_id),Integer.toString(order.o_id),order.o_time.toString(),"已接单"));
         }
 
 
