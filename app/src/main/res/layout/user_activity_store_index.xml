@@ -109,20 +109,23 @@
                     </LinearLayout>
 
                     <LinearLayout
+
                         android:layout_width="match_parent"
                         android:layout_height="40dp"
                         android:orientation="horizontal"
                         android:layout_gravity="center_horizontal">
                         <TextView
+
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:text="联系方式："
                             android:gravity="center_vertical"/>
 
                         <TextView
+                            android:id="@+id/store_phonee"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
-                            android:text="123456789"
+                            android:text="18212682115"
                             android:gravity="center_vertical"/>
 
                         <android.widget.Button

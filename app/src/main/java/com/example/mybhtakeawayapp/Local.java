@@ -17,7 +17,13 @@ public class Local {
     private static Local instance;
     String userLoginId;
     String localIp;
-    public static HashMap<String, String> storeName2Id = new HashMap<>();
+    public static HashMap<String, String> storeName2Id = new HashMap<String,String>(){
+        {
+            put("合一基本伙","1");
+            put("合一精品伙","2");
+            put("合一卤肉饭","3");
+        }
+    };
     public static String storeId;
     public static HashMap<String,Integer> shopingcar = new HashMap<>();
     public static HashMap<String, UserActivityStoreIndex.News> shopingcaritem = new HashMap<>();
