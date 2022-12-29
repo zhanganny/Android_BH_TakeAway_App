@@ -57,7 +57,7 @@ public class DeliveryActivityMyHomeFragment extends Fragment {
     private Button riderInfoSet;
     private Button erweima;
     // private String sellerId = Local.getUserLoginId();
-    private String sellerId;
+    private String sellerId = "骑手";
     Dialog dia;
     private String localIP = "http://192.168.110.79:8081/";
     List<LineChartBaseBean> list1;
@@ -71,7 +71,6 @@ public class DeliveryActivityMyHomeFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
 
     @SuppressLint("MissingInflatedId")
@@ -88,10 +87,7 @@ public class DeliveryActivityMyHomeFragment extends Fragment {
                 startActivity(intent);
             }
         });
-
         lc1 = mView.findViewById(R.id.line1);
-
-
         erweima = mView.findViewById(R.id.delivery_erweima);
         Context context = getContext();
         dia = new Dialog(context, R.style.edit_AlertDialog_style);
@@ -134,6 +130,8 @@ public class DeliveryActivityMyHomeFragment extends Fragment {
             }
         });
 
+        initData();
+        initChart1();
         return mView;
     }
 
@@ -194,7 +192,6 @@ public class DeliveryActivityMyHomeFragment extends Fragment {
         lc1.setData(data);//设置图表数据
     }
 
-
     private void initData() {
 
         //todo
@@ -230,12 +227,12 @@ public class DeliveryActivityMyHomeFragment extends Fragment {
             }
         });
         requestQueue.add(jsonObjectRequest);
-        list1.add(new LineChartBaseBean("周一", 3.8f));
-        list1.add(new LineChartBaseBean("周二", 3.8f));
-//        list1.add(new LineChartBaseBean("周三", 6.8f));
-//        list1.add(new LineChartBaseBean("周四", 7.8f));
-//        list1.add(new LineChartBaseBean("周五", 5.4f));
-//        list1.add(new LineChartBaseBean("周六", 0f));
-        list1.add(new LineChartBaseBean("周日", 6f));
+        list1.add(new LineChartBaseBean("周一", 20f));
+        list1.add(new LineChartBaseBean("周二", 18f));
+        list1.add(new LineChartBaseBean("周三", 30f));
+        list1.add(new LineChartBaseBean("周四", 15f));
+        list1.add(new LineChartBaseBean("周五", 5.4f));
+        list1.add(new LineChartBaseBean("周六", 0f));
+        list1.add(new LineChartBaseBean("周日", 0f));
     }
 }
