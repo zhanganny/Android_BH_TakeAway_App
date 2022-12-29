@@ -27,7 +27,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class RegisterActivity extends Activity {
-    private String localIP = "http://192.168.110.79:8081/";
+    private String localIP = "http://192.168.3.76:8081/";
     private EditText re_username;
     private EditText re_password;
     private EditText re_affirm;
@@ -61,7 +61,7 @@ public class RegisterActivity extends Activity {
                 boolean isUser = registerByUser.isChecked();
                 if (username.equals("") || password.equals("") || re_affirm.equals("")) {
                     Toast.makeText(RegisterActivity.this, "请完整填写信息", Toast.LENGTH_SHORT).show();
-                } else if (!password.equals(re_affirm)) {
+                } else if (!password.equals(affirm)) {
                     Toast.makeText(RegisterActivity.this, "两次输入密码不一致，请重新输入", Toast.LENGTH_SHORT).show();
                 } else {
                     JSONObject jsonObject = new JSONObject();
