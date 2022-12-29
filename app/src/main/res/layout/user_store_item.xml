@@ -46,9 +46,8 @@
                         android:layout_marginLeft="5dp" />
 
                     <LinearLayout
-                        android:layout_width="198dp"
+                        android:layout_width="220dp"
                         android:layout_height="100dp"
-                        android:layout_weight="1"
                         android:orientation="vertical"
                         android:paddingLeft="5dp"
                         android:paddingRight="2dp">
