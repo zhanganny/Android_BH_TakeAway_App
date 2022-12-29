@@ -25,6 +25,7 @@
                 android:orientation="horizontal">
                 <!--返回键-->
                 <Button
+                    android:id="@+id/back"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:layout_gravity="center"
@@ -62,10 +63,12 @@
                 android:layout_height="30dp"
                 android:layout_marginTop="30dp"
                 android:layout_marginLeft="20dp"
+                android:textColor="@color/black"
                 android:text="投诉内容"
                 android:textSize="25dp"/>
 
             <EditText
+                android:id="@+id/feedback"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"

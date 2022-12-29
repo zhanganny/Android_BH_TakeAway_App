@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,7 +21,6 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.mybhtakeawayapp.Local;
 import com.example.mybhtakeawayapp.R;
 
 import org.json.JSONException;
@@ -36,6 +36,11 @@ public class UserActivityOderDetail extends Activity {
     private RecyclerView order_ed_list;
     private TextView order_total_money;
     private TextView order_comment;
+
+    private Button cancel_order;
+    private Button pay;
+    private Button back;
+
     // todo 获取id
     private String orderId;
 
@@ -51,6 +56,11 @@ public class UserActivityOderDetail extends Activity {
         order_total_money = findViewById(R.id.order_total_money);
         order_comment = findViewById(R.id.order_comment);
         order_ed_list = findViewById(R.id.user_order_detail);
+
+
+        cancel_order = findViewById(R.id.cancel_order);
+        pay = findViewById(R.id.pay);
+        back = findViewById(R.id.back);
 
 //        String orderUrl = Local.getLocalIp() + "indent/getInfo/" + orderId;
         String orderUrl = "indent/getInfo/" + orderId;
@@ -85,13 +95,30 @@ public class UserActivityOderDetail extends Activity {
         requestQueue.add(jsonObjectRequest);
         // todo
         // 前端需要从后端获取这些信息
-//        pay.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Intent intent = new Intent(UserActivityShoppingCart.this, UserActivityOrderEnsure.class);
-//                startActivity(intent);
-//            }
-//        });
+        pay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(UserActivityOderDetail.this, UserActivityOrderStatus.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+
+        // todo
+        // 后端要删掉此订单
+        cancel_order.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
 
         mRecyclerView = findViewById(R.id.user_order_detail);
         // 构造一些数据  todo

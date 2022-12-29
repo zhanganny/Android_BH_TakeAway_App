@@ -23,6 +23,13 @@
                 android:layout_width="60dp"
                 android:layout_height="match_parent" />
 
+            <Button
+                android:id="@+id/go_in"
+                android:layout_width="43dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:background="@drawable/ic_arrow_right" />
+
             <TextView
                 android:id="@+id/store_name"
                 android:layout_width="250dp"

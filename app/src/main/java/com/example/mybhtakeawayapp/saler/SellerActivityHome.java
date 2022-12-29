@@ -20,7 +20,7 @@ public class SellerActivityHome extends AppCompatActivity {
     private FrameLayout frameLayout;
     private SellerActivityHomeFragment homeFragment1;
     private SellerOrderItemFragment orderFragment2;
-//    private DeliveryActivityOrderFragment infoFragment3;
+    private SalerInfo infoFragment3;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -31,7 +31,7 @@ public class SellerActivityHome extends AppCompatActivity {
 
         homeFragment1 = new SellerActivityHomeFragment();
         orderFragment2 = new SellerOrderItemFragment();
-//        infoFragment3 = new DeliveryActivityOrderFragment();
+        infoFragment3 = new SalerInfo();
         frameLayout = findViewById(R.id.saler_home_fragment);
         bottomNavigationView = findViewById(R.id.bottomNavigationView);
         bottomNavigationView.setOnNavigationItemSelectedListener(itemSelectedListener);
@@ -48,9 +48,9 @@ public class SellerActivityHome extends AppCompatActivity {
                 case R.id.saler_order:
                     switchFragment(orderFragment2);
                     return true;
-//                case R.id.saler_info:
-//                    switchFragment(infoFragment3);
-//                    return true;
+                case R.id.saler_info:
+                    switchFragment(infoFragment3);
+                    return true;
             }
             return false;
         }

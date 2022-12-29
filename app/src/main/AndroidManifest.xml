@@ -42,7 +42,10 @@
             android:exported="true"
             android:label="登录页"
             android:launchMode="singleTask">
-
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity
             android:name=".RegisterActivity"
@@ -58,11 +61,18 @@
 
         </activity>
         <activity
+            android:name=".FeedBackActivity"
+            android:exported="true"
+            android:launchMode="singleTask">
+
+        </activity>
+        <activity
             android:name=".user.UserActivityStoreIndex"
             android:exported="true"
             android:launchMode="singleTask">
 
         </activity>
+
         <activity
             android:name=".user.UserActivityShoppingCart"
             android:exported="true"
@@ -85,10 +95,7 @@
             android:exported="true"
             android:label="商家主页"
             android:launchMode="singleTask">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+
         </activity>
         <activity
             android:name=".rider.DeliveryActivityMy"
@@ -110,6 +117,11 @@
 
         </activity>
         <activity android:name=".user.UserActivityOrderStatus"
+            android:exported="true"
+            android:launchMode="singleTask">
+
+        </activity>
+        <activity android:name=".saler.SellerFoodItemInformation"
             android:exported="true"
             android:launchMode="singleTask">
 

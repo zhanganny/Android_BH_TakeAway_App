@@ -12,15 +12,17 @@ import android.view.MenuItem;
 import android.widget.FrameLayout;
 
 import com.example.mybhtakeawayapp.R;
+import com.example.mybhtakeawayapp.UserActivityHomeFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class UserActivityHome extends AppCompatActivity {
 
     private BottomNavigationView bottomNavigationView;
     private FrameLayout frameLayout;
-    private UserHomeFragment user_homeFragment1;
+    private UserActivityHomeFragment user_homeFragment1;
     private UserOrderFragment user_orderFragment2;
-    private UserInfoFragment user_infoFragment3;
+//    private UserInfoFragment user_infoFragment3;
+    private user_my user_infoFragment3;
     private UserActivityContactsFragment user_contactFragment4;
 
     @SuppressLint("MissingInflatedId")
@@ -28,9 +30,9 @@ public class UserActivityHome extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.user_constrain);
-        user_homeFragment1 = new UserHomeFragment();
+        user_homeFragment1 = new UserActivityHomeFragment();
         user_orderFragment2 = new UserOrderFragment();
-        user_infoFragment3 = new UserInfoFragment();
+        user_infoFragment3 = new user_my();
         user_contactFragment4 = new UserActivityContactsFragment();
         frameLayout = findViewById(R.id.user_home_fragment);
         bottomNavigationView = findViewById(R.id.bottomNavigationView);

@@ -44,7 +44,7 @@
         </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/order_ed_list"
+            android:id="@+id/user_order_ed_list"
             android:layout_width="match_parent"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
@@ -75,7 +75,7 @@
         </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/order_ing_list"
+            android:id="@+id/user_order_ed_list1"
             android:layout_width="match_parent"
             android:layout_marginLeft="20dp"
             android:layout_marginBottom="20dp"

@@ -25,6 +25,7 @@
                 android:orientation="horizontal">
                 <!--返回键-->
                 <Button
+                    android:id="@+id/back"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:layout_gravity="center"
@@ -240,6 +241,7 @@
             android:background="@color/darkGray">
 
             <Button
+                android:id="@+id/cancel_order"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_marginRight="10dp"

@@ -9,6 +9,7 @@ import android.graphics.DashPathEffect;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -22,6 +23,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -34,6 +36,7 @@ import com.android.volley.toolbox.Volley;
 import com.example.mybhtakeawayapp.Local;
 import com.example.mybhtakeawayapp.R;
 import com.example.mybhtakeawayapp.admin.AdministratorHomeActivity;
+import com.example.mybhtakeawayapp.rider.setDeliveryInformation;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.components.Legend;
@@ -72,13 +75,13 @@ import java.util.List;
 import java.util.Map;
 
 
-public class SalerInfo extends AppCompatActivity {
+public class SalerInfo extends Fragment {
     private TextView saler_name;
     private TextView saler_income;
     private Button erweima;
     private Button help;
     private String sellerId = Local.getUserLoginId();
-
+    private View mView;
     private String localIP = "http://192.168.110.79:8081/";
     LineChart lc1;
     LineChart lc2;
@@ -102,99 +105,15 @@ public class SalerInfo extends AppCompatActivity {
 
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-
+    public void onCreate(Bundle savedInstanceState) {
         // 个人信息和帮助的跳转链接 todo
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.seller_activity_my);
-        lc1 = findViewById(R.id.line1);
-        lc2 = findViewById(R.id.line2);
-        saler_name = findViewById(R.id.saler_home_name);
-        saler_income = findViewById(R.id.saler_home_income);
-        erweima = findViewById(R.id.erweima);
-        help = findViewById(R.id.saler_help);
-
-
-        Context context = SalerInfo.this;
-        dia = new Dialog(context, R.style.edit_AlertDialog_style);
-        dia.setContentView(R.layout.dialog);
-        ImageView imageView = (ImageView) dia.findViewById(R.id.ivdialog);
-        //选择true的话点击其他地方可以使dialog消失，为false的话不会消失
-        dia.setCanceledOnTouchOutside(true); // Sets whether this dialog is
-        Window w = dia.getWindow();
-        WindowManager.LayoutParams lp = w.getAttributes();
-        lp.x = 0;
-        lp.y = 40;
-        dia.onWindowAttributesChanged(lp);
-        imageView.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        dia.dismiss();
-                    }
-                });
-
-        erweima.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                BreakIterator editText = null;
-                        //editText.getText().toString().trim();
-                MultiFormatWriter writer = new MultiFormatWriter();
-                try {
-                    BitMatrix matrix = writer.encode(sellerId, BarcodeFormat.QR_CODE,350,350);
-                    BarcodeEncoder encoder = new BarcodeEncoder();
-                    Bitmap bitmap = encoder.createBitmap(matrix);
-                    imageView.setImageBitmap(bitmap);
-                    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
-                        InputMethodManager manager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                    }
-//                    manager.hideSoftInputFromWindow(editText.getApplicationWindowToken(),0);
-                } catch (WriterException e) {
-                    e.printStackTrace();
-                }
-                dia.show();
-            }
-        });
-
-        String providerUrl = localIP + "provider/getIncomeSum/" + sellerId;
-        RequestQueue requestQueue = Volley.newRequestQueue(SalerInfo.this);
-        JSONObject jsonObject = new JSONObject();
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, providerUrl,
-                jsonObject, new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject jsonObject) {
-                try {
-                    boolean state = jsonObject.getBoolean("state");
-                    String msg = jsonObject.getString("msg");
-                    if (state) {
-                        saler_name.setText(jsonObject.getString("sellerName"));
-                        saler_income.setText(Double.toString(jsonObject.getDouble("income")));
-                    } else {
-                        Toast.makeText(SalerInfo.this, "加载预测数据失败", Toast.LENGTH_SHORT).show();
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        },new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError volleyError) {
-                Log.d("错误", volleyError.toString());
-                Toast.makeText(SalerInfo.this, "网络失败", Toast.LENGTH_SHORT).show();
-            }
-        });
-        requestQueue.add(jsonObjectRequest);
-        initData();
-        initChart1();
-        initChart2();
-        initRecycler();
-
     }
 
     public void initRecycler() {
-        mRecyclerView = findViewById(R.id.order_list);
+        mRecyclerView = mView.findViewById(R.id.order_list);
         String predictUrl = localIP + "indent/getPredicts/" + sellerId;
-        RequestQueue requestQueue = Volley.newRequestQueue(SalerInfo.this);
+        RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
         JSONObject jsonObject = new JSONObject();
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, predictUrl,
                 jsonObject, new Response.Listener<JSONObject>() {
@@ -210,7 +129,7 @@ public class SalerInfo extends AppCompatActivity {
                             mNewsList.add(new News(dish.getString("name"),"x" + dish.getInt("num")));
                         }
                     } else {
-                        Toast.makeText(SalerInfo.this, "加载预测数据失败", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), "加载预测数据失败", Toast.LENGTH_SHORT).show();
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -220,7 +139,7 @@ public class SalerInfo extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 Log.d("错误", volleyError.toString());
-                Toast.makeText(SalerInfo.this, "网络失败", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "网络失败", Toast.LENGTH_SHORT).show();
             }
         });
         requestQueue.add(jsonObjectRequest);
@@ -229,7 +148,7 @@ public class SalerInfo extends AppCompatActivity {
 //        mNewsList.add(new News("西红柿炒蛋","x3"));
         mMyAdapter = new SalerInfo.MyAdapter();
         mRecyclerView.setAdapter(mMyAdapter);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(SalerInfo.this);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(layoutManager);
     }
 
@@ -237,7 +156,7 @@ public class SalerInfo extends AppCompatActivity {
 
         //todo
         String incomeUrl = localIP + "provider/getProfit/" + sellerId;
-        RequestQueue requestQueue = Volley.newRequestQueue(SalerInfo.this);
+        RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
         JSONObject jsonObject = new JSONObject();
         list1= new ArrayList<>();
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, incomeUrl,
@@ -254,7 +173,7 @@ public class SalerInfo extends AppCompatActivity {
                             list1.add(new LineChartBaseBean(oneDayIncome.getString("time"),(float) oneDayIncome.getDouble("money")));
                         }
                     } else {
-                        Toast.makeText(SalerInfo.this, "加载收益数据失败", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), "加载收益数据失败", Toast.LENGTH_SHORT).show();
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -264,7 +183,7 @@ public class SalerInfo extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 Log.d("错误", volleyError.toString());
-                Toast.makeText(SalerInfo.this, "网络失败", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "网络失败", Toast.LENGTH_SHORT).show();
             }
         });
         requestQueue.add(jsonObjectRequest);
@@ -291,7 +210,7 @@ public class SalerInfo extends AppCompatActivity {
                             list2.add(new LineChartBaseBean(oneDayIncome.getString("time"),oneDayIncome.getInt("num")));
                         }
                     } else {
-                        Toast.makeText(SalerInfo.this, "加载订单数据失败", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), "加载订单数据失败", Toast.LENGTH_SHORT).show();
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -301,7 +220,7 @@ public class SalerInfo extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 Log.d("错误", volleyError.toString());
-                Toast.makeText(SalerInfo.this, "网络失败", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "网络失败", Toast.LENGTH_SHORT).show();
             }
         });
         requestQueue.add(jsonObjectRequest);
@@ -355,9 +274,9 @@ public class SalerInfo extends AppCompatActivity {
         };
         LineDataSet lineDataSet = new LineDataSet(entries, "本周营业额");
         lineDataSet.setMode(LineDataSet.Mode.CUBIC_BEZIER);//设置折线图的显示模式，可以自行设置上面的值进行查看不同之处
-        lineDataSet.setColor(ContextCompat.getColor(this, android.R.color.holo_blue_light));//设置线的颜色
+        lineDataSet.setColor(ContextCompat.getColor(getContext(), android.R.color.holo_blue_light));//设置线的颜色
         lineDataSet.setLineWidth(1.5f);//设置线的宽度
-        lineDataSet.setCircleColor(ContextCompat.getColor(this, android.R.color.holo_blue_light));//设置圆圈的颜色
+        lineDataSet.setCircleColor(ContextCompat.getColor(getContext(), android.R.color.holo_blue_light));//设置圆圈的颜色
         lineDataSet.setAxisDependency(YAxis.AxisDependency.LEFT);//设置线数据依赖于左侧y轴
         lineDataSet.setDrawFilled(true);//设置不画数据覆盖的阴影层
         lineDataSet.setDrawValues(true);//不绘制线的数据
@@ -412,9 +331,9 @@ public class SalerInfo extends AppCompatActivity {
         };
         LineDataSet lineDataSet2 = new LineDataSet(entries3, "本周营业额");
         lineDataSet2.setMode(LineDataSet.Mode.CUBIC_BEZIER);//设置折线图的显示模式，可以自行设置上面的值进行查看不同之处
-        lineDataSet2.setColor(ContextCompat.getColor(this, android.R.color.holo_blue_light));//设置线的颜色
+        lineDataSet2.setColor(ContextCompat.getColor(getContext(), android.R.color.holo_blue_light));//设置线的颜色
         lineDataSet2.setLineWidth(1.5f);//设置线的宽度
-        lineDataSet2.setCircleColor(ContextCompat.getColor(this, android.R.color.holo_blue_light));//设置圆圈的颜色
+        lineDataSet2.setCircleColor(ContextCompat.getColor(getContext(), android.R.color.holo_blue_light));//设置圆圈的颜色
         lineDataSet2.setAxisDependency(YAxis.AxisDependency.LEFT);//设置线数据依赖于左侧y轴
         lineDataSet2.setDrawFilled(true);//设置不画数据覆盖的阴影层
         lineDataSet2.setDrawValues(true);//不绘制线的数据
@@ -434,7 +353,7 @@ public class SalerInfo extends AppCompatActivity {
         @NonNull
         @Override
         public MyViewHoder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            View view = View.inflate(SalerInfo.this, R.layout.good_item, null);
+            View view = View.inflate(getActivity(), R.layout.good_item, null);
             MyViewHoder myViewHoder = new MyViewHoder(view);
             return myViewHoder;
         }
@@ -463,5 +382,94 @@ public class SalerInfo extends AppCompatActivity {
             goodName = itemView.findViewById(R.id.payment_good_ame);
             goodNum = itemView.findViewById(R.id.payment_good_number);
         }
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        this.mView = inflater.inflate(R.layout.seller_activity_my ,container, false);
+        lc1 = mView.findViewById(R.id.line1);
+        lc2 = mView.findViewById(R.id.line2);
+        saler_name = mView.findViewById(R.id.saler_home_name);
+        saler_income = mView.findViewById(R.id.saler_home_income);
+        erweima = mView.findViewById(R.id.erweima);
+        help = mView.findViewById(R.id.saler_help);
+
+
+        Context context = getContext();
+        dia = new Dialog(context, R.style.edit_AlertDialog_style);
+        dia.setContentView(R.layout.dialog);
+        ImageView imageView = (ImageView) dia.findViewById(R.id.ivdialog);
+        //选择true的话点击其他地方可以使dialog消失，为false的话不会消失
+        dia.setCanceledOnTouchOutside(true); // Sets whether this dialog is
+        Window w = dia.getWindow();
+        WindowManager.LayoutParams lp = w.getAttributes();
+        lp.x = 0;
+        lp.y = 40;
+        dia.onWindowAttributesChanged(lp);
+        imageView.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        dia.dismiss();
+                    }
+                });
+
+        erweima.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                BreakIterator editText = null;
+                //editText.getText().toString().trim();
+                MultiFormatWriter writer = new MultiFormatWriter();
+                try {
+                    BitMatrix matrix = writer.encode(sellerId, BarcodeFormat.QR_CODE,350,350);
+                    BarcodeEncoder encoder = new BarcodeEncoder();
+                    Bitmap bitmap = encoder.createBitmap(matrix);
+                    imageView.setImageBitmap(bitmap);
+                    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+                        InputMethodManager manager = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                    }
+//                    manager.hideSoftInputFromWindow(editText.getApplicationWindowToken(),0);
+                } catch (WriterException e) {
+                    e.printStackTrace();
+                }
+                dia.show();
+            }
+        });
+
+        String providerUrl = localIP + "provider/getIncomeSum/" + sellerId;
+        RequestQueue requestQueue = Volley.newRequestQueue(getContext());
+        JSONObject jsonObject = new JSONObject();
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, providerUrl,
+                jsonObject, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject jsonObject) {
+                try {
+                    boolean state = jsonObject.getBoolean("state");
+                    String msg = jsonObject.getString("msg");
+                    if (state) {
+                        saler_name.setText(jsonObject.getString("sellerName"));
+                        saler_income.setText(Double.toString(jsonObject.getDouble("income")));
+                    } else {
+                        Toast.makeText(getContext(), "加载预测数据失败", Toast.LENGTH_SHORT).show();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        },new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                Log.d("错误", volleyError.toString());
+                Toast.makeText(getContext(), "网络失败", Toast.LENGTH_SHORT).show();
+            }
+        });
+        requestQueue.add(jsonObjectRequest);
+        initData();
+        initChart1();
+        initChart2();
+        initRecycler();
+        return mView;
     }
 }

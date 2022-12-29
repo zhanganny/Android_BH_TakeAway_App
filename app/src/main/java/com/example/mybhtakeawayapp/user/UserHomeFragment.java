@@ -56,8 +56,13 @@ public class UserHomeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        Intent intent = new Intent(getActivity(), UserActivityStoreIndex.class);
-        startActivity(intent);
-        return inflater.inflate(R.layout.user_activity_store_index, container, false);
+
+        return inflater.inflate(R.layout.user_activity_home, container, false);
     }
+
+//    @Override
+//    public void onActivityCreated(Bundle savedInstanceState) {
+//        super.onActivityCreated(savedInstanceState);
+//
+//    }
 }

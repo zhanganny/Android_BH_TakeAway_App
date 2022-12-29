@@ -10,6 +10,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -30,9 +31,9 @@ public class UserActivityStoreIndex extends Activity {
         public String good_name; // 标题
         public String good_composition;
         public String good_price;
-        public int process;
+        public String process;
 
-        public News(String good_name, String good_composition, String good_price, int process) {
+        public News(String good_name, String good_composition, String good_price, String process) {
             this.good_name = good_name;
             this.good_composition = good_composition;
             this.good_price = good_price;
@@ -61,7 +62,7 @@ public class UserActivityStoreIndex extends Activity {
             holder.good_composition.setText(news.good_name);
             holder.good_price.setText(news.good_name);
             holder.recommend.setText(news.process);
-            holder.process.setProgress(news.process);
+            holder.process.setProgress(Integer.parseInt(news.process));
         }
 
         @Override
@@ -93,7 +94,7 @@ public class UserActivityStoreIndex extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.user_activity_store_index);
         pay = findViewById(R.id.pay);
-        back.findViewById(R.id.back);
+        back = findViewById(R.id.back);
 
         pay.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -115,11 +116,11 @@ public class UserActivityStoreIndex extends Activity {
         // 链接recyclerview todo
         store_ListView = findViewById(R.id.store_ListView);
         // 构造一些数据 todo
-        mNewsList.add(new News("学二食堂", "大豆","￥12.00",80));
-        mNewsList.add(new News("学食堂", "大豆","￥12.00",80));
+        mNewsList.add(new News("学二食堂", "大豆","￥12.00","80"));
+        mNewsList.add(new News("学食堂", "大豆","￥12.00","80"));
         mMyAdapter = new MyAdapter();
         store_ListView.setAdapter(mMyAdapter);
-//        LinearLayoutManager layoutManager = new LinearLayoutManager(UserActivityStoreIndex.this);
-//        store_ListView.setLayoutManager(layoutManager);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(UserActivityStoreIndex.this);
+        store_ListView.setLayoutManager(layoutManager);
     }
 }
