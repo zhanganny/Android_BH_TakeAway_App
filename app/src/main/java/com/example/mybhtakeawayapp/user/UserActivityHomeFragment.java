@@ -1,16 +1,18 @@
-package com.example.mybhtakeawayapp;
+package com.example.mybhtakeawayapp.user;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -18,8 +20,20 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+import com.example.mybhtakeawayapp.Local;
 import com.example.mybhtakeawayapp.R;
+import com.example.mybhtakeawayapp.saler.LineChartBaseBean;
 import com.example.mybhtakeawayapp.user.UserActivityStoreIndex;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -108,9 +122,38 @@ public class UserActivityHomeFragment extends Fragment {
 
 
 
-        // 构造一些数据  todo
-        mNewsList1.add(new News("合一", "合一"));
-        mNewsList1.add(new News("合一", "合一"));
+        String disUrl = Local.getInstance().getLocalIp() + "district/select";
+        RequestQueue requestQueue = Volley.newRequestQueue(requireActivity());
+        JSONObject jsonObject = new JSONObject();
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, disUrl,
+                jsonObject, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject jsonObject) {
+                try {
+                    System.out.println("食堂列表");
+                    boolean state = jsonObject.getBoolean("state");
+                    if (state) {
+                        JSONArray district = (JSONArray) jsonObject.getJSONArray("data");
+                        for (int i = 0;i<district.length();i++) {
+                            JSONObject d = district.getJSONObject(i);
+                            System.out.println(d);
+                            mNewsList1.add(new News(Integer.toString(d.getInt("id")),d.getString("name")));
+                        }
+                    } else {
+                        Toast.makeText(getActivity(), "加载食堂数据失败", Toast.LENGTH_SHORT).show();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        },new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                Log.d("错误", volleyError.toString());
+                Toast.makeText(getActivity(), "网络失败", Toast.LENGTH_SHORT).show();
+            }
+        });
+        requestQueue.add(jsonObjectRequest);
 
         mMyAdapter1 = new MyAdapter1();
         mRecyclerView1.setAdapter(mMyAdapter1);
