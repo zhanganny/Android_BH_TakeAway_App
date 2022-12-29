@@ -68,7 +68,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="30dp"
+                android:layout_height="40dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="20dp"
@@ -81,7 +81,7 @@
                     android:gravity="center_vertical"
                     android:text="学生姓名"/>
 
-                <TextView
+                <EditText
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -92,7 +92,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="30dp"
+                android:layout_height="40dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="20dp"
@@ -105,7 +105,7 @@
                     android:gravity="center_vertical"
                     android:text="学号"/>
 
-                <TextView
+                <EditText
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -116,7 +116,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="30dp"
+                android:layout_height="40dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="20dp"
@@ -129,7 +129,7 @@
                     android:gravity="center_vertical"
                     android:text="年级"/>
 
-                <TextView
+                <EditText
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -139,7 +139,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="30dp"
+                android:layout_height="40dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="20dp"
@@ -152,7 +152,7 @@
                     android:gravity="center_vertical"
                     android:text="学院"/>
 
-                <TextView
+                <EditText
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
