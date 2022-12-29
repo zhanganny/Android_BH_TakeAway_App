@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import org.json.JSONObject;
@@ -27,11 +27,11 @@ import com.example.mybhtakeawayapp.rider.setDeliveryInformation;
 import org.json.JSONException;
 
 public class setUserInformation extends Activity {
-    private TextView userName;
-    private TextView userContact;
-    private TextView userDefaultAddress;
-    private TextView userCount;
-    private TextView userPassword;
+    private EditText userName;
+    private EditText userContact;
+    private EditText userDefaultAddress;
+    private EditText userCount;
+    private EditText userPassword;
     private Button pay;
     private String userId = Local.getInstance().getUserLoginId();
 
@@ -50,7 +50,6 @@ public class setUserInformation extends Activity {
 
 
         //页面首先获取骑手信息
-        userId="1";
         JSONObject jsonObject = new JSONObject();
         String url = localIP+"user/getInfo/" + userId;
         System.err.println(url);

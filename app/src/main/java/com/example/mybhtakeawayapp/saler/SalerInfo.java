@@ -1,4 +1,5 @@
 package com.example.mybhtakeawayapp.saler;
+
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.app.ProgressDialog;
@@ -93,6 +94,7 @@ public class SalerInfo extends Fragment {
     public class News {
         public String good_name; // 标题
         public String good_num;
+
         public News(String store_name, String good_num) {
             this.good_name = store_name;
             this.good_num = good_num;
@@ -100,7 +102,7 @@ public class SalerInfo extends Fragment {
     }
 
     RecyclerView mRecyclerView;
-    SalerInfo.MyAdapter mMyAdapter ;
+    SalerInfo.MyAdapter mMyAdapter;
     List<SalerInfo.News> mNewsList = new ArrayList<>();
 
 
@@ -127,7 +129,7 @@ public class SalerInfo extends Fragment {
                         JSONArray predicts = (JSONArray) jsonObject.getJSONArray("data");
                         for (int i = 0; i < predicts.length(); i++) {
                             JSONObject dish = predicts.getJSONObject(i);
-                            mNewsList.add(new News(dish.getString("name"),"x" + dish.getInt("num")));
+                            mNewsList.add(new News(dish.getString("name"), "x" + dish.getInt("num")));
                         }
                     } else {
                         Toast.makeText(getActivity(), "加载预测数据失败", Toast.LENGTH_SHORT).show();
@@ -136,7 +138,7 @@ public class SalerInfo extends Fragment {
                     e.printStackTrace();
                 }
             }
-        },new Response.ErrorListener() {
+        }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 Log.d("错误", volleyError.toString());
@@ -159,7 +161,7 @@ public class SalerInfo extends Fragment {
         String incomeUrl = localIP + "provider/getProfit/" + sellerId;
         RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
         JSONObject jsonObject = new JSONObject();
-        list1= new ArrayList<>();
+        list1 = new ArrayList<>();
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, incomeUrl,
                 jsonObject, new Response.Listener<JSONObject>() {
             @Override
@@ -171,7 +173,7 @@ public class SalerInfo extends Fragment {
                         JSONArray incomes = (JSONArray) jsonObject.getJSONArray("data");
                         for (int i = 0; i < incomes.length(); i++) {
                             JSONObject oneDayIncome = incomes.getJSONObject(i);
-                            list1.add(new LineChartBaseBean(oneDayIncome.getString("time"),(float) oneDayIncome.getDouble("money")));
+                            list1.add(new LineChartBaseBean(oneDayIncome.getString("time"), (float) oneDayIncome.getDouble("money")));
                         }
                     } else {
                         Toast.makeText(getActivity(), "加载收益数据失败", Toast.LENGTH_SHORT).show();
@@ -180,7 +182,7 @@ public class SalerInfo extends Fragment {
                     e.printStackTrace();
                 }
             }
-        },new Response.ErrorListener() {
+        }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 Log.d("错误", volleyError.toString());
@@ -196,7 +198,7 @@ public class SalerInfo extends Fragment {
         list1.add(new LineChartBaseBean("周六", 0f));
         list1.add(new LineChartBaseBean("周日", 6f));
         String orderNumUrl = localIP + "provider/getOrderNum/" + sellerId;
-        list2= new ArrayList<>();
+        list2 = new ArrayList<>();
         jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, orderNumUrl,
                 jsonObject, new Response.Listener<JSONObject>() {
             @Override
@@ -208,7 +210,7 @@ public class SalerInfo extends Fragment {
                         JSONArray incomes = (JSONArray) jsonObject.getJSONArray("data");
                         for (int i = 0; i < incomes.length(); i++) {
                             JSONObject oneDayIncome = incomes.getJSONObject(i);
-                            list2.add(new LineChartBaseBean(oneDayIncome.getString("time"),oneDayIncome.getInt("num")));
+                            list2.add(new LineChartBaseBean(oneDayIncome.getString("time"), oneDayIncome.getInt("num")));
                         }
                     } else {
                         Toast.makeText(getActivity(), "加载订单数据失败", Toast.LENGTH_SHORT).show();
@@ -217,7 +219,7 @@ public class SalerInfo extends Fragment {
                     e.printStackTrace();
                 }
             }
-        },new Response.ErrorListener() {
+        }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 Log.d("错误", volleyError.toString());
@@ -377,6 +379,7 @@ public class SalerInfo extends Fragment {
     class MyViewHoder extends RecyclerView.ViewHolder {
         TextView goodName;
         TextView goodNum;
+
         // todo
         public MyViewHoder(@NonNull View itemView) {
             super(itemView);
@@ -389,7 +392,7 @@ public class SalerInfo extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        this.mView = inflater.inflate(R.layout.seller_activity_my ,container, false);
+        this.mView = inflater.inflate(R.layout.seller_activity_my, container, false);
         lc1 = mView.findViewById(R.id.line1);
         lc2 = mView.findViewById(R.id.line2);
         saler_name = mView.findViewById(R.id.saler_home_name);
@@ -424,7 +427,7 @@ public class SalerInfo extends Fragment {
                 //editText.getText().toString().trim();
                 MultiFormatWriter writer = new MultiFormatWriter();
                 try {
-                    BitMatrix matrix = writer.encode(sellerId, BarcodeFormat.QR_CODE,350,350);
+                    BitMatrix matrix = writer.encode(sellerId, BarcodeFormat.QR_CODE, 350, 350);
                     BarcodeEncoder encoder = new BarcodeEncoder();
                     Bitmap bitmap = encoder.createBitmap(matrix);
                     imageView.setImageBitmap(bitmap);
@@ -450,8 +453,10 @@ public class SalerInfo extends Fragment {
                     boolean state = jsonObject.getBoolean("state");
                     String msg = jsonObject.getString("msg");
                     if (state) {
-                        saler_name.setText(jsonObject.getString("sellerName"));
-                        saler_income.setText(Double.toString(jsonObject.getDouble("income")));
+                        jsonObject = jsonObject.getJSONObject("data");
+                        saler_name.setText(jsonObject.getString("name"));
+                        String money = jsonObject.getDouble("income") + "元";
+                        saler_income.setText(money);
                     } else {
                         Toast.makeText(getContext(), "加载预测数据失败", Toast.LENGTH_SHORT).show();
                     }
@@ -459,7 +464,7 @@ public class SalerInfo extends Fragment {
                     e.printStackTrace();
                 }
             }
-        },new Response.ErrorListener() {
+        }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 Log.d("错误", volleyError.toString());

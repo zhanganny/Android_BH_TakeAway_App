@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,14 +27,14 @@ import org.json.JSONObject;
 
 public class setDeliveryInformation extends Activity {
     private String localIP = Local.getInstance().getLocalIp();
-    private int riderId = 19375203;
-    private TextView riderUserName;
-    private TextView riderContact;
-    private TextView riderAccountName;
-    private TextView riderPassword;
-    private TextView riderRealName;
-    private TextView riderStuId;
-    private TextView riderSchool;
+    private String riderId = Local.getInstance().getUserLoginId();
+    private EditText riderUserName;
+    private EditText riderContact;
+    private EditText riderAccountName;
+    private EditText riderPassword;
+    private EditText riderRealName;
+    private EditText riderStuId;
+    private EditText riderSchool;
     private Button pay;
 
     @Override
