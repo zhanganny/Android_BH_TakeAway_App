@@ -72,8 +72,6 @@
                 android:layout_marginRight="20dp"
                 android:orientation="horizontal">
 
-
-
                 <TextView
                     android:layout_width="0dp"
                     android:layout_weight="1"
@@ -81,12 +79,14 @@
                     android:gravity="center_vertical"
                     android:text="餐食照片"/>
 
-                <android.widget.Button
+                <ImageView
                     android:layout_width="70dp"
                     android:layout_marginRight="20dp"
+                    android:id="@+id/phout"
                     android:layout_height="70dp"
                     android:background="@drawable/camel" />
             </LinearLayout>
+
 
             <LinearLayout
                 android:layout_width="match_parent"
