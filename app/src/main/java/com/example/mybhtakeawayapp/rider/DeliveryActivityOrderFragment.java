@@ -1,25 +1,41 @@
 package com.example.mybhtakeawayapp.rider;
-
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+import com.example.mybhtakeawayapp.Local;
 import com.example.mybhtakeawayapp.R;
+import com.example.mybhtakeawayapp.admin.AdministratorHomeActivity;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class DeliveryActivityOrderFragment extends Fragment {
+    // todo 获取食堂id
+    private int districtId;
+
 
     public DeliveryActivityOrderFragment() {
         // Required empty public constructor
@@ -78,17 +94,17 @@ public class DeliveryActivityOrderFragment extends Fragment {
         }
     }
 
-    class MyAdapter2 extends RecyclerView.Adapter<MyViewHoder2> {
+    class MyAdapter2 extends RecyclerView.Adapter<MyViewHoder> {
         @NonNull
         @Override
-        public MyViewHoder2 onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        public MyViewHoder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
             View view = View.inflate(getActivity(), R.layout.order_item, null);
-            MyViewHoder2 myViewHoder2 = new MyViewHoder2(view);
-            return myViewHoder2;
+            MyViewHoder myViewHoder = new MyViewHoder(view);
+            return myViewHoder;
         }
         @Override
-        public void onBindViewHolder(@NonNull MyViewHoder2 holder, int position) {
-            News news = mNewsList2.get(position);
+        public void onBindViewHolder(@NonNull MyViewHoder holder, int position) {
+            News news = mNewsList1.get(position);
             holder.order_name.setText(news.order_name);
             holder.order_status.setText(news.order_statement);
             holder.order_time.setText(news.order_time);
@@ -98,22 +114,22 @@ public class DeliveryActivityOrderFragment extends Fragment {
 
         @Override
         public int getItemCount() {
-            return mNewsList2.size();
+            return mNewsList1.size();
         }
     }
 
 
-    class MyAdapter3 extends RecyclerView.Adapter<MyViewHoder3> {
+    class MyAdapter3 extends RecyclerView.Adapter<MyViewHoder> {
         @NonNull
         @Override
-        public MyViewHoder3 onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        public MyViewHoder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
             View view = View.inflate(getActivity(), R.layout.order_item, null);
-            MyViewHoder3 myViewHoder3 = new MyViewHoder3(view);
-            return myViewHoder3;
+            MyViewHoder myViewHoder = new MyViewHoder(view);
+            return myViewHoder;
         }
         @Override
-        public void onBindViewHolder(@NonNull MyViewHoder3 holder, int position) {
-            News news = mNewsList3.get(position);
+        public void onBindViewHolder(@NonNull MyViewHoder holder, int position) {
+            News news = mNewsList1.get(position);
             holder.order_name.setText(news.order_name);
             holder.order_status.setText(news.order_statement);
             holder.order_time.setText(news.order_time);
@@ -123,7 +139,7 @@ public class DeliveryActivityOrderFragment extends Fragment {
 
         @Override
         public int getItemCount() {
-            return mNewsList2.size();
+            return mNewsList1.size();
         }
     }
 
@@ -142,47 +158,18 @@ public class DeliveryActivityOrderFragment extends Fragment {
         }
     }
 
-    class MyViewHoder2 extends RecyclerView.ViewHolder {
-        TextView order_name;
-        TextView order_time;
-        TextView order_status;
-        ImageView order_store_image;
-
-        public MyViewHoder2(@NonNull View itemView) {
-            super(itemView);
-            order_name = itemView.findViewById(R.id.order_name);
-            order_time = itemView.findViewById(R.id.order_time);
-            order_status = itemView.findViewById(R.id.order_statement);
-            order_store_image = itemView.findViewById(R.id.order_store);
-        }
-    }
-
-    class MyViewHoder3 extends RecyclerView.ViewHolder {
-        TextView order_name;
-        TextView order_time;
-        TextView order_status;
-        ImageView order_store_image;
-
-        public MyViewHoder3(@NonNull View itemView) {
-            super(itemView);
-            order_name = itemView.findViewById(R.id.order_name);
-            order_time = itemView.findViewById(R.id.order_time);
-            order_status = itemView.findViewById(R.id.order_statement);
-            order_store_image = itemView.findViewById(R.id.order_store);
-        }
-    }
-
     @SuppressLint("MissingInflatedId")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View mView = inflater.inflate(R.layout.seller_activity_order ,container, false);
+        View mView = inflater.inflate(R.layout.delivery_activity_order ,container, false);
 
         mRecyclerView1 = mView.findViewById(R.id.order_ed_list);
         mRecyclerView2 = mView.findViewById(R.id.order_ed_list2);
         mRecyclerView3 = mView.findViewById(R.id.order_ed_list3);
 
+        // 构造一些数据  todo
         int N = 12;
         for (int i = 1;i<=N;i++) {
             mNewsList3.add(new News(Integer.toString(i%4+1), Integer.toString(i), "2022-12-30", "已完成"));
@@ -193,6 +180,44 @@ public class DeliveryActivityOrderFragment extends Fragment {
         for (int i = 2*N+1;i<=3*N-5;i++) {
             mNewsList1.add(new News(Integer.toString(i%4+1), Integer.toString(i), "2022-10-20", "待接单"));
         }
+
+//        JSONObject jsonObject = new JSONObject();
+//        String url = Local.getLocalIp() + "";
+//        RequestQueue requestQueue = Volley.newRequestQueue(requireActivity());
+//        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, jsonObject, new Response.Listener<JSONObject>() {
+//            @Override
+//            public void onResponse(JSONObject jsonObject) {
+//                try {
+//                    JSONArray list1 = (JSONArray) jsonObject.getJSONArray("NA");
+//                    JSONArray list2 = (JSONArray) jsonObject.getJSONArray("AC");
+//                    JSONArray list3 = (JSONArray) jsonObject.getJSONArray("FINISH");
+//                    for (int i = 0;i< list1.length();i++) {
+//                        JSONObject indent = list1.getJSONObject(i);
+//                        String status = indent.getString("state");
+//                        mNewsList1.add(new News(indent.getString("did"),indent.getString("oid"),indent.getString("time"), status));
+//                    }
+//                    for (int i = 0;i< list2.length();i++) {
+//                        JSONObject indent = list2.getJSONObject(i);
+//                        String status = indent.getString("state");
+//                        mNewsList2.add(new News(indent.getString("did"),indent.getString("oid"),indent.getString("time"), status));
+//                    }
+//                    for (int i = 0;i< list3.length();i++) {
+//                        JSONObject indent = list3.getJSONObject(i);
+//                        String status = indent.getString("state");
+//                        mNewsList3.add(new News(indent.getString("did"),indent.getString("oid"),indent.getString("time"), status));
+//                    }
+//                } catch (JSONException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//        }, new Response.ErrorListener() {
+//            @Override
+//            public void onErrorResponse(VolleyError volleyError) {
+//                Log.d("错误", volleyError.toString());
+//                Toast.makeText(requireActivity(), "网络失败", Toast.LENGTH_SHORT).show();
+//            }
+//        });
+//        requestQueue.add(jsonObjectRequest);
 
         mMyAdapter1 = new MyAdapter1();
         mRecyclerView1.setAdapter(mMyAdapter1);

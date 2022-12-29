@@ -35,6 +35,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.mybhtakeawayapp.Local;
 import com.example.mybhtakeawayapp.LoginActivity;
 import com.example.mybhtakeawayapp.R;
 import com.example.mybhtakeawayapp.RegisterActivity;
@@ -51,7 +52,7 @@ import java.util.List;
 import java.util.UUID;
 
 public class AdministratorHomeActivity extends Activity {
-    private String localIP = "http://192.168.110.79:8081/";
+    private String localIP = Local.getLocalIp();
     private Button addSystemInformation;
     private TextView userNumText;
     private TextView providerNumText;
@@ -78,17 +79,19 @@ public class AdministratorHomeActivity extends Activity {
         riderNumText = findViewById(R.id.riderNum);
         JSONObject jsonObject = new JSONObject();
         String userUrl = localIP+"user/getUserNum";
-        String providerUrl = localIP+"user/getProviderNum";
-        String riderUrl = localIP+"user/getUserNum";
+        String providerUrl = localIP+"provider/getProviderNum";
+        String riderUrl = localIP+"rider/getRiderNum";
         RequestQueue requestQueue = Volley.newRequestQueue(AdministratorHomeActivity.this);
+        System.err.println("g");
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, userUrl, jsonObject, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject jsonObject) {
                 try {
                     boolean state = jsonObject.getBoolean("state");
                     String msg = jsonObject.getString("msg");
+                    System.err.println(state);
                     if (state) {
-                        int userNum = jsonObject.getInt("userNum");
+                        int userNum = jsonObject.getInt("data");
                         userNumText.setText(userNum);
                     } else {
                         Toast.makeText(AdministratorHomeActivity.this, "加载买家数据失败", Toast.LENGTH_SHORT).show();
@@ -112,7 +115,7 @@ public class AdministratorHomeActivity extends Activity {
                     boolean state = jsonObject.getBoolean("state");
                     String msg = jsonObject.getString("msg");
                     if (state) {
-                        int userNum = jsonObject.getInt("providerNum");
+                        int userNum = jsonObject.getInt("data");
                         providerNumText.setText(userNum);
                     } else {
                         Toast.makeText(AdministratorHomeActivity.this, "加载商家数据失败", Toast.LENGTH_SHORT).show();
@@ -137,7 +140,7 @@ public class AdministratorHomeActivity extends Activity {
                     boolean state = jsonObject.getBoolean("state");
                     String msg = jsonObject.getString("msg");
                     if (state) {
-                        int userNum = jsonObject.getInt("riderNum");
+                        int userNum = jsonObject.getInt("data");
                         riderNumText.setText(userNum);
                     } else {
                         Toast.makeText(AdministratorHomeActivity.this, "加载骑手数据失败", Toast.LENGTH_SHORT).show();

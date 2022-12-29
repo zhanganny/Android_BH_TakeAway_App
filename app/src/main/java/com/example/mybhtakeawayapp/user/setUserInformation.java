@@ -20,6 +20,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.mybhtakeawayapp.Local;
 import com.example.mybhtakeawayapp.R;
 
 import org.json.JSONException;
@@ -32,6 +33,7 @@ public class setUserInformation extends Activity {
     private TextView userCount;
     private TextView userPassword;
     private Button pay;
+    private String userId = Local.getUserLoginId();
 
 
     @Override
@@ -67,7 +69,7 @@ public class setUserInformation extends Activity {
                         String count1 = URLEncoder.encode(count, "utf-8");
                         String password1 = URLEncoder.encode(password, "utf-8");
                         set(name1,contact1,defaultAddress1,email1,count1,password1);
-                    } catch (UnsupportedEncodingException e) {
+                    } catch (UnsupportedEncodingException | JSONException e) {
                         e.printStackTrace();
                     }
                 }
@@ -76,17 +78,21 @@ public class setUserInformation extends Activity {
         });
     }
 
-    private void set(String name, String contact, String defaultAddress, String email, String count, String password) {
+    private void set(String name, String contact, String defaultAddress, String email, String count, String password) throws JSONException {
         JSONObject jsonObject=new JSONObject();
-        String url="http://192.168.1.103:8085/item/insertItem/"+name+"/"+contact+"/"+
-                defaultAddress+"&email="+email+"&count="+count+"&password="+password+"";
+        String url= Local.getLocalIp() + "updateInfo/" + userId;
+        jsonObject.put("name",name);
+        jsonObject.put("contact",contact);
+        jsonObject.put("address",defaultAddress);
+        jsonObject.put("email",email);
+        jsonObject.put("password",password);
         RequestQueue requestQueue= Volley.newRequestQueue(setUserInformation.this);
         JsonObjectRequest jsonObjectRequest=new JsonObjectRequest(Request.Method.GET, url, jsonObject, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject jsonObject) {
                 try {
-                    String info1 = jsonObject.getString("info");
-                    if(info1.equals("添加成功")){
+                    boolean state = jsonObject.getBoolean("state");
+                    if(state){
                         Toast.makeText(setUserInformation.this, "添加成功", Toast.LENGTH_SHORT).show();
                     }else {
                         Toast.makeText(setUserInformation.this, "添加失败", Toast.LENGTH_SHORT).show();

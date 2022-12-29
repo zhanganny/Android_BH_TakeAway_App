@@ -4,9 +4,8 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.ActivityNotFoundException;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -15,58 +14,46 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.mybhtakeawayapp.Local;
 import com.example.mybhtakeawayapp.R;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.BinaryBitmap;
 import com.google.zxing.DecodeHintType;
 import com.google.zxing.MultiFormatReader;
-import com.google.zxing.MultiFormatWriter;
+import com.google.zxing.NotFoundException;
 import com.google.zxing.RGBLuminanceSource;
 import com.google.zxing.Result;
-import com.google.zxing.WriterException;
-import com.google.zxing.common.BitMatrix;
 import com.google.zxing.common.GlobalHistogramBinarizer;
 import com.google.zxing.common.HybridBinarizer;
-import com.journeyapps.barcodescanner.BarcodeEncoder;
+import com.google.zxing.qrcode.QRCodeReader;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.text.BreakIterator;
 import java.util.ArrayList;
 import java.util.EnumMap;
+import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
-public class user_my extends Fragment {
+public class user_my extends AppCompatActivity {
     private TextView user_name;
     private Button user_erweima;
     private ImageView user_saomiao;
-    private View mView;
-    private Button changeUserInfo = null;
-    private String sellerId = Local.getUserLoginId();
-    Dialog dia;
-
 
     private ImageView mImg;
     private String mPath;
@@ -85,10 +72,11 @@ public class user_my extends Fragment {
     private CharSequence[] mItems = {"选择图片"};
 
     @Override
-    public void onSaveInstanceState(Bundle outState) {
+    protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putString("Path", mPath);
     }
+
 
     public class News {
         public String title; // 标题
@@ -98,23 +86,25 @@ public class user_my extends Fragment {
             this.content = content;
         }
     }
-    RecyclerView mRecyclerView;
-    MyAdapter mMyAdapter ;
-    List<News> mNewsList = new ArrayList<>();
 
-    class MyAdapter extends RecyclerView.Adapter<MyViewHoder> {
+    RecyclerView mRecyclerView;
+    user_my.MyAdapter mMyAdapter ;
+    List<user_my.News> mNewsList = new ArrayList<>();
+
+
+    class MyAdapter extends RecyclerView.Adapter<user_my.MyViewHoder> {
 
         @NonNull
         @Override
-        public MyViewHoder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            View view = View.inflate(getActivity(), R.layout.user_fav_item, null);
-            MyViewHoder myViewHoder = new MyViewHoder(view);
+        public user_my.MyViewHoder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+            View view = View.inflate(user_my.this, R.layout.user_fav_item, null);
+            user_my.MyViewHoder myViewHoder = new user_my.MyViewHoder(view);
             return myViewHoder;
         }
 
         @Override
-        public void onBindViewHolder(@NonNull MyViewHoder holder, int position) {
-            News news = mNewsList.get(position);
+        public void onBindViewHolder(@NonNull user_my.MyViewHoder holder, int position) {
+            user_my.News news = mNewsList.get(position);
             holder.mTitleTv.setText(news.title);
             holder.mTitleContent.setText(news.content);
         }
@@ -138,93 +128,33 @@ public class user_my extends Fragment {
 
     @SuppressLint("MissingInflatedId")
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-    }
-
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        this.mView = inflater.inflate(R.layout.user_activity_my, container, false);
-        user_name = mView.findViewById(R.id.user_name);
-        mRecyclerView = mView.findViewById(R.id.fav_ed_list);
+        setContentView(R.layout.user_activity_my);
+        user_name = findViewById(R.id.user_name);
+        mRecyclerView = findViewById(R.id.fav_ed_list);
         // 构造一些数据 todo
         mNewsList.add(new News("鱼香肉丝", "￥10"));
         mNewsList.add(new News("麻婆豆腐", "￥10"));
-        mMyAdapter = new MyAdapter();
+        mMyAdapter = new user_my.MyAdapter();
         mRecyclerView.setAdapter(mMyAdapter);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
+        LinearLayoutManager layoutManager = new LinearLayoutManager(user_my.this);
         mRecyclerView.setLayoutManager(layoutManager);
         init();
-        user_erweima = mView.findViewById(R.id.user_erweima);
-        user_saomiao = mView.findViewById(R.id.user_saomiao);
+        user_erweima = findViewById(R.id.user_erweima);
+        user_saomiao = findViewById(R.id.user_saomiao);
         if (savedInstanceState != null) mPath = savedInstanceState.getString("Path");
-
-        changeUserInfo = mView.findViewById(R.id.changeUserInfo);
-        if (changeUserInfo!=null) {
-            changeUserInfo.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Intent intent = new Intent(getActivity(), setUserInformation.class);
-                    startActivity(intent);
-                }
-            });
-        }
-
-        Context context = getContext();
-        dia = new Dialog(context, R.style.edit_AlertDialog_style);
-        dia.setContentView(R.layout.dialog);
-        ImageView imageView = (ImageView) dia.findViewById(R.id.ivdialog);
-        //选择true的话点击其他地方可以使dialog消失，为false的话不会消失
-        dia.setCanceledOnTouchOutside(true); // Sets whether this dialog is
-        Window w = dia.getWindow();
-        WindowManager.LayoutParams lp = w.getAttributes();
-        lp.x = 0;
-        lp.y = 40;
-        dia.onWindowAttributesChanged(lp);
-        imageView.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        dia.dismiss();
-                    }
-                });
-
-        user_erweima.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                BreakIterator editText = null;
-                //editText.getText().toString().trim();
-                MultiFormatWriter writer = new MultiFormatWriter();
-                try {
-                    BitMatrix matrix = writer.encode(sellerId, BarcodeFormat.QR_CODE,350,350);
-                    BarcodeEncoder encoder = new BarcodeEncoder();
-                    Bitmap bitmap = encoder.createBitmap(matrix);
-                    imageView.setImageBitmap(bitmap);
-                    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
-                        InputMethodManager manager = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-                    }
-//                    manager.hideSoftInputFromWindow(editText.getApplicationWindowToken(),0);
-                } catch (WriterException e) {
-                    e.printStackTrace();
-                }
-                dia.show();
-            }
-        });
-
-
-        return this.mView;
     }
 
     private void init() {
-        mImg = (ImageView) mView.findViewById(R.id.user_saomiao);
+        mImg = (ImageView) this.findViewById(R.id.user_saomiao);
         mImg.setOnClickListener(v -> showPhotoDialog());
         File file = new File(IMAGE_SAVE_DIR);
         if (!file.exists()) file.mkdirs();
     }
 
     private void showPhotoDialog() {
-        new AlertDialog.Builder(getActivity())
+        new AlertDialog.Builder(this)
                 .setTitle("提示")
                 .setItems(mItems, (dialog, which) -> {
                     operChoosePic();
@@ -237,11 +167,11 @@ public class user_my extends Fragment {
     private void operChoosePic() {
         isTakePhoto = false;
         isGetPic = true;
-        if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-            if (ActivityCompat.shouldShowRequestPermissionRationale(getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE))
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.WRITE_EXTERNAL_STORAGE))
                 showFilePerDialog();
             else
-                ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, PERMISSIONS_REQUEST_FILE);
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, PERMISSIONS_REQUEST_FILE);
         } else getPictureFromLocal();
     }
 
@@ -263,10 +193,10 @@ public class user_my extends Fragment {
      * 文件权限提示
      */
     private void showFilePerDialog() {
-        new AlertDialog.Builder(getActivity())
+        new AlertDialog.Builder(this)
                 .setTitle("提示")
                 .setMessage("PhotoDemo需要获取存储文件权限，以确保可以正常保存拍摄或选取的图片。")
-                .setPositiveButton("确定", (dialog, which) -> ActivityCompat.requestPermissions(getActivity(), new String[]{
+                .setPositiveButton("确定", (dialog, which) -> ActivityCompat.requestPermissions(user_my.this, new String[]{
                         Manifest.permission.WRITE_EXTERNAL_STORAGE
                 }, PERMISSIONS_REQUEST_FILE)).create().show();
     }
@@ -307,7 +237,7 @@ public class user_my extends Fragment {
     private String dealChoosePhotoWithoutZoom(Intent data) {
         Uri uri = data.getData();
         if (uri != null) {
-            Bitmap bitmap = BitmapUtils.uriToBitmap(getActivity(), uri);
+            Bitmap bitmap = BitmapUtils.uriToBitmap(this, uri);
             if (bitmap != null) {
                 String username = syncDecodeQRCode(bitmap);
                 return username;
@@ -327,7 +257,7 @@ public class user_my extends Fragment {
             Uri uri = data.getData();
             InputStream inputStream = null;
             try {
-                inputStream = getActivity().getContentResolver().openInputStream(uri);
+                inputStream = getContentResolver().openInputStream(uri);
                 if (inputStream != null) {
                     Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
                     if (bitmap != null) BitmapUtils.compressBitmap2file(bitmap, IMAGE_SAVE_PATH);
@@ -351,7 +281,7 @@ public class user_my extends Fragment {
     private void dealZoomPhoto() {
         try {
             if (mUri != null) {
-                Bitmap bitmap = BitmapFactory.decodeStream(getActivity().getContentResolver().openInputStream(mUri));
+                Bitmap bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(mUri));
                 if (bitmap != null) {
                     mImg.setImageBitmap(bitmap);
                     boolean b = BitmapUtils.compressBitmap2file(bitmap,IMAGE_SAVE_PATH);
@@ -399,7 +329,7 @@ public class user_my extends Fragment {
             startActivityForResult(intent, REQUEST_CODE_CUT_PHOTO);
         } catch (ActivityNotFoundException e) {
             String errorMessage = "Your device doesn't support the crop action!";
-            Toast.makeText(getActivity(), errorMessage, Toast.LENGTH_LONG).show();
+            Toast.makeText(this, errorMessage, Toast.LENGTH_LONG).show();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -439,7 +369,7 @@ public class user_my extends Fragment {
     }
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == Activity.RESULT_OK) {
             switch (requestCode) {

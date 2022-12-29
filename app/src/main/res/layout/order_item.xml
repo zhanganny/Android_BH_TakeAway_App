@@ -34,6 +34,7 @@
                 <!--食堂图片-->
                 <ImageView
                     android:layout_width="30dp"
+                    android:id="@+id/order_store"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="2dp"
                     android:layout_marginTop="8dp"
@@ -81,6 +82,7 @@
                 <Button
                     android:id="@+id/go_in"
                     android:layout_width="40dp"
+                    android:id="@+id/order_detail"
                     android:layout_height="40dp"
                     android:layout_gravity="center_vertical"
                     android:background="@drawable/ic_arrow_right" />

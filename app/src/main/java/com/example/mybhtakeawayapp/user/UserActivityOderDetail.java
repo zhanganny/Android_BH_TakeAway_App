@@ -4,11 +4,9 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,11 +23,14 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.mybhtakeawayapp.Local;
 import com.example.mybhtakeawayapp.R;
+import com.example.mybhtakeawayapp.saler.LineChartBaseBean;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class UserActivityOderDetail extends Activity {
@@ -39,6 +40,7 @@ public class UserActivityOderDetail extends Activity {
     private RecyclerView order_ed_list;
     private TextView order_total_money;
     private TextView order_comment;
+
     private Button cancel_order;
     private Button pay;
     private Button back;
@@ -58,12 +60,15 @@ public class UserActivityOderDetail extends Activity {
         order_total_money = findViewById(R.id.order_total_money);
         order_comment = findViewById(R.id.order_comment);
         order_ed_list = findViewById(R.id.user_order_detail);
-        cancel_order = findViewById(R.id.cancel_order);
+
+
+//        cancel_order = findViewById(R.id.cancel_order);
         pay = findViewById(R.id.pay);
         back = findViewById(R.id.back);
+        mRecyclerView = findViewById(R.id.user_order_detail);
 
-//        String orderUrl = Local.getLocalIp() + "indent/getInfo/" + orderId;
-        String orderUrl = "http://192.168.1.5:8081/indent/getInfo/" + orderId;
+        String orderUrl = Local.getLocalIp() + "indent/getInfo/" + orderId;
+//        String orderUrl = "indent/getInfo/" + orderId;
         RequestQueue requestQueue = Volley.newRequestQueue(UserActivityOderDetail.this);
         JSONObject jsonObject = new JSONObject();
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, orderUrl, jsonObject, new Response.Listener<JSONObject>() {
@@ -78,6 +83,11 @@ public class UserActivityOderDetail extends Activity {
                         order_address.setText(jsonObject.getString("address"));
                         order_total_money.setText(jsonObject.getString("cost"));
                         order_comment.setText(jsonObject.getString("o_comment"));
+                        JSONArray dishes = (JSONArray) jsonObject.getJSONArray("dishes");
+                        for (int i = 0; i < dishes.length(); i++) {
+                            JSONObject dish = dishes.getJSONObject(i);
+                            mNewsList.add(new News(dish.getString("name"),Integer.toString(dish.getInt("sum"))));
+                        }
                     } else {
                         Toast.makeText(UserActivityOderDetail.this, "加载买家数据失败", Toast.LENGTH_SHORT).show();
                     }
@@ -100,14 +110,39 @@ public class UserActivityOderDetail extends Activity {
             public void onClick(View view) {
                 Intent intent = new Intent(UserActivityOderDetail.this, UserActivityOrderStatus.class);
                 startActivity(intent);
+                finish();
             }
         });
 
-        // todo
-        // 后端要删掉此订单
         cancel_order.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                String orderUrl = "indent/cancel/" + orderId;
+                RequestQueue requestQueue = Volley.newRequestQueue(UserActivityOderDetail.this);
+                JSONObject jsonObject = new JSONObject();
+                JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, orderUrl, jsonObject, new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject jsonObject) {
+                        try {
+                            boolean state = jsonObject.getBoolean("state");
+                            String msg = jsonObject.getString("msg");
+                            if (state) {
+                                Toast.makeText(UserActivityOderDetail.this, "取消成功", Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(UserActivityOderDetail.this, "取消失败", Toast.LENGTH_SHORT).show();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError volleyError) {
+                        Log.d("错误", volleyError.toString());
+                        Toast.makeText(UserActivityOderDetail.this, "网络失败", Toast.LENGTH_SHORT).show();
+                    }
+                });
+                requestQueue.add(jsonObjectRequest);
                 finish();
             }
         });
@@ -119,30 +154,29 @@ public class UserActivityOderDetail extends Activity {
             }
         });
 
-        mRecyclerView1 = findViewById(R.id.user_order_detail);
-        // 构造一些数据  todo
-        mNewsList1.add(new News("麻婆豆腐", "X1"));
-        mNewsList1.add(new News("鱼香肉丝", "X2"));
-        mMyAdapter1 = new MyAdapter1();
-        mRecyclerView1.setAdapter(mMyAdapter1);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(UserActivityOderDetail.this);
-        mRecyclerView1.setLayoutManager(layoutManager);
 
+        mMyAdapter = new MyAdapter();
+        mRecyclerView.setAdapter(mMyAdapter);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(UserActivityOderDetail.this);
+        mRecyclerView.setLayoutManager(layoutManager);
     }
+
 
     public class News {
-        public String order_name; //订单号
-        public String order_num;// 订单日期
-        public News(String name, String num) {
-            this.order_name = name;
-            this.order_num = num;
+        public String name; // 标题
+        public String num; //内容
+        public News(String  name, String num) {
+            this.name = name;
+            this.num = num;
         }
     }
-    RecyclerView mRecyclerView1;
-    MyAdapter1 mMyAdapter1 ;
-    List<News> mNewsList1 = new ArrayList<>();
 
-    class MyAdapter1 extends RecyclerView.Adapter<MyViewHoder> {
+    RecyclerView mRecyclerView;
+    MyAdapter mMyAdapter ;
+    List<News> mNewsList = new ArrayList<>();
+
+    class MyAdapter extends RecyclerView.Adapter<MyViewHoder> {
+
         @NonNull
         @Override
         public MyViewHoder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -150,28 +184,29 @@ public class UserActivityOderDetail extends Activity {
             MyViewHoder myViewHoder = new MyViewHoder(view);
             return myViewHoder;
         }
+
+        @SuppressLint("SetTextI18n")
         @Override
         public void onBindViewHolder(@NonNull MyViewHoder holder, int position) {
-            News news = mNewsList1.get(position);
-            holder.order_name.setText(news.order_name);
-            holder.order_num.setText(news.order_num);
+            News news = mNewsList.get(position);
+            holder.mTitleTv.setText(news.name);
+            holder.mTitleContent.setText("X" + news.num);
         }
+
         @Override
         public int getItemCount() {
-            return mNewsList1.size();
+            return mNewsList.size();
         }
     }
 
     class MyViewHoder extends RecyclerView.ViewHolder {
-        TextView order_name;
-        TextView order_num;
+        TextView mTitleTv;
+        TextView mTitleContent;
 
         public MyViewHoder(@NonNull View itemView) {
             super(itemView);
-            order_name = itemView.findViewById(R.id.order_name);
-            order_num = itemView.findViewById(R.id.order_statement);
+            mTitleTv = itemView.findViewById(R.id.payment_good_ame);
+            mTitleContent = itemView.findViewById(R.id.payment_good_number);
         }
     }
-
-
 }

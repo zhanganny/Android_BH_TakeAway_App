@@ -2,12 +2,6 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     >
 
-<!--    <data>-->
-<!--        <variable-->
-<!--            name="store"-->
-<!--            type="com.example.basicpage.store_index" />-->
-<!--    </data>-->
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -201,8 +195,9 @@
                     android:gravity="center_vertical"
                     android:text="店铺图片"/>
 
-                <android.widget.Button
+                    <ImageView
                     android:layout_width="70dp"
+                    android:id="@+id/saler_info"
                     android:layout_marginRight="20dp"
                     android:layout_height="70dp"
                     android:background="@drawable/camel" />

@@ -27,7 +27,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class RegisterActivity extends Activity {
-    private String localIP = "http://192.168.110.79:8081/";
+    private String localIP = Local.getLocalIp();
     private EditText re_username;
     private EditText re_password;
     private EditText re_affirm;
@@ -35,7 +35,6 @@ public class RegisterActivity extends Activity {
     private CheckBox registerByStore;
     private CheckBox registerByUser;
     private Button re_register;
-
 
 
     @Override
@@ -60,13 +59,20 @@ public class RegisterActivity extends Activity {
                 boolean isRider = registerByRider.isChecked();
                 boolean isStore = registerByStore.isChecked();
                 boolean isUser = registerByUser.isChecked();
-                if(username.equals("")||password.equals("")||re_affirm.equals("")){
+                if (username.equals("") || password.equals("") || re_affirm.equals("")) {
                     Toast.makeText(RegisterActivity.this, "请完整填写信息", Toast.LENGTH_SHORT).show();
                 } else if (!password.equals(re_affirm)) {
                     Toast.makeText(RegisterActivity.this, "两次输入密码不一致，请重新输入", Toast.LENGTH_SHORT).show();
                 } else {
                     JSONObject jsonObject = new JSONObject();
-                    String url = localIP+"user/register/" + username + "/" + password;
+                    String url;
+                    if (isRider) {
+                        url = localIP + "rider/register/" + username + "/" + password;//TODO 增加id参数
+                    } else if (isStore) {
+                        url = localIP + "provider/register/" + username + "/" + password;
+                    } else {
+                        url = localIP + "user/register/" + username + "/" + password;
+                    }
                     RequestQueue requestQueue = Volley.newRequestQueue(RegisterActivity.this);
                     JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, jsonObject, new Response.Listener<JSONObject>() {
                         @Override
