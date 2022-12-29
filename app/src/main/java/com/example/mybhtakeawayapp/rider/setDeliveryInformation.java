@@ -15,6 +15,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.mybhtakeawayapp.Local;
 import com.example.mybhtakeawayapp.LoginActivity;
 import com.example.mybhtakeawayapp.user.UserActivityHome;
 
@@ -23,7 +24,7 @@ import org.json.JSONObject;
 
 
 public class setDeliveryInformation extends Activity {
-    private String localIP = "http://192.168.110.79:8081/";
+    private String localIP = Local.getLocalIp();
     private int riderId = 19375203;
     private TextView riderUserName;
     private TextView riderContact;

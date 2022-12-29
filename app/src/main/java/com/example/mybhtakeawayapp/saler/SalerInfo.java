@@ -79,7 +79,7 @@ public class SalerInfo extends AppCompatActivity {
     private Button help;
     private String sellerId = Local.getUserLoginId();
 
-    private String localIP = "http://192.168.110.79:8081/";
+    private String localIP = Local.getLocalIp();
     LineChart lc1;
     LineChart lc2;
     List<LineChartBaseBean> list1;

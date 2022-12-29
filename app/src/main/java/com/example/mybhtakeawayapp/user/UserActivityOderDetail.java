@@ -62,7 +62,7 @@ public class UserActivityOderDetail extends Activity {
         order_ed_list = findViewById(R.id.user_order_detail);
 
 
-        cancel_order = findViewById(R.id.cancel_order);
+//        cancel_order = findViewById(R.id.cancel_order);
         pay = findViewById(R.id.pay);
         back = findViewById(R.id.back);
         mRecyclerView = findViewById(R.id.user_order_detail);

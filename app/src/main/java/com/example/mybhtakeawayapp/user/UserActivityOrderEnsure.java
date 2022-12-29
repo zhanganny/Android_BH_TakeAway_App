@@ -105,7 +105,7 @@ public class UserActivityOrderEnsure extends Activity {
         orderUrl = Local.getLocalIp() + "indent/addIndent";
         jsonObject2.put("address",order_address.getText().toString());
         jsonObject2.put("uid",Local.getUserLoginId());
-        jsonObject2.put("rider",rider);
+//        jsonObject2.put("rider",rider);
         jsonObject2.put("pid",UserShoppingData.curPid);
         jsonObject2.put("comment",order_comment.getText().toString());
         jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, orderUrl,

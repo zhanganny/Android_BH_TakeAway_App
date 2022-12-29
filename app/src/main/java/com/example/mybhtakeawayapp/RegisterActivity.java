@@ -27,7 +27,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class RegisterActivity extends Activity {
-    private String localIP = "http://192.168.110.79:8081/";
+    private String localIP = Local.getLocalIp();
     private EditText re_username;
     private EditText re_password;
     private EditText re_affirm;

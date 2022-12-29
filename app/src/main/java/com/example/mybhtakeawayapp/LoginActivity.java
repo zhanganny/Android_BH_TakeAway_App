@@ -34,7 +34,7 @@ public class LoginActivity extends BaseActivity {
     private CheckBox loginByStore;
     private CheckBox loginByUser;
 
-    private String localIP = "http://192.168.110.79:8081/";
+    private String localIP = Local.getLocalIp();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
