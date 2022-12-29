@@ -17,6 +17,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.mybhtakeawayapp.Local;
 import com.example.mybhtakeawayapp.LoginActivity;
+import com.example.mybhtakeawayapp.R;
 import com.example.mybhtakeawayapp.user.UserActivityHome;
 
 import org.json.JSONException;
@@ -38,6 +39,15 @@ public class setDeliveryInformation extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        riderUserName=findViewById(R.id.riderUserName);
+        riderContact=findViewById(R.id.riderContact);
+        riderAccountName=findViewById(R.id.riderAccountName);
+        riderPassword=findViewById(R.id.riderPassword);
+        riderRealName=findViewById(R.id.riderRealName);
+        riderStuId=findViewById(R.id.riderStuId);
+        riderSchool=findViewById(R.id.riderSchool);
+        pay=findViewById(R.id.pay);
+
         //页面首先获取骑手信息
         JSONObject jsonObject = new JSONObject();
         String url = localIP+"rider/getInfo/" + riderId;
@@ -51,7 +61,7 @@ public class setDeliveryInformation extends Activity {
                     if (state) {
                         String userName = jsonObject.getString("userName");
                         String contact = jsonObject.getString("contact");
-                        String accountName = jsonObject.getString("accountName");
+                        String accountName = jsonObject.getString("userName");
                         String password = jsonObject.getString("password");
                         String realName = jsonObject.getString("realName");
                         String stuId = jsonObject.getString("stuId");
@@ -93,7 +103,7 @@ public class setDeliveryInformation extends Activity {
                 String school = riderSchool.getText().toString();
 
                 JSONObject jsonObject = new JSONObject();
-                String url = localIP+"rider/changeInfo/" + userName + "/" + contact + "/" + accountName
+                String url = localIP+"rider/changeInfo/" + userName + "/" + contact
                         + "/" + password + "/" + realName + "/" + stuId + "/" + school;
                 RequestQueue requestQueue = Volley.newRequestQueue(setDeliveryInformation.this);
                 JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, jsonObject, new Response.Listener<JSONObject>() {
