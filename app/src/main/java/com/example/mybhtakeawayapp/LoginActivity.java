@@ -66,7 +66,19 @@ public class LoginActivity extends BaseActivity {
                 boolean isUser = loginByUser.isChecked();
 
                 JSONObject jsonObject = new JSONObject();
-                String url = localIP+"user/login/" + username + "/" + password;
+                String url;
+                if(isAdmin){
+                    url = localIP+"admin/login/" + username + "/" + password;//TODO 这里的username应该指的是id而非昵称
+                }else if(isRider){
+                    url = localIP+"rider/login/" + username + "/" + password;
+                }else if(isStore){
+                    url = localIP+"provider/login/" + username + "/" + password;
+                }else if(isUser){
+                    url = localIP+"user/login/" + username + "/" + password;
+                }else {
+                    url="";
+                    Toast.makeText(LoginActivity.this, "请选择身份", Toast.LENGTH_SHORT).show();
+                }
                 RequestQueue requestQueue = Volley.newRequestQueue(LoginActivity.this);
                 JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, jsonObject, new Response.Listener<JSONObject>() {
                     @Override
