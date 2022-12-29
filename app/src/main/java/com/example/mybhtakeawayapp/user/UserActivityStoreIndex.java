@@ -14,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.mybhtakeawayapp.Local;
 import com.example.mybhtakeawayapp.LoginActivity;
 import com.example.mybhtakeawayapp.R;
 import com.example.mybhtakeawayapp.RegisterActivity;
@@ -25,6 +26,8 @@ import java.util.List;
 public class UserActivityStoreIndex extends Activity {
     private Button pay;
     private Button back;
+    private TextView countnum;
+    private TextView total_money;
 
     public class News {
         // todo
@@ -63,6 +66,16 @@ public class UserActivityStoreIndex extends Activity {
             holder.good_price.setText(news.good_name);
             holder.recommend.setText(news.process);
             holder.process.setProgress(Integer.parseInt(news.process));
+//            holder.add_dish.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View view) {
+//                    System.out.println(news.good_price);
+//                    Local.addTotalMoney(Integer.parseInt(news.good_price));
+//                    Local.addOneCountnum();
+//                    total_money.setText(Local.getTotalMoney());
+//                    countnum.setText(Local.getCountnum());
+//                }
+//            });
         }
 
         @Override
@@ -77,6 +90,7 @@ public class UserActivityStoreIndex extends Activity {
         TextView good_price;
         TextView recommend;
         ProgressBar process;
+        Button add_dish;
         // todo
         public MyViewHoder(View itemView) {
             super(itemView);
@@ -85,7 +99,7 @@ public class UserActivityStoreIndex extends Activity {
             good_price = itemView.findViewById(R.id.good_price);
             recommend = itemView.findViewById(R.id.recommend);
             process = itemView.findViewById(R.id.process);
-
+            add_dish = itemView.findViewById(R.id.add_dish);
         }
     }
 
@@ -95,6 +109,9 @@ public class UserActivityStoreIndex extends Activity {
         setContentView(R.layout.user_activity_store_index);
         pay = findViewById(R.id.pay);
         back = findViewById(R.id.back);
+        countnum = findViewById(R.id.countnum);
+        total_money = findViewById(R.id.total_money);
+
 
         pay.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -116,8 +133,8 @@ public class UserActivityStoreIndex extends Activity {
         // 链接recyclerview todo
         store_ListView = findViewById(R.id.store_ListView);
         // 构造一些数据 todo
-        mNewsList.add(new News("学二食堂", "大豆","￥12.00","80"));
-        mNewsList.add(new News("学食堂", "大豆","￥12.00","80"));
+        mNewsList.add(new News("学二食堂", "大豆","12","80"));
+        mNewsList.add(new News("学食堂", "大豆","12","80"));
         mMyAdapter = new MyAdapter();
         store_ListView.setAdapter(mMyAdapter);
         LinearLayoutManager layoutManager = new LinearLayoutManager(UserActivityStoreIndex.this);

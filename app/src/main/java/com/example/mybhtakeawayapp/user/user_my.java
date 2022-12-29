@@ -4,7 +4,9 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.ActivityNotFoundException;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -16,6 +18,9 @@ import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -28,19 +33,25 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.mybhtakeawayapp.Local;
 import com.example.mybhtakeawayapp.R;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.BinaryBitmap;
 import com.google.zxing.DecodeHintType;
 import com.google.zxing.MultiFormatReader;
+import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.RGBLuminanceSource;
 import com.google.zxing.Result;
+import com.google.zxing.WriterException;
+import com.google.zxing.common.BitMatrix;
 import com.google.zxing.common.GlobalHistogramBinarizer;
 import com.google.zxing.common.HybridBinarizer;
+import com.journeyapps.barcodescanner.BarcodeEncoder;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.text.BreakIterator;
 import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.List;
@@ -53,6 +64,9 @@ public class user_my extends Fragment {
     private ImageView user_saomiao;
     private View mView;
     private Button changeUserInfo = null;
+    private String sellerId = Local.getUserLoginId();
+    Dialog dia;
+
 
     private ImageView mImg;
     private String mPath;
@@ -151,11 +165,53 @@ public class user_my extends Fragment {
             changeUserInfo.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    //Intent intent = new Intent(getActivity(), setUserInformation.class);
-                    //startActivity(intent);
+                    Intent intent = new Intent(getActivity(), setUserInformation.class);
+                    startActivity(intent);
                 }
             });
         }
+
+        Context context = getContext();
+        dia = new Dialog(context, R.style.edit_AlertDialog_style);
+        dia.setContentView(R.layout.dialog);
+        ImageView imageView = (ImageView) dia.findViewById(R.id.ivdialog);
+        //选择true的话点击其他地方可以使dialog消失，为false的话不会消失
+        dia.setCanceledOnTouchOutside(true); // Sets whether this dialog is
+        Window w = dia.getWindow();
+        WindowManager.LayoutParams lp = w.getAttributes();
+        lp.x = 0;
+        lp.y = 40;
+        dia.onWindowAttributesChanged(lp);
+        imageView.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        dia.dismiss();
+                    }
+                });
+
+        user_erweima.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                BreakIterator editText = null;
+                //editText.getText().toString().trim();
+                MultiFormatWriter writer = new MultiFormatWriter();
+                try {
+                    BitMatrix matrix = writer.encode(sellerId, BarcodeFormat.QR_CODE,350,350);
+                    BarcodeEncoder encoder = new BarcodeEncoder();
+                    Bitmap bitmap = encoder.createBitmap(matrix);
+                    imageView.setImageBitmap(bitmap);
+                    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+                        InputMethodManager manager = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                    }
+//                    manager.hideSoftInputFromWindow(editText.getApplicationWindowToken(),0);
+                } catch (WriterException e) {
+                    e.printStackTrace();
+                }
+                dia.show();
+            }
+        });
+
 
         return this.mView;
     }
