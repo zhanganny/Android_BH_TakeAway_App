@@ -23,6 +23,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.mybhtakeawayapp.Local;
 import com.example.mybhtakeawayapp.R;
 
 import org.json.JSONException;
@@ -62,7 +63,7 @@ public class UserActivityOderDetail extends Activity {
         back = findViewById(R.id.back);
 
 //        String orderUrl = Local.getLocalIp() + "indent/getInfo/" + orderId;
-        String orderUrl = "indent/getInfo/" + orderId;
+        String orderUrl = "http://192.168.1.5:8081/indent/getInfo/" + orderId;
         RequestQueue requestQueue = Volley.newRequestQueue(UserActivityOderDetail.this);
         JSONObject jsonObject = new JSONObject();
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, orderUrl, jsonObject, new Response.Listener<JSONObject>() {
