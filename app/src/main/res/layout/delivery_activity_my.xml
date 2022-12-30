@@ -39,7 +39,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="骑手名称"
+                    android:text="KAZEYA"
                     android:textSize="30dp"
                     android:textStyle="bold"
                     android:layout_marginTop="30dp"
@@ -49,7 +49,7 @@
                     android:layout_width="match_parent"
                     android:gravity="center_horizontal"
                     android:layout_height="20dp"
-                    android:text="已认证/未认证"/>
+                    android:text="已认证"/>
 
                 <TextView
                     android:layout_width="match_parent"

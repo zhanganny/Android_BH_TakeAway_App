@@ -23,8 +23,10 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.mybhtakeawayapp.Local;
 import com.example.mybhtakeawayapp.R;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -43,7 +45,7 @@ public class UserActivityOderDetail extends Activity {
     private Button pay;
     private Button back;
     // todo 获取id
-    private String orderId;
+    private String orderId = Local.orderId;
 
     @SuppressLint("CutPasteId")
     @Override
@@ -61,8 +63,8 @@ public class UserActivityOderDetail extends Activity {
         pay = findViewById(R.id.pay);
         back = findViewById(R.id.back);
 
-//        String orderUrl = Local.getLocalIp() + "indent/getInfo/" + orderId;
-        String orderUrl = "indent/getInfo/" + orderId;
+        String orderUrl = Local.getInstance().getLocalIp() + "indent/getInfo/" + orderId;
+//        String orderUrl = "indent/getInfo/" + orderId;
         RequestQueue requestQueue = Volley.newRequestQueue(UserActivityOderDetail.this);
         JSONObject jsonObject = new JSONObject();
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, orderUrl, jsonObject, new Response.Listener<JSONObject>() {
@@ -71,12 +73,23 @@ public class UserActivityOderDetail extends Activity {
                 try {
                     boolean state = jsonObject.getBoolean("state");
                     String msg = jsonObject.getString("msg");
+                    // System.out.println(jsonObject);
+                    JSONObject data = jsonObject.getJSONObject("data");
                     if (state) {
                         order_id.setText(orderId);
-                        order_store.setText(jsonObject.getString("store"));
-                        order_address.setText(jsonObject.getString("address"));
-                        order_total_money.setText(jsonObject.getString("cost"));
-                        order_comment.setText(jsonObject.getString("o_comment"));
+//                        System.out.println(data);
+                        JSONArray dishes = data.getJSONArray("dishes");
+                        // System.out.println(dishes);
+                        order_store.setText(data.getString("store"));
+                        order_address.setText(data.getString("address"));
+                        order_total_money.setText(data.getString("cost"));
+                        order_comment.setText(data.getString("o_comment"));
+                        for (int i = 0;i<dishes.length();i++) {
+                            JSONObject dish = dishes.getJSONObject(i);
+                            System.out.println(dish);
+                            System.out.println(dish.getString("name"));
+                            mNewsList1.add(new News(dish.getString("name"),"X" + dish.getString("num")));
+                        }
                     } else {
                         Toast.makeText(UserActivityOderDetail.this, "加载买家数据失败", Toast.LENGTH_SHORT).show();
                     }
@@ -120,8 +133,8 @@ public class UserActivityOderDetail extends Activity {
 
         mRecyclerView1 = findViewById(R.id.user_order_detail);
         // 构造一些数据  todo
-        mNewsList1.add(new News("麻婆豆腐", "X1"));
-        mNewsList1.add(new News("鱼香肉丝", "X2"));
+        mNewsList1.add(new News("糖醋里脊", "X1"));
+        mNewsList1.add(new News("风味茄子", "X3"));
         mMyAdapter1 = new MyAdapter1();
         mRecyclerView1.setAdapter(mMyAdapter1);
         LinearLayoutManager layoutManager = new LinearLayoutManager(UserActivityOderDetail.this);
@@ -145,7 +158,7 @@ public class UserActivityOderDetail extends Activity {
         @NonNull
         @Override
         public MyViewHoder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            View view = View.inflate(UserActivityOderDetail.this, R.layout.good_item, null);
+            View view = View.inflate(UserActivityOderDetail.this, R.layout.order_item, null);
             MyViewHoder myViewHoder = new MyViewHoder(view);
             return myViewHoder;
         }

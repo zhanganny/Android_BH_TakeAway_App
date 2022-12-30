@@ -107,7 +107,7 @@
                                 android:id="@+id/good_price"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="￥XX.XX"
+                                android:text="￥12.00"
                                 android:layout_gravity="bottom"
                                 android:textColor="@color/red"
                                 android:textSize="20sp" />

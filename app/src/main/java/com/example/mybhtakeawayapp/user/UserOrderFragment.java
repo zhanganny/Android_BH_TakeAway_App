@@ -14,9 +14,12 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.mybhtakeawayapp.Local;
 import com.example.mybhtakeawayapp.LoginActivity;
+import com.example.mybhtakeawayapp.Orders;
 import com.example.mybhtakeawayapp.R;
 import com.example.mybhtakeawayapp.RegisterActivity;
+import com.example.mybhtakeawayapp.saler.SellerOrderItemFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -107,6 +110,7 @@ public class UserOrderFragment extends Fragment {
             holder.go_in.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    Local.orderId = news.order_name;
                     Intent intent = new Intent(getActivity(), UserActivityOderDetail.class);
                     startActivity(intent);
                 }
@@ -158,10 +162,39 @@ public class UserOrderFragment extends Fragment {
 
 
         // 构造一些数据  todo
-        mNewsList1.add(new News("合一", "合一", "2022-10-20", "待接单"));
-        mNewsList1.add(new News("合一", "合一", "2022-10-20", "待接单"));
+        if (mNewsList1.isEmpty()) {
+            ArrayList<Orders> tmp = Local.getInstance().orders.get(Orders.OrderState.PAID);
+            for (Orders order:tmp) {
+                // System.out.println(order.u_id+ " " +Local.getInstance().getUserLoginId());
+                if (order.u_id.equals(Local.getInstance().getUserLoginId()) ) {
+                    mNewsList1.add(new News(Integer.toString(order.d_id),Integer.toString(order.o_id),order.o_time.toString(),"待接单"));
+                }
+            }
+            tmp = Local.getInstance().orders.get(Orders.OrderState.ACCEPTED);
+            for (Orders order:tmp) {
+                if (order.u_id.equals(Local.getInstance().getUserLoginId()) ) {
+                    mNewsList1.add(new News(Integer.toString(order.d_id),Integer.toString(order.o_id),order.o_time.toString(),"待接单"));
+                }
+            }
+            tmp = Local.getInstance().orders.get(Orders.OrderState.DELIVERING);
+            for (Orders order:tmp) {
+                if (order.u_id.equals(Local.getInstance().getUserLoginId()) ) {
+                    mNewsList1.add(new News(Integer.toString(order.d_id),Integer.toString(order.o_id),order.o_time.toString(),"待接单"));
+                }
+            }
+            tmp = Local.getInstance().orders.get(Orders.OrderState.FINISHED);
+            for (Orders order:tmp) {
+                if (order.u_id.equals(Local.getInstance().getUserLoginId()) ) {
+                    mNewsList2.add(new News(Integer.toString(order.d_id),Integer.toString(order.o_id),order.o_time.toString(),"待接单"));
+                }
+            }
+        }
 
-        mNewsList2.add(new News("合一", "合一", "2022-10-20", "已接单"));
+
+//        mNewsList1.add(new News("合一", "合一", "2022-10-20", "待接单"));
+//        mNewsList1.add(new News("合一", "合一", "2022-10-20", "待接单"));
+//
+//        mNewsList2.add(new News("合一", "合一", "2022-10-20", "已接单"));
 
 
 

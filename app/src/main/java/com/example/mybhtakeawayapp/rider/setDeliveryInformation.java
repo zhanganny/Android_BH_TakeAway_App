@@ -40,6 +40,7 @@ public class setDeliveryInformation extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.delivery_information_setting);
         riderUserName=findViewById(R.id.riderUserName);
         riderContact=findViewById(R.id.riderContact);
         riderAccountName=findViewById(R.id.riderAccountName);

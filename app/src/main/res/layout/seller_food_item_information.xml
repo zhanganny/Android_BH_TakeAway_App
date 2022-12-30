@@ -107,7 +107,7 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:text="1234"
+                    android:text="￥12.00"
                     android:gravity="right|center_vertical"/>
 
             </LinearLayout>
@@ -131,7 +131,7 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:text="1234"
+                    android:text=""
                     android:gravity="right|center_vertical"/>
 
             </LinearLayout>
@@ -156,7 +156,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="right|center_vertical"
-                    android:text="1234" />
+                    android:text="" />
             </LinearLayout>
 
             <LinearLayout
@@ -179,7 +179,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="right|center_vertical"
-                    android:text="1234" />
+                    android:text="" />
 
             </LinearLayout>
 

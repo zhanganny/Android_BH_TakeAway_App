@@ -157,7 +157,6 @@ public class SalerInfo extends Fragment {
 
     private void initData() {
 
-        //todo
         String incomeUrl = localIP + "provider/getProfit/" + sellerId;
         RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
         JSONObject jsonObject = new JSONObject();
@@ -190,13 +189,13 @@ public class SalerInfo extends Fragment {
             }
         });
         requestQueue.add(jsonObjectRequest);
-        list1.add(new LineChartBaseBean("周一", 10f));
-        list1.add(new LineChartBaseBean("周二", 7.5f));
-        list1.add(new LineChartBaseBean("周三", 12f));
-        list1.add(new LineChartBaseBean("周四", 15f));
-        list1.add(new LineChartBaseBean("周五", 10f));
-        list1.add(new LineChartBaseBean("周六", 0f));
-        list1.add(new LineChartBaseBean("周日", 6f));
+//        list1.add(new LineChartBaseBean("周一", 10f));
+//        list1.add(new LineChartBaseBean("周二", 7.5f));
+//        list1.add(new LineChartBaseBean("周三", 12f));
+//        list1.add(new LineChartBaseBean("周四", 15f));
+//        list1.add(new LineChartBaseBean("周五", 10f));
+//        list1.add(new LineChartBaseBean("周六", 0f));
+//        list1.add(new LineChartBaseBean("周日", 6f));
         String orderNumUrl = localIP + "provider/getOrderNum/" + sellerId;
         list2 = new ArrayList<>();
         jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, orderNumUrl,
@@ -227,13 +226,13 @@ public class SalerInfo extends Fragment {
             }
         });
         requestQueue.add(jsonObjectRequest);
-        list2.add(new LineChartBaseBean("周一", 3f));
-        list2.add(new LineChartBaseBean("周二", 4f));
-        list2.add(new LineChartBaseBean("周三", 5f));
-        list2.add(new LineChartBaseBean("周四", 5f));
-        list2.add(new LineChartBaseBean("周五", 4f));
-        list2.add(new LineChartBaseBean("周六", 0f));
-        list2.add(new LineChartBaseBean("周日", 0f));
+//        list2.add(new LineChartBaseBean("周一", 3f));
+//        list2.add(new LineChartBaseBean("周二", 4f));
+//        list2.add(new LineChartBaseBean("周三", 5f));
+//        list2.add(new LineChartBaseBean("周四", 5f));
+//        list2.add(new LineChartBaseBean("周五", 4f));
+//        list2.add(new LineChartBaseBean("周六", 0f));
+//        list2.add(new LineChartBaseBean("周日", 0f));
 
     }
 
@@ -388,6 +387,7 @@ public class SalerInfo extends Fragment {
         }
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -441,7 +441,6 @@ public class SalerInfo extends Fragment {
                 dia.show();
             }
         });
-
         String providerUrl = localIP + "provider/getIncomeSum/" + sellerId;
         RequestQueue requestQueue = Volley.newRequestQueue(getContext());
         JSONObject jsonObject = new JSONObject();

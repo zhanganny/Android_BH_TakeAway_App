@@ -194,7 +194,6 @@ public class DeliveryActivityMyHomeFragment extends Fragment {
 
     private void initData() {
 
-        //todo
         String incomeUrl = localIP + "provider/getProfit/" + sellerId;
         RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
         JSONObject jsonObject = new JSONObject();
@@ -223,16 +222,16 @@ public class DeliveryActivityMyHomeFragment extends Fragment {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 Log.d("错误", volleyError.toString());
-                Toast.makeText(getActivity(), "网络失败", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "", Toast.LENGTH_SHORT).show();
             }
         });
         requestQueue.add(jsonObjectRequest);
-        list1.add(new LineChartBaseBean("周一", 20f));
-        list1.add(new LineChartBaseBean("周二", 18f));
-        list1.add(new LineChartBaseBean("周三", 30f));
-        list1.add(new LineChartBaseBean("周四", 15f));
-        list1.add(new LineChartBaseBean("周五", 5.4f));
-        list1.add(new LineChartBaseBean("周六", 0f));
-        list1.add(new LineChartBaseBean("周日", 0f));
+//        list1.add(new LineChartBaseBean("周一", 20f));
+//        list1.add(new LineChartBaseBean("周二", 18f));
+//        list1.add(new LineChartBaseBean("周三", 30f));
+//        list1.add(new LineChartBaseBean("周四", 15f));
+//        list1.add(new LineChartBaseBean("周五", 5.4f));
+//        list1.add(new LineChartBaseBean("周六", 0f));
+//        list1.add(new LineChartBaseBean("周日", 0f));
     }
 }

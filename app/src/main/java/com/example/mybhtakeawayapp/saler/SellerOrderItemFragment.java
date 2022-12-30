@@ -13,6 +13,9 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.mybhtakeawayapp.Local;
+import com.example.mybhtakeawayapp.Orders;
+import com.example.mybhtakeawayapp.rider.DeliveryActivityOrderFragment;
 import com.example.mybhtakeawayapp.saler.SellerOrderItemFragment;
 import com.example.mybhtakeawayapp.R;
 
@@ -182,13 +185,19 @@ public class SellerOrderItemFragment extends Fragment {
         mRecyclerView2 = mView.findViewById(R.id.order_ed_list2);
         mRecyclerView3 = mView.findViewById(R.id.order_ed_list3);
 
-        // 构造一些数据  todo
-        mNewsList1.add(new SellerOrderItemFragment.News("合一", "合一", "2022-10-20", "待接单"));
-        mNewsList1.add(new SellerOrderItemFragment.News("合一", "合一", "2022-10-20", "待接单"));
 
-        mNewsList2.add(new SellerOrderItemFragment.News("合一", "合一", "2022-10-20", "已接单"));
-
-        mNewsList3.add(new SellerOrderItemFragment.News("合一", "合一", "2022-10-20", "已完成"));
+        ArrayList<Orders> tmp = Local.getInstance().orders.get(Orders.OrderState.PAID);
+        for (Orders order:tmp) {
+            mNewsList1.add(new SellerOrderItemFragment.News(Integer.toString(order.d_id),Integer.toString(order.o_id),order.o_time.toString(),"待接单"));
+        }
+        tmp = Local.getInstance().orders.get(Orders.OrderState.NOT_ACCEPT);
+        for (Orders order:tmp) {
+            mNewsList2.add(new SellerOrderItemFragment.News(Integer.toString(order.d_id),Integer.toString(order.o_id),order.o_time.toString(),"已接单"));
+        }
+        tmp = Local.getInstance().orders.get(Orders.OrderState.FINISHED);
+        for (Orders order:tmp) {
+            mNewsList3.add(new SellerOrderItemFragment.News(Integer.toString(order.d_id),Integer.toString(order.o_id),order.o_time.toString(),"已接单"));
+        }
 
 
         mMyAdapter1 = new SellerOrderItemFragment.MyAdapter1();

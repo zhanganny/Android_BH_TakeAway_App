@@ -1,6 +1,7 @@
 package com.example.mybhtakeawayapp.user;
 
 import android.app.Activity;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -12,6 +13,7 @@ import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.time.LocalDateTime;
 
 
 import com.android.volley.Request;
@@ -33,6 +35,7 @@ public class setUserInformation extends Activity {
     private EditText userCount;
     private EditText userPassword;
     private Button pay;
+    private Button poorConfirm;
     private String userId = Local.getInstance().getUserLoginId();
 
     private String localIP = Local.getInstance().getLocalIp();
@@ -48,6 +51,21 @@ public class setUserInformation extends Activity {
         userPassword = findViewById(R.id.userPassword);
         pay = findViewById(R.id.pay);
 
+        poorConfirm = findViewById(R.id.poorConfirm);
+
+        poorConfirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String name = userName.getText().toString();
+                String contact = userContact.getText().toString();
+                String defaultAddress= userDefaultAddress.getText().toString();
+                String count = userCount.getText().toString();
+                String password = userPassword.getText().toString();
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    Local.poorConfirm.add("贫困生申请： " + name + " " + LocalDateTime.now() + " ");
+                }
+            }
+        });
 
         //页面首先获取骑手信息
         JSONObject jsonObject = new JSONObject();
@@ -66,10 +84,11 @@ public class setUserInformation extends Activity {
                         String contact = jsonObject.getString("contact");
                         String password = jsonObject.getString("password");
                         String address = jsonObject.getString("address");
+                        String count = jsonObject.getString("count");
                         userName.setText(name);
                         userContact.setText(contact);
                         userDefaultAddress.setText(address);
-                        userCount.setText(name);
+                        userCount.setText(count);
                         userPassword.setText(password);
                     } else {
                         Toast.makeText(setUserInformation.this, "加载失败", Toast.LENGTH_SHORT).show();
@@ -131,9 +150,9 @@ public class setUserInformation extends Activity {
                 try {
                     boolean state = jsonObject.getBoolean("state");
                     if(state){
-                        Toast.makeText(setUserInformation.this, "添加成功", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(setUserInformation.this, "修改成功", Toast.LENGTH_SHORT).show();
                     }else {
-                        Toast.makeText(setUserInformation.this, "添加失败", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(setUserInformation.this, "修改失败", Toast.LENGTH_SHORT).show();
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();

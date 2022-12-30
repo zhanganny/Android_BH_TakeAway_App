@@ -36,7 +36,14 @@ public class Local {
         return totalMoney;
     }
 
+    public static int contacts = 0;
 
+    public static ArrayList<Orders> newOrder = new ArrayList<>();
+
+
+    public static ArrayList<String> poorConfirm = new ArrayList<>();
+
+    public static String orderId;
 
     public HashMap<Orders.OrderState,ArrayList<Orders>> orders;
     private Local() {
@@ -46,13 +53,12 @@ public class Local {
         countnum=0;
         dishes = new ArrayList<>();
         orders = new HashMap<>();
-        orders = new HashMap<>();
         int N = 6;
         ArrayList<Orders> tmp = new ArrayList<>();
         for (int i = 1;i<N;i++) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 tmp.add(new Orders(i, LocalDateTime.of(2022,12,30,8,11+i),
-                        LocalDateTime.of(2022,12,30,9,30+i),100+i*3, Orders.OrderState.PAID,"学生7公寓303",Integer.toString(i%4+1),Integer.toString(i%3+2),Integer.toString(i%3+1),"",i%3+1));
+                        LocalDateTime.of(2022,12,30,9,30+i),100+i*3, Orders.OrderState.PAID,"学生7公寓303",Integer.toString(i%4+19374423),Integer.toString(i%3+2),Integer.toString(i%3+1),"",i%3+1));
             }
         }
         orders.put(Orders.OrderState.PAID,tmp);
@@ -60,14 +66,14 @@ public class Local {
         for (int i = N;i<2*N;i++) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 tmp.add(new Orders(i, LocalDateTime.of(2022,12,30,8,11+i),
-                        LocalDateTime.of(2022,12,30,8,30+i),100+i*3, Orders.OrderState.NOT_ACCEPT,"学生7公寓303",Integer.toString(i%4+1),Integer.toString(i%3+2),Integer.toString(i%3+1),"",i%3+1));
+                        LocalDateTime.of(2022,12,30,8,30+i),100+i*3, Orders.OrderState.NOT_ACCEPT,"学生7公寓303",Integer.toString(i%4+19374223),Integer.toString(i%3+2),Integer.toString(i%3+1),"",i%3+1));
             }
         }
         tmp = new ArrayList<>();
         for (int i = 2*N;i<3*N;i++) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 tmp.add(new Orders(i, LocalDateTime.of(2022,12,30,8,11+i),
-                        LocalDateTime.of(2022,12,30,8,30+i),100+i*3, Orders.OrderState.ACCEPTED,"学生7公寓303",Integer.toString(i%4+1),Integer.toString(i%3+2),Integer.toString(i%3+1),"",i%3+1));
+                        LocalDateTime.of(2022,12,30,8,30+i),100+i*3, Orders.OrderState.ACCEPTED,"学生7公寓303",Integer.toString(i%4+19374223),Integer.toString(i%3+2),Integer.toString(i%3+1),"",i%3+1));
             }
         }
         orders.put(Orders.OrderState.ACCEPTED,tmp);
@@ -75,7 +81,7 @@ public class Local {
         for (int i = 3*N;i<4*N;i++) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 tmp.add(new Orders(i, LocalDateTime.of(2022,12,30,8,11+i),
-                        LocalDateTime.of(2022,12,30,8,30+i),100+i*3, Orders.OrderState.DELIVERING,"学生7公寓303",Integer.toString(i%4+1),Integer.toString(i%3+2),Integer.toString(i%3+1),"",i%3+1));
+                        LocalDateTime.of(2022,12,30,8,30+i),100+i*3, Orders.OrderState.DELIVERING,"学生7公寓303",Integer.toString(i%4+19374223),Integer.toString(i%3+2),Integer.toString(i%3+1),"",i%3+1));
             }
         }
         orders.put(Orders.OrderState.DELIVERING,tmp);
@@ -83,10 +89,18 @@ public class Local {
         for (int i = 4*N;i<5*N;i++) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 tmp.add(new Orders(i, LocalDateTime.of(2022,12,30,8,11+i),
-                        LocalDateTime.of(2022,12,30,8,30+i),100+i*3, Orders.OrderState.FINISHED,"学生7公寓303",Integer.toString(i%4+1),Integer.toString(i%3+2),Integer.toString(i%3+1),"",i%3+1));
+                        LocalDateTime.of(2022,12,30,8,30+i),100+i*3, Orders.OrderState.FINISHED,"学生7公寓303",Integer.toString(i%4+19374223),Integer.toString(i%3+2),Integer.toString(i%3+1),"",i%3+1));
             }
         }
         orders.put(Orders.OrderState.FINISHED,tmp);
+        tmp = new ArrayList<>();
+        for (int i = 5*N;i<6*N;i++) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                tmp.add(new Orders(i, LocalDateTime.of(2022,12,30,8,11+i),
+                        LocalDateTime.of(2022,12,30,8,10+i),100+i*3, Orders.OrderState.FINISHED,"学生7公寓303",Integer.toString(i%4+19374223),Integer.toString(i%3+2),Integer.toString(i%3+1),"",i%3+1));
+            }
+        }
+        orders.put(Orders.OrderState.NOT_ACCEPT,tmp);
     }
 
     public static Local getInstance() {

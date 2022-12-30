@@ -99,6 +99,13 @@
 
         </activity>
         <activity
+            android:name=".rider.setDeliveryInformation"
+            android:exported="true"
+            android:label="骑手修改信息"
+            android:launchMode="singleTask">
+
+        </activity>
+        <activity
             android:name=".saler.SellerActivityHome"
             android:exported="true"
             android:label="商家主页"

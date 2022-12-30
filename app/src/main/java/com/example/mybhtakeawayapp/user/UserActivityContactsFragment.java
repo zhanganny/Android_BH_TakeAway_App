@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.mybhtakeawayapp.Local;
 import com.example.mybhtakeawayapp.R;
 
 import java.util.ArrayList;
@@ -42,6 +43,13 @@ public class UserActivityContactsFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mNewsList1.clear();
+        mNewsList1.add(new News("合一", "张三", " ", "182-0000-0000"));
+        mNewsList1.add(new News("合一", "李四", " ", "138-3457-3456"));
+        mNewsList1.add(new News("合一", "王五", " ", "138-3457-3456"));
+        for (int i = 0;i < Local.contacts;i++) {
+            mNewsList1.add(new News("合一", "阿七", " ", "136-3557-3126"));
+        }
     }
 
     class MyAdapter1 extends RecyclerView.Adapter<MyViewHoder> {
@@ -141,9 +149,6 @@ public class UserActivityContactsFragment extends Fragment {
         mRecyclerView1 = mView.findViewById(R.id.user_contact_list);
 
         // 构造一些数据  todo
-        mNewsList1.add(new News("合一", "合一", " ", "18200000000"));
-        mNewsList1.add(new News("合一", "合一", " ", "14444444444"));
-
 
         mMyAdapter1 = new MyAdapter1();
         mRecyclerView1.setAdapter(mMyAdapter1);

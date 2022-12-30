@@ -15,6 +15,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,6 +36,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mybhtakeawayapp.Local;
 import com.example.mybhtakeawayapp.R;
+import com.example.mybhtakeawayapp.admin.AdministratorHomeActivity;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.BinaryBitmap;
 import com.google.zxing.DecodeHintType;
@@ -149,8 +151,11 @@ public class user_my extends Fragment {
         user_name = mView.findViewById(R.id.user_name);
         mRecyclerView = mView.findViewById(R.id.fav_ed_list);
         // 构造一些数据 todo
-        mNewsList.add(new News("鱼香肉丝", "￥10"));
-        mNewsList.add(new News("麻婆豆腐", "￥10"));
+        if (mNewsList.isEmpty()) {
+            mNewsList.add(new News("鱼香肉丝", "￥10"));
+            mNewsList.add(new News("麻婆豆腐", "￥10"));
+        }
+
         mMyAdapter = new MyAdapter();
         mRecyclerView.setAdapter(mMyAdapter);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
@@ -310,6 +315,8 @@ public class user_my extends Fragment {
             Bitmap bitmap = BitmapUtils.uriToBitmap(getActivity(), uri);
             if (bitmap != null) {
                 String username = syncDecodeQRCode(bitmap);
+                Toast.makeText(getActivity(), "成功添加王五", Toast.LENGTH_SHORT).show();
+                Local.contacts+=1;
                 return username;
                 // todo username是用户名
                 //mImg.setImageBitmap(bitmap);

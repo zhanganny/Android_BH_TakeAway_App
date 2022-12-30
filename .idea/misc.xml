@@ -1,5 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/Users/83782/Desktop/android/project/Android_BH_TakeAway_App/app/src/main/res/layout/delivery_activity_my.xml" value="0.15572916666666667" />
+        <entry key="..\:/Users/83782/Desktop/android/project/Android_BH_TakeAway_App/app/src/main/res/layout/delivery_information_setting.xml" value="0.25885416666666666" />
+        <entry key="..\:/Users/83782/Desktop/android/project/Android_BH_TakeAway_App/app/src/main/res/layout/rider_constrain.xml" value="0.10364583333333334" />
+        <entry key="..\:/Users/83782/Desktop/android/project/Android_BH_TakeAway_App/app/src/main/res/layout/seller_activity_home.xml" value="0.25885416666666666" />
+        <entry key="..\:/Users/83782/Desktop/android/project/Android_BH_TakeAway_App/app/src/main/res/layout/seller_food_item.xml" value="0.14175724637681159" />
+        <entry key="..\:/Users/83782/Desktop/android/project/Android_BH_TakeAway_App/app/src/main/res/layout/seller_food_item_information.xml" value="0.25885416666666666" />
+        <entry key="..\:/Users/83782/Desktop/android/project/Android_BH_TakeAway_App/app/src/main/res/layout/seller_information_setting.xml" value="0.15572916666666667" />
+        <entry key="..\:/Users/83782/Desktop/android/project/Android_BH_TakeAway_App/app/src/main/res/layout/user_activity_contacts.xml" value="0.25885416666666666" />
+        <entry key="..\:/Users/83782/Desktop/android/project/Android_BH_TakeAway_App/app/src/main/res/layout/user_activity_home.xml" value="0.25885416666666666" />
+        <entry key="..\:/Users/83782/Desktop/android/project/Android_BH_TakeAway_App/app/src/main/res/layout/user_activity_my.xml" value="0.25885416666666666" />
+        <entry key="..\:/Users/83782/Desktop/android/project/Android_BH_TakeAway_App/app/src/main/res/layout/user_activity_store_index.xml" value="0.264" />
+        <entry key="..\:/Users/83782/Desktop/android/project/Android_BH_TakeAway_App/app/src/main/res/layout/user_information_setting.xml" value="0.1" />
+      </map>
+    </option>
+  </component>
   <component name="ExternalStorageConfigurationManager" enabled="true" />
   <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />

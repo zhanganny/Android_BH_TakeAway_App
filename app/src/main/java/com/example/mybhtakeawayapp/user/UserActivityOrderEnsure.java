@@ -3,6 +3,7 @@ package com.example.mybhtakeawayapp.user;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -20,12 +21,14 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.mybhtakeawayapp.Local;
+import com.example.mybhtakeawayapp.Orders;
 import com.example.mybhtakeawayapp.R;
 import com.example.mybhtakeawayapp.saler.SalerInfo;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class UserActivityOrderEnsure extends Activity {
@@ -58,6 +61,14 @@ public class UserActivityOrderEnsure extends Activity {
                 } catch (JSONException e) {
                     Toast.makeText(UserActivityOrderEnsure.this, "提交订单失败", Toast.LENGTH_SHORT).show();
                 }
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    Local.newOrder.add(new Orders(10, LocalDateTime.now(),
+                            LocalDateTime.now(), (double) Local.totalMoney, Orders.OrderState.DELIVERING, (String) order_address.getText(),Integer.toString(10%4+1),Integer.toString(10%3+2),Integer.toString(10%3+1), (String) order_comment.getText(),10%3+1));
+                }
+                Local.shopingcar.clear();
+                Local.shopingcaritem.clear();
+                Local.totalMoney = 0;
+                Local.countnum = 0;
                 Intent intent = new Intent(UserActivityOrderEnsure.this, UserActivityHome.class);
                 startActivity(intent);
             }

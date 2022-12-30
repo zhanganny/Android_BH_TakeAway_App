@@ -35,10 +35,13 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.mybhtakeawayapp.Local;
 import com.example.mybhtakeawayapp.LoginActivity;
 import com.example.mybhtakeawayapp.R;
 import com.example.mybhtakeawayapp.RegisterActivity;
 import com.example.mybhtakeawayapp.rider.setDeliveryInformation;
+import com.example.mybhtakeawayapp.user.UserActivityShoppingCart;
+import com.example.mybhtakeawayapp.user.UserActivityStoreIndex;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -166,9 +169,12 @@ public class AdministratorHomeActivity extends Activity {
         // 链接recyclerview todo
         mRecyclerView = findViewById(R.id.order_ed_list);
         // 构造一些数据 todo
-        mNewsList.add(new News("商家认证"));
-        mNewsList.add(new News("骑手认证"));
-        mNewsList.add(new News("贫困生认证"));
+//        mNewsList.add(new News("商家认证"));
+//        mNewsList.add(new News("骑手认证"));
+//        mNewsList.add(new News("贫困生认证"));
+        for (String info: Local.poorConfirm) {
+            mNewsList.add(new News(info));
+        }
 
         mMyAdapter = new MyAdapter();
         mRecyclerView.setAdapter(mMyAdapter);
@@ -197,12 +203,32 @@ public class AdministratorHomeActivity extends Activity {
             News news = mNewsList.get(position);
             // todo
             holder.infoToConfirm.setText(news.infoToConfirm);
+            holder.goToConfirm.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Local.poorConfirm.remove(holder.infoToConfirm.getText());
+                    onResume();
+                }
+            });
         }
 
         @Override
         public int getItemCount() {
             return mNewsList.size();
         }
+    }
+
+
+    /**
+     * 调用onCreate(), 目的是刷新数据,  从另一activity界面返回到该activity界面时, 此方法自动调用
+     */
+    @Override
+
+    protected void onResume() {
+
+        super.onResume();
+        onCreate(null);
+
     }
 
     class MyViewHoder extends RecyclerView.ViewHolder {
@@ -402,7 +428,7 @@ public class AdministratorHomeActivity extends Activity {
         if (uri != null) {
             Bitmap bitmap = BitmapUtils.uriToBitmap(this, uri);
             if (bitmap != null) {
-               // mImg.setImageBitmap(bitmap);
+                // mImg.setImageBitmap(bitmap);
                 boolean b = BitmapUtils.compressBitmap2file(bitmap, IMAGE_SAVE_PATH);
                 if (b) mTxtPath.setText("图片地址：" + IMAGE_SAVE_PATH);
             }

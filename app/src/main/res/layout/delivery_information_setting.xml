@@ -85,7 +85,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="right|center_vertical"
-                    android:text="1234" />
+                    android:text="KAZEYA" />
             </LinearLayout>
 
             <LinearLayout
@@ -109,7 +109,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="right|center_vertical"
-                    android:text="1234" />
+                    android:text="13668571124" />
 
             </LinearLayout>
 
@@ -135,7 +135,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="right|center_vertical"
-                    android:text="1234" />
+                    android:text="19374223" />
 
             </LinearLayout>
 
@@ -161,7 +161,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="right|center_vertical"
-                    android:text="1234" />
+                    android:text="QWER1234" />
 
             </LinearLayout>
 
@@ -186,7 +186,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="right|center_vertical"
-                    android:text="1234" />
+                    android:text="王永瑶" />
 
             </LinearLayout>
 
@@ -211,7 +211,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="right|center_vertical"
-                    android:text="1234" />
+                    android:text="19374223" />
 
             </LinearLayout>
 
@@ -236,7 +236,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="right|center_vertical"
-                    android:text="1234" />
+                    android:text="计算机学院" />
 
             </LinearLayout>
 

@@ -55,7 +55,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/user_name"
-                    android:text="用户名称"
+                    android:text="Kazeya"
                     android:textSize="30dp"
                     android:textStyle="bold"
                     android:layout_marginTop="30dp"
